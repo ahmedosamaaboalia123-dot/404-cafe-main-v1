@@ -1,0 +1,374 @@
+/* ======================================================================
+   Print layer
+   ----------------------------------------------------------------------
+   Printable documents are portalled into #print-root (a sibling of the app
+   shell, see index.html). When printing we drop the shell with
+   `display:none` and let the sheet decide the page height on its own.
+
+   `display:none` is the important part: the previous approach used
+   `body * { visibility: hidden }`, and `visibility:hidden` keeps the layout
+   box, so the browser still paginated the entire page behind the sheet and
+   emitted blank pages after it.
+   ====================================================================== */
+
+/* Screen: the print layer is never part of the visible page. */
+#print-root {
+  display: none;
+}
+
+.print-document__button {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: var(--button-radius);
+  background: var(--primary);
+  color: #fff;
+  cursor: pointer;
+}
+
+.print-document__button:disabled {
+  opacity: 0.5;
+}
+
+.print-document__error {
+  margin: 6px 0 0;
+  font-size: 0.8rem;
+  color: #c0392b;
+}
+
+/* Screen: the document body stays out of the way until a print is requested. */
+.print-document__sheet {
+  display: none;
+}
+
+/* Compact page box. The previous sheet carried 16mm of its own padding on top
+   of the browser's default page margins, which pushed content onto extra pages. */
+@page {
+  size: auto;
+  margin: 8mm;
+}
+
+@media print {
+  /* --- 1. Remove app-level height constraints that manufacture blank pages --- */
+  html,
+  body {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #fff !important;
+  }
+
+  /* Fixed/sticky app chrome is meaningless on paper and forces overflow. */
+  body.is-printing-document * {
+    position: static !important;
+    inset: auto !important;
+    transform: none !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+
+  /* --- 2. Drop the application from the printed page --- */
+  body.is-printing-document > *:not(#print-root) {
+    display: none !important;
+  }
+
+  body.is-printing-document #print-root {
+    display: block !important;
+    position: static !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* --- 3. Beat the competing `body * { visibility: hidden }` module rules ---
+     Those exist for the modal-based printers; the portalled sheet must win. */
+  body.is-printing-document #print-root,
+  body.is-printing-document #print-root * {
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  /* --- 4. The sheet flows naturally: its own content defines the page height --- */
+  .print-sheet,
+  body.is-printing-document .print-sheet {
+    display: block !important;
+    position: static !important;
+    inset: auto !important;
+    float: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: #fff !important;
+    color: #000 !important;
+    direction: rtl;
+    text-align: right;
+    font-size: 11.5pt;
+    line-height: 1.5;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Screen-only chrome (buttons, nav, sidebars) never reaches paper. */
+  .no-print {
+    display: none !important;
+  }
+
+  /* --- 5. Pagination: never split a row / section / total block --- */
+  .print-sheet {
+    orphans: 2;
+    widows: 2;
+  }
+
+  .print-sheet tr,
+  .print-sheet thead,
+  .print-sheet tfoot,
+  .print-sheet img,
+  .print-sheet__block,
+  .print-sheet__row,
+  .print-sheet__total,
+  .print-sheet__footer {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* Repeat the column header on every page of a long invoice. */
+  .print-sheet thead {
+    display: table-header-group;
+  }
+
+  .print-sheet tfoot {
+    display: table-footer-group;
+  }
+
+  .print-sheet h1,
+  .print-sheet h2,
+  .print-sheet h3,
+  .print-sheet h4 {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  /* --- 6. Document typography ------------------------------------------------- */
+  .print-sheet h1 {
+    font-size: 16pt;
+    font-weight: 800;
+    margin: 0 0 6pt;
+  }
+
+  .print-sheet h2 {
+    font-size: 14pt;
+    font-weight: 800;
+    margin: 0 0 4pt;
+  }
+
+  .print-sheet h3,
+  .print-sheet h4 {
+    font-size: 12pt;
+    font-weight: 800;
+    margin: 0 0 4pt;
+  }
+
+  .print-sheet p {
+    margin: 0 0 3pt;
+  }
+
+  .print-sheet table {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    border-collapse: collapse;
+    table-layout: auto;
+    font-size: 10.5pt;
+  }
+
+  .print-sheet th,
+  .print-sheet td {
+    border: 0.5pt solid #999;
+    padding: 4pt 6pt;
+    text-align: right;
+    vertical-align: top;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .print-sheet th {
+    background: #f0f0f0;
+    font-weight: 800;
+  }
+
+  .print-sheet pre {
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-size: 9pt;
+  }
+
+  .print-sheet svg {
+    width: 1em;
+    height: 1em;
+  }
+}
+
+/* ======================================================================
+   Reusable printed-block helpers
+   Used by every invoice / order / table-order sheet so the three printers
+   stay visually consistent instead of each one inventing its own layout.
+   ====================================================================== */
+/* One printed document. Kept together so a sheet never straddles a page break
+   when it is short enough to fit on a single page. */
+.print-sheet__doc {
+  display: block;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.print-sheet__head {
+  text-align: center;
+  padding-bottom: 6pt;
+  border-bottom: 1pt solid #000;
+  margin-bottom: 8pt;
+}
+
+.print-sheet__brand {
+  font-size: 18pt;
+  font-weight: 900;
+  letter-spacing: 2pt;
+  line-height: 1.1;
+}
+
+.print-sheet__sub {
+  font-size: 9.5pt;
+  color: #444;
+}
+
+.print-sheet__meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 3pt 14pt;
+  margin-bottom: 8pt;
+  font-size: 10pt;
+}
+
+.print-sheet__meta > div {
+  display: flex;
+  gap: 6pt;
+  justify-content: space-between;
+  border-bottom: 0.5pt dotted #bbb;
+  padding-bottom: 2pt;
+}
+
+.print-sheet__meta dt,
+.print-sheet__meta .label {
+  color: #555;
+}
+
+.print-sheet__meta dd,
+.print-sheet__meta .value {
+  margin: 0;
+  font-weight: 700;
+}
+
+.print-sheet__block {
+  margin-bottom: 8pt;
+}
+
+/* Screen preview of a printed table so the modal and the paper agree. */
+.print-sheet__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 10.5pt;
+}
+
+.print-sheet__title {
+  font-size: 11pt;
+  font-weight: 800;
+  margin: 0 0 4pt;
+}
+
+.print-sheet__row {
+  display: flex;
+  gap: 8pt;
+  justify-content: space-between;
+  font-size: 10.5pt;
+  padding: 1pt 0;
+}
+
+.print-sheet__totals {
+  margin-top: 6pt;
+  font-size: 10.5pt;
+}
+
+/* Ledger totals: bold, top-ruled, and repeated when a table spans pages. */
+.print-sheet__table tfoot td {
+  border-top: 1pt solid #000;
+  background: #f6f6f6;
+  font-weight: 800;
+  font-size: 11pt;
+}
+
+.print-sheet__table tfoot td:not(:last-child) {
+  text-align: right;
+}
+
+.print-sheet__empty {
+  text-align: center;
+  color: #666;
+  font-style: italic;
+}
+
+.print-sheet__total {
+  display: flex;
+  gap: 10pt;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-top: 4pt;
+  padding-top: 4pt;
+  border-top: 1pt solid #000;
+  font-size: 13pt;
+  font-weight: 900;
+}
+
+.print-sheet__note {
+  margin-top: 8pt;
+  font-size: 9.5pt;
+  color: #333;
+  border: 0.5pt solid #999;
+  border-radius: 3pt;
+  padding: 4pt 6pt;
+}
+
+.print-sheet__footer {
+  margin-top: 10pt;
+  padding-top: 6pt;
+  border-top: 0.5pt dashed #999;
+  text-align: center;
+  font-size: 9.5pt;
+  color: #333;
+}
+
+.print-sheet__empty {
+  padding: 10pt;
+  text-align: center;
+  font-size: 10.5pt;
+  color: #666;
+}
+
+.print-sheet__num {
+  direction: ltr;
+  unicode-bidi: isolate;
+  white-space: nowrap;
+}

@@ -1,0 +1,26 @@
+.reviews-page{width:100%;min-height:100vh;background:#f8f6f0;direction:rtl;padding-bottom:28px}
+.reviews-page .page-header{margin-bottom:0}
+.reviews-filters{display:grid;grid-template-columns:repeat(2,minmax(0,220px)) auto;gap:10px;align-items:end;margin:14px 24px 0;padding:14px;background:#fff;border:1px solid #eadfd3;border-radius:12px}
+.reviews-filters__actions{display:flex;align-items:flex-end}
+.reviews-chips{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:14px 24px 0}
+.reviews-chip{padding:12px;background:#fff;border:1px solid #eadfd3;border-radius:12px;display:grid;gap:4px;text-align:center}
+.reviews-chip span{font-size:12px;color:#79695d}
+.reviews-chip strong{font-size:18px;color:#35271f}
+.reviews-card{margin:14px 24px 0;padding:14px;background:#fff;border:1px solid #eadfd3;border-radius:12px}
+.reviews-card h2{margin:0 0 10px;font-size:16px;color:#35271f}
+.reviews-table-wrap{overflow:auto;border:1px solid #eee4db;border-radius:10px}
+.reviews-table{width:100%;min-width:820px;border-collapse:collapse;font-size:12px}
+.reviews-table th,.reviews-table td{padding:10px;border-bottom:1px solid #eee4db;text-align:right;vertical-align:top}
+.reviews-table th{background:#f8f3ed;white-space:nowrap}
+.reviews-stars{color:#b97a1f;letter-spacing:2px;white-space:nowrap}
+.reviews-comment{max-width:280px;white-space:pre-wrap}
+.reviews-expand-btn{min-height:44px;min-width:64px;padding:6px 12px;border:1px solid #dfd1c4;border-radius:9px;background:#fff;color:#6b3f1d;cursor:pointer;font:inherit;font-size:12px}
+.reviews-expand-btn:hover{background:#f8f3ed}
+.reviews-row--expanded>td{background:#fdfaf6}
+.review-manage{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.review-form{display:grid;gap:10px;padding:12px;border:1px solid #eee4db;border-radius:10px;background:#fff}
+.review-form h3{margin:0;font-size:14px;color:#35271f}
+.review-form .button{justify-self:start}
+.reviews-error{color:#b42318;font-size:13px;margin:0}
+.reviews-muted{color:#79695d;font-size:13px}
+@media(max-width:760px){.reviews-filters,.reviews-chips,.reviews-card{margin-inline:12px}.reviews-filters{grid-template-columns:1fr}.review-manage{grid-template-columns:1fr}.reviews-filters__actions .button,.review-form .button{width:100%}}

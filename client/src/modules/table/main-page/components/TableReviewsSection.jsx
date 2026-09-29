@@ -1,0 +1,7 @@
+import { MessageCircleMore, Star } from "lucide-react";
+
+export default function TableReviewsSection({ reviews: propReviews, onMore, onAdd }) {
+  const reviews = Array.isArray(propReviews) ? propReviews.map((r)=>({ name: r.displayName || r.customerName || r.name || "ضيف", text: r.comment || r.text || "—", rating: Number(r.rating)||5 })).slice(0,3) : [];
+  if (!reviews.length) return <section className="table-reviews-section"><div className="section-title-bar"><div><h2 className="section-title-text">التقييمات</h2><p>آخر 3 تقييمات للكافيه</p></div><MessageCircleMore/></div><p style={{padding:12,color:"#8b7a6a",textAlign:"center"}}>لا توجد تقييمات بعد — كن أول من يقيّم 404</p><div className="reviews-actions"><button className="reviews-primary" onClick={onAdd}>اترك تقييمك</button></div></section>;
+  return <section className="table-reviews-section"><div className="section-title-bar"><div><h2 className="section-title-text">التقييمات</h2><p>آخر 3 تقييمات للكافيه</p></div><MessageCircleMore/></div><div className="table-reviews-grid">{reviews.map((review, idx) => <article key={`${review.name}-${idx}`}><div className="review-stars">{Array.from({ length: 5 }).map((_, i) => <Star key={i} size={14} fill={i < review.rating ? "currentColor" : "none"}/>)}</div><p>“{review.text}”</p><strong>{review.name}</strong></article>)}</div><div className="reviews-actions"><button onClick={onMore}>عرض المزيد</button><button className="reviews-primary" onClick={onAdd}>اترك تقييمك</button></div></section>;
+}

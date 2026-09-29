@@ -1,0 +1,116 @@
+.tables-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: var(--space-sm) var(--space-md);
+}
+
+.tables-error {
+  color: var(--danger);
+  font-size: var(--fs-xs);
+  padding: 0 var(--space-sm);
+}
+
+.tables-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  gap: var(--space-sm);
+}
+
+/* ── Table card (empty) ── */
+.table-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: var(--space-sm) var(--space-xs);
+  border: 1px solid var(--border-main);
+  border-radius: var(--radius-md);
+  background: var(--card-bg);
+  cursor: pointer;
+  transition: var(--transition);
+  font-family: var(--font-family);
+  min-height: 70px;
+}
+
+.table-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.table-card:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.table-card:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  background: var(--surface-soft);
+  transform: none;
+  box-shadow: none;
+}
+
+/* ── Table card (busy — green background) ── */
+.table-card--busy {
+  background: var(--success-bg);
+  border-color: var(--success);
+}
+
+.table-card--busy:hover {
+  background: #d4f5dd;
+}
+
+.table-card__number {
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-bold);
+  color: var(--text-main);
+}
+
+.table-card--busy .table-card__number {
+  color: var(--success);
+}
+
+.table-card__label {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-medium);
+  color: var(--text-secondary);
+}
+
+.table-card--busy .table-card__label {
+  color: var(--success);
+  font-weight: var(--fw-semibold);
+}
+
+.table-card__orders {
+  font-size: 10px;
+  color: var(--text-secondary);
+  background: var(--surface-soft);
+  padding: 1px 6px;
+  border-radius: 8px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .tables-page {
+    padding: var(--space-xs);
+  }
+
+  .tables-grid {
+    grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
+    gap: var(--space-xs);
+  }
+
+  .table-card {
+    min-height: 60px;
+    padding: var(--space-xs);
+  }
+
+  .table-card__number {
+    font-size: var(--fs-md);
+  }
+}

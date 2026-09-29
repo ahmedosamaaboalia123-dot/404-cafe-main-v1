@@ -1,0 +1,267 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap');
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+:root {
+  /* ======================
+     Brand Colors
+  ====================== */
+  --primary: #6B3F1D;
+  --primary-hover: #553117;
+  --primary-light: #8B5A32;
+
+  --background: #FCF9F5;
+  --surface: #FFFFFF;
+  --surface-soft: #F8F3ED;
+
+  /* ======================
+     Text Colors
+  ====================== */
+  --text-main: #2B211B;
+  --text-secondary: #6F6258;
+  --text-placeholder: #B4A79C;
+  --text-disabled: #CFC4BB;
+
+  /* ======================
+     Border Colors
+  ====================== */
+  --border-main: #EDE3DA;
+  --border-light: #F3ECE5;
+  --border-focus: #C89D72;
+
+  /* ======================
+     Sidebar
+  ====================== */
+  --sidebar-width: 240px;
+  --sidebar-bg: var(--header-bg);
+  --sidebar-item-height: 46px;
+  --sidebar-item-radius: 12px;
+  --sidebar-active-bg: #6B3F1D;
+  --sidebar-active-text: #FFFFFF;
+
+  /* ======================
+     Header
+  ====================== */
+  --page-header-bg: #FDF9F6;
+  --header-height: 64px;
+  --header-bg: var(--surface-soft);
+  --header-padding: 24px;
+
+  /* ======================
+     Page Layout
+  ====================== */
+  --page-padding: 32px;
+  --section-gap: 24px;
+  --content-width: 1400px;
+
+  /* ======================
+     Cards
+  ====================== */
+  --card-bg: #FFFFFF;
+  --card-radius: 16px;
+  --card-padding: 24px;
+  --card-border: 1px solid #EDE3DA;
+  --card-shadow: 0 2px 10px rgba(60, 40, 20, .05);
+
+  /* ======================
+     Forms
+  ====================== */
+  --input-height: 44px;
+  --input-radius: 10px;
+  --input-padding: 16px;
+  --input-bg: #FFFFFF;
+  --input-border: #EDE3DA;
+  --input-placeholder: #B4A79C;
+
+  /* ======================
+     Buttons
+  ====================== */
+  --button-height: 42px;
+  --button-radius: 10px;
+  --button-padding-x: 20px;
+
+  --button-primary-bg: #6B3F1D;
+  --button-primary-text: #FFFFFF;
+
+  --button-secondary-bg: #F8F3ED;
+  --button-secondary-text: #6F6258;
+
+  /* ======================
+     Table
+  ====================== */
+  --table-header-bg: #F8F3ED;
+  --table-row-height: 58px;
+  --table-text-size: 14px;
+  --table-border: #F3ECE5;
+
+  /* ======================
+     Status Colors
+  ====================== */
+  --success: #3FA45B;
+  --success-bg: #EAF7EE;
+
+  --danger: #E85B5B;
+  --danger-bg: #FDECEC;
+
+  --warning: #E6A23C;
+  --warning-bg: #FFF5E6;
+
+  --info: #4A90E2;
+  --info-bg: #EDF5FF;
+
+  /* ======================
+     Action Buttons
+  ====================== */
+  --action-size: 32px;
+  --action-radius: 8px;
+
+  --action-edit: #E6A23C;
+  --action-delete: #E85B5B;
+  --action-view: #3FA45B;
+  --action-refresh: #4A90E2;
+
+  /* ======================
+     Pagination
+  ====================== */
+  --pagination-size: 36px;
+  --pagination-radius: 10px;
+  --pagination-active: #6B3F1D;
+
+  /* ======================
+     Typography
+  ====================== */
+  --font-family: "Cairo", "Tajawal", Arial, sans-serif;
+
+  --fs-xs: 12px;
+  --fs-sm: 14px;
+  --fs-md: 16px;
+  --fs-lg: 20px;
+  --fs-xl: 24px;
+  --fs-2xl: 32px;
+
+  --fw-normal: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+
+  /* ======================
+     Spacing
+  ====================== */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+
+  /* ======================
+     Radius
+  ====================== */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+
+  /* ======================
+     Animation
+  ====================== */
+  --transition: .25s ease;
+
+  /* ======================
+     Shadow
+  ====================== */
+  --shadow-sm: 0 1px 4px rgba(0, 0, 0, .04);
+  --shadow-md: 0 4px 12px rgba(60, 40, 20, .08);
+}
+
+html, body, #root, .customer-layout-root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+  box-sizing: border-box;
+  background-color: var(--background, #FCF9F5);
+  color: var(--text-main, #2B211B);
+  direction: rtl;
+  font-family: var(--font-family, 'Cairo', sans-serif);
+  -webkit-font-smoothing: antialiased;
+}
+
+.admin-layout {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  overflow: hidden;
+  background-color: var(--background, #FCF9F5);
+}
+
+.admin-main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.admin-main main {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 32px;
+}
+
+.admin-sidebar-backdrop {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .admin-layout {
+    position: relative;
+  }
+
+  .admin-sidebar-backdrop {
+    position: fixed;
+    z-index: 1100;
+    inset: 0;
+    display: block;
+    border: 0;
+    background: rgba(43, 33, 27, .52);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity .2s ease, visibility .2s ease;
+  }
+
+  .admin-sidebar-backdrop.is-visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+}
+
+* {
+  font-family: var(--font-family, 'Cairo', sans-serif);
+}
+.route-loading {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  direction: rtl;
+  color: #5a4638;
+  background: #faf6f0;
+  font-size: 0.9rem;
+}

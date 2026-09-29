@@ -1,0 +1,64 @@
+.products-table-card{background:#fff;border:1px solid #ede3da;border-radius:14px;padding:16px;display:grid;gap:12px}.table-card-header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.table-card-title{font-size:14px;font-weight:800;color:#2b211b;display:flex;align-items:center;gap:8px}.table-header-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.search-input-wrapper{position:relative;display:flex;align-items:center}.table-search-input{height:40px;min-width:200px;padding:0 38px 0 12px;border-radius:10px;border:1px solid #ede3da;background:#fafafa;font:inherit;font-size:13px}.table-search-icon{position:absolute;right:12px;color:#8b7b6b;pointer-events:none}.products-filter-select{height:40px;border-radius:10px;border:1px solid #ede3da;background:#fafafa;font:inherit;font-size:12.5px;padding:0 10px}.refresh-icon-btn{width:40px;height:40px;border-radius:10px;border:1px solid #ede3da;background:#fff;cursor:pointer;display:grid;place-items:center}.refresh-icon-btn .is-spinning{animation:spin 1s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}.table-card-summary{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:#6b5b4b}.table-card-summary strong{color:#2b211b}.table-responsive{width:100%;overflow-x:auto;border:1px solid #ede3da;border-radius:12px}.products-custom-table{width:100%;min-width:720px;border-collapse:collapse;font-size:13px}.products-custom-table th{background:#f8f3ed;padding:12px;font-weight:800;white-space:nowrap;border-bottom:1px solid #ede3da}.products-custom-table td{padding:12px;text-align:center;border-bottom:1px solid #f3ece5;vertical-align:middle}.products-custom-table tr:last-child td{border-bottom:0}.status-badge{display:inline-flex;align-items:center;padding:4px 10px;border-radius:8px;font-size:12px;font-weight:700;white-space:nowrap}.status-badge.active{background:#e6f4ea;color:#137333;border:1px solid #ceead6}.status-badge.withdrawn{background:#fef7e0;color:#b06000;border:1px solid #fce8b2}.btn-open-details{height:36px;padding:0 16px;border-radius:8px;background:#3c2814;color:#fff;border:0;font:inherit;font-size:12.5px;font-weight:700;cursor:pointer}@media(max-width:640px){.table-search-input{min-width:0;width:100%}.search-input-wrapper{width:100%}.table-header-actions{width:100%}.products-filter-select{flex:1}.products-table-card{padding:12px}}
+.products-custom-table td{padding:10px 12px}.btn-open-details{min-height:40px;height:40px}.products-custom-table td:first-child .product-thumb{margin-inline:auto}
+@media(max-width:640px){.btn-open-details,.table-search-input,.products-filter-select,.refresh-icon-btn{min-height:44px}.refresh-icon-btn{width:44px;height:44px}}
+
+/* ==========================================================================
+   RESPONSIVE / MOBILE HARDENING
+   --------------------------------------------------------------------------
+   - the table scroller needed touch-scroll hints and a max-width guard;
+   - the 720px min-width forced heavy sideways scrolling on 320-390px screens;
+   - action buttons in table cells were 40px, not the 44px touch target.
+   ========================================================================== */
+
+.products-table-card,
+.table-card-header,
+.table-header-actions,
+.table-responsive,
+.search-input-wrapper {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.table-responsive {
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table-search-input,
+.products-filter-select {
+  max-width: 100%;
+}
+
+.table-search-input {
+  font-size: 16px; /* prevents iOS zoom-on-focus */
+}
+
+@media (max-width: 640px) {
+  .products-custom-table {
+    min-width: 600px;
+  }
+
+  .products-custom-table th,
+  .products-custom-table td {
+    padding: 9px 8px;
+  }
+
+  .btn-open-details {
+    min-height: 44px;
+  }
+
+  .table-card-summary {
+    gap: 10px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 420px) {
+  .products-custom-table {
+    min-width: 540px;
+  }
+
+  .table-header-actions {
+    gap: 6px;
+  }
+}

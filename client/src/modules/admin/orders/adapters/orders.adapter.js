@@ -1,0 +1,10 @@
+import { readPageMeta } from "@/api/pagination";
+export const money = (v) => String(v ?? "0");
+export const toOrder = (v = {}) => ({ ...v, id: String(v.id), totals: v.totals || { total: money(v.total) }, total: money(v.totals?.total ?? v.total), items: v.items || [], progress: v.progress || { ready: 0, total: v.items?.length || 0 }, version: Number(v.version ?? 0) });
+export const toOnlinePage = (v = {}) => ({ items: (v.orders || []).map(toOrder), summary: v.summary || {}, meta: readPageMeta(v.pageMeta, v.orders?.length) });
+export const toHistoryPage = (v = {}) => ({ items: (v.items || []).map(toOrder), meta: readPageMeta(v.pageMeta, v.items?.length) });
+export const toPreparationPage = (v = {}) => ({ items: (v.items || []).map(toOrder), summary: v.summary || {}, meta: readPageMeta(v.pageMeta, v.items?.length) });
+export const toPreparationDetails = (v = {}) => ({ order: toOrder(v.order), items: v.items || [], progress: v.progress || { ready: 0, total: 0 } });
+export const toTablesBoard = (v = {}) => ({ tables: v.tables || [], summary: v.summary || {} });
+export const toInvoicePage = (v = {}) => ({ items: v.items || [], summary: v.summary || {}, meta: readPageMeta(v.pageMeta, v.items?.length) });
+export const toCancellationPage = (v = {}) => ({ items: v.requests || [], summary: v.summary || {}, meta: readPageMeta(v.pageMeta, v.requests?.length) });

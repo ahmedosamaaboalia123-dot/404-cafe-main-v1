@@ -1,0 +1,482 @@
+/* =========================================
+   Page Header
+========================================= */
+
+
+.page-header {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    direction: rtl;
+    padding: var(--space-xl) var(--page-padding) 0;
+    box-sizing: border-box;
+    background: var(--page-header-bg);
+    border-bottom: 1px solid var(--border-main);
+    --page-header-text: #1a1a1a;
+    --page-header-text-secondary: #8B7B6B;
+}
+
+.page-header--tabs-only {
+    padding: var(--space-sm) var(--page-padding) 0;
+    background: transparent;
+    border-bottom: none;
+}
+
+.page-header--tabs-only .page-header__container {
+    gap: 0;
+}
+
+.page-header__container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+}
+
+.page-header__tabs {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.page-header__tab-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border: none;
+    background: transparent;
+    color: #6F6258;
+    font-family: var(--font-family, 'Cairo', sans-serif);
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.page-header__tab-btn:hover {
+    color: #2B211B;
+}
+
+.page-header__tab-btn--active {
+    color: #2B211B;
+    border-bottom-color: #6B3F1D;
+    background: rgba(107, 63, 29, 0.05);
+    border-radius: 8px 8px 0 0;
+}
+
+
+
+
+
+/* =========================================
+   Content Group
+   Icon + Text
+========================================= */
+
+
+.page-header__content {
+
+
+    display: flex;
+
+
+    align-items: center;
+
+
+    justify-content: flex-start;
+
+
+    gap: var(--space-md);
+
+
+    min-width: 0;
+
+
+}
+
+
+
+
+
+/* =========================================
+   Icon Container
+========================================= */
+
+
+.page-header__icon {
+
+
+    width: 56px;
+
+
+    height: 56px;
+
+
+    flex: 0 0 56px;
+
+
+    display: flex;
+
+
+    align-items: center;
+
+
+    justify-content: center;
+
+
+    border-radius: 50%;
+
+
+    background: var(--surface-soft);
+
+
+    border: 1px solid var(--border-light);
+
+
+    color: var(--primary);
+
+
+    box-shadow: var(--shadow-sm);
+
+
+}
+
+
+
+
+
+/* Lucide icon itself */
+
+
+.page-header__icon svg {
+
+
+    width: 30px;
+
+
+    height: 30px;
+
+
+    stroke-width: 1.8;
+
+
+}
+
+
+
+
+
+/* =========================================
+   Text Section
+========================================= */
+
+
+.page-header__text {
+
+
+    min-width: 0;
+
+
+    display: flex;
+
+
+    flex-direction: column;
+
+
+    align-items: flex-start;
+
+
+    gap: var(--space-xs);
+
+
+}
+
+
+
+
+
+/* =========================================
+   Page Title
+========================================= */
+
+
+.page-header__title {
+
+
+    margin: 0;
+
+
+    padding: 0;
+
+
+    color: var(--page-header-text);
+
+
+    font-family: var(--font-family);
+
+
+    font-size: var(--fs-xl);
+
+
+    font-weight: var(--fw-bold);
+
+
+    line-height: 1.4;
+
+
+    white-space: nowrap;
+
+
+}
+
+
+
+
+
+/* =========================================
+   Breadcrumb Container
+========================================= */
+
+
+.page-header__breadcrumbs {
+
+
+    display: flex;
+
+
+    align-items: center;
+
+
+    flex-wrap: wrap;
+
+
+    gap: var(--space-xs);
+
+
+    margin: 0;
+
+
+    padding: 0;
+
+
+    color: var(--page-header-text-secondary);
+
+
+    font-family: var(--font-family);
+
+
+    font-size: var(--fs-sm);
+
+
+    line-height: 1.6;
+
+
+}
+
+
+
+
+
+/* =========================================
+   Breadcrumb Item
+========================================= */
+
+
+.page-header__breadcrumb-item {
+
+
+    display: inline-flex;
+
+
+    align-items: center;
+
+
+    gap: var(--space-xs);
+
+
+}
+
+
+
+
+
+/* =========================================
+   Breadcrumb Text
+========================================= */
+
+
+.page-header__breadcrumb-text {
+
+
+    color: var(--page-header-text-secondary);
+
+
+    font-weight: var(--fw-normal);
+
+
+}
+
+
+
+
+
+/* Current page */
+
+
+.page-header__breadcrumb-text--current {
+
+
+    color: var(--text-main);
+
+
+    font-weight: var(--fw-medium);
+
+
+}
+
+
+
+
+
+/* =========================================
+   Separator
+========================================= */
+
+
+.page-header__separator {
+
+
+    color: var(--page-header-text-secondary);
+
+
+    user-select: none;
+
+
+}
+
+
+
+
+
+/* =========================================
+   Tablet
+========================================= */
+
+
+@media (max-width: 1024px) {
+
+
+    .page-header {
+
+
+        padding:
+            var(--space-lg)
+            var(--space-lg)
+            var(--space-md);
+
+
+    }
+
+
+}
+
+
+
+
+
+/* =========================================
+   Mobile
+========================================= */
+
+
+@media (max-width: 768px) {
+
+
+    .page-header {
+
+
+        padding:
+            var(--space-md)
+            var(--space-md);
+
+
+    }
+
+
+
+
+
+    .page-header__content {
+
+
+        gap: var(--space-sm);
+
+
+    }
+
+
+
+
+
+    .page-header__icon {
+
+
+        width: 48px;
+
+
+        height: 48px;
+
+
+        flex-basis: 48px;
+
+
+    }
+
+
+
+
+
+    .page-header__icon svg {
+
+
+        width: 26px;
+
+
+        height: 26px;
+
+
+    }
+
+
+
+
+
+    .page-header__title {
+
+
+        font-size: var(--fs-lg);
+
+
+        white-space: normal;
+
+
+    }
+
+
+
+
+
+    .page-header__breadcrumbs {
+
+
+        font-size: var(--fs-xs);
+
+
+    }
+
+
+}

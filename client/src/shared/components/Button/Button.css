@@ -1,0 +1,45 @@
+.button {
+  height: 44px;
+  min-width: 130px;
+  padding: 0 28px;
+  border: none;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-family, 'Cairo', sans-serif);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.button--primary {
+  background: #6B3F1D;
+  color: #FFFFFF;
+  box-shadow: 0 2px 6px rgba(107, 63, 29, 0.15);
+}
+
+.button--primary:hover {
+  background: #553117;
+}
+
+.button--secondary {
+  background: #F8F3ED;
+  color: #6F6258;
+}
+
+.button--secondary:hover {
+  background: #F0E6DC;
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.button-icon {
+  width: 18px;
+  height: 18px;
+}

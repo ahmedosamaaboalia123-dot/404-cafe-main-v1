@@ -1,0 +1,6 @@
+import { useEffect, useState } from "react";
+import { customerStorage } from "../../services/customerStorage";
+import { createV1CustomerAccessSession, listV1CustomerHistory } from "../../checkout/services/orderGateway";
+import { normalizeTrackedOrder } from "../services/customerOrdersService";
+import { getOrdersByTableNumber } from "../../../table/services/tableOrdersService";
+export function useCustomerOrders({ tableMode, tableNumber, page = 1 }) { const [orders, setOrders] = useState([]); useEffect(() => { let alive = true; if (tableMode) { setOrders(getOrdersByTableNumber(tableNumber)); return undefined; } const load = async () => { let session = customerStorage.loadAccessSession(); if (!session?.customerAccessToken) { const last = customerStorage.listOrderAccess().at(-1); if (last?.orderActionToken) session = await createV1CustomerAccessSession(last.orderNumber, last.orderActionToken); } if (!session?.customerAccessToken) { if (alive) setOrders([]); return; } const result = await listV1CustomerHistory(page); if (alive) setOrders((result.items || []).map((x) => normalizeTrackedOrder({ ...x, id: x.orderNumber, trackingToken: customerStorage.getOrderAccess(x.orderNumber)?.trackingReadToken || "" })) ); }; load().catch(() => alive && setOrders([])); return () => { alive = false; }; }, [tableMode, tableNumber, page]); return orders; }

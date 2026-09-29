@@ -1,0 +1,2 @@
+.warnings-page{width:100%;min-height:100vh;background:#f8f6f0;direction:rtl}.warnings-container{padding:18px 24px;display:flex;flex-direction:column;gap:14px}
+@media(max-width:640px){.warnings-container{padding:14px}}

@@ -1,0 +1,17 @@
+.admin-order-queue { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; direction: rtl; }
+.admin-order-card { min-width: 0; background: var(--card-bg, #fff); border: 1px solid var(--border-main, #e8ded3); border-radius: 18px; padding: 16px; display: flex; flex-direction: column; gap: 14px; }
+.admin-order-card header, .admin-order-card footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.admin-order-card header > div { display: flex; flex-direction: column; gap: 3px; }
+.admin-order-code { color: var(--primary, #593215); font-weight: 900; font-size: 13px; }
+.admin-order-status { padding: 6px 9px; border-radius: 999px; background: var(--surface-soft, #faf6f0); font-size: 11px; font-weight: 800; }
+.admin-order-delegate { padding: 6px 9px; border-radius: 999px; background: var(--success-bg, #e5f4e9); color: var(--success, #246b39); border: 1px solid var(--success, #246b39); font-size: 11px; font-weight: 800; white-space: nowrap; }
+.admin-order-meta { display: flex; flex-direction: column; gap: 7px; color: var(--text-muted, #6b5c52); font-size: 12px; }
+.admin-order-meta span, .admin-order-card footer span { display: flex; align-items: center; gap: 6px; }
+.admin-order-items { display: flex; flex-wrap: wrap; gap: 6px; }
+.admin-order-items span { background: var(--surface-soft, #faf6f0); padding: 5px 8px; border-radius: 8px; font-size: 11px; }
+.admin-order-card footer { border-top: 1px solid var(--border-main, #e8ded3); padding-top: 12px; }
+.admin-order-empty { min-height: 180px; display: grid; place-items: center; text-align: center; color: var(--text-muted, #6b5c52); border: 1px dashed var(--border-main, #e8ded3); border-radius: 18px; padding: 20px; }
+@media (max-width: 1000px) { .admin-order-queue { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .admin-order-queue { grid-template-columns: 1fr; } .admin-order-card { padding: 14px; } }
+
+.admin-order-card--clickable{cursor:pointer}.admin-order-card--clickable:hover{border-color:var(--primary,#6B3F1D)}

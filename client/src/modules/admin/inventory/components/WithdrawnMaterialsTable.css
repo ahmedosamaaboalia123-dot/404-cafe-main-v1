@@ -1,0 +1,43 @@
+.run-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 5px 14px;
+  border-radius: 8px;
+  background-color: #EAF7EE;
+  color: #2E7D32;
+  border: 1px solid #C8E6C9;
+  font-family: var(--font-family, 'Cairo', sans-serif);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.run-action-btn:hover:not(:disabled) {
+  background-color: #2E7D32;
+  color: #FFFFFF;
+  border-color: #2E7D32;
+  box-shadow: 0 2px 8px rgba(46, 125, 50, 0.2);
+}
+
+.run-action-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.spin-icon {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.movement-qty-cell {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}

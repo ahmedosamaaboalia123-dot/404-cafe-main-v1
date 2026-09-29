@@ -1,0 +1,10 @@
+import { useNavigate } from "react-router-dom";
+import { MapPin, Phone, UserRound } from "lucide-react";
+import "../styles/CardGrid.css";
+
+const labels = { PENDING: "جاري التحضير", CONFIRMED: "جاري التحضير", PREPARING: "جاري التحضير", READY: "جاهز", ASSIGNED_TO_DELEGATE: "مع المندوب", OUT_FOR_DELIVERY: "خارج للتوصيل", DELIVERED: "تم التسليم", COMPLETED: "مكتمل", CANCELLED: "ملغي" };
+export default function CardGrid({ cards = [], type }) {
+  const navigate = useNavigate();
+  const open = (card) => { if (card.isNew || !card.orderId) navigate(`/admin/orders/sales/${type}/${card.id}`); else navigate(`/admin/orders/busy/${type}/${card.orderId}`); };
+  return <div className="card-grid">{cards.map((card) => <button type="button" key={`${type}-${card.id}`} className={`card-item ${card.orderId ? "card-item--busy" : ""}`} onClick={() => open(card)}><div className="card-item__number">{type === "online" ? (card.isNew ? "إنشاء طلب أونلاين" : card.orderNumber) : `طاولة ${card.id}`}</div><div className={`card-item__status ${card.orderId ? "card-item__status--busy" : ""}`}>{card.orderId ? (labels[card.status] || card.status) : "فارغة"}</div>{card.fulfillmentType && <small>{card.fulfillmentType === "DELIVERY" ? "توصيل" : "تيك أواي"}</small>}{card.channel === "CUSTOMER_WEB" && <small className="card-item__outside">من الخارج</small>}{(card.customerName || card.customerPhone) && <small className="card-item__customer"><UserRound size={13} />{card.customerName || "عميل"}{card.customerPhone ? ` — ${card.customerPhone}` : ""}</small>}{card.fulfillmentType === "DELIVERY" && card.customerAddress && <small className="card-item__address"><MapPin size={13} />{card.customerAddress}</small>}{card.customerPhone && <small className="card-item__phone"><Phone size={13} />{card.customerPhone}</small>}{card.assignedDelegate && <small className="card-item__delegate">تم التسليم للمندوب{card.assignedDelegate.name ? ` — ${card.assignedDelegate.name}` : ""}</small>}{card.orderId && <div className="card-item__order">{card.itemsCount || 0} منتج • {Number(card.total || 0).toFixed(2)} ج.م</div>}</button>)}</div>;
+}

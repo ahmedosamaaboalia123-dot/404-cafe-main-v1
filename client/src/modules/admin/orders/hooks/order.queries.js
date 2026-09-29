@@ -1,0 +1,14 @@
+import { useQuery } from "@tanstack/react-query";
+import { queryKeys } from "@/api/queryKeys";
+import { ordersApi } from "../api/orders.api";
+import { toCancellationPage, toHistoryPage, toInvoicePage, toOnlinePage, toPreparationDetails, toPreparationPage, toTablesBoard } from "../adapters/orders.adapter";
+export const useOnlineOrders = (p) => useQuery({ queryKey: ["orders", "online-screen", p], queryFn: async () => toOnlinePage(await ordersApi.onlineScreen(p)), placeholderData: (x) => x });
+export const useOrderDetails = (id) => useQuery({ queryKey: queryKeys.orders.detail(id, "full"), queryFn: () => ordersApi.details(id), enabled: Boolean(id) });
+export const usePreparation = (p) => useQuery({ queryKey: queryKeys.preparation.screen(p), queryFn: async () => toPreparationPage(await ordersApi.preparation(p)), placeholderData: (x) => x });
+export const usePreparationDetails = (id) => useQuery({ queryKey: ["preparation", "detail", String(id)], queryFn: async () => toPreparationDetails(await ordersApi.preparationOrder(id)), enabled: Boolean(id) });
+export const useOrderHistory = (p) => useQuery({ queryKey: ["orders", "history", p], queryFn: async () => toHistoryPage(await ordersApi.history(p)), placeholderData: (x) => x });
+export const useTablesBoard = () => useQuery({ queryKey: queryKeys.tables.board, queryFn: async () => toTablesBoard(await ordersApi.tablesBoard()), refetchOnWindowFocus: true });
+export const useTableDetails = (id) => useQuery({ queryKey: queryKeys.tables.detail(id), queryFn: () => ordersApi.table(id), enabled: Boolean(id) });
+export const useSessionDetails = (id) => useQuery({ queryKey: ["tables", "session", String(id)], queryFn: () => ordersApi.session(id), enabled: Boolean(id) });
+export const useInvoices = (p) => useQuery({ queryKey: queryKeys.invoices.list(p), queryFn: async () => toInvoicePage(await ordersApi.invoices(p)), placeholderData: (x) => x });
+export const useCancellationRequests = (p) => useQuery({ queryKey: queryKeys.orderCases.list(p), queryFn: async () => toCancellationPage(await ordersApi.cancellations(p)), placeholderData: (x) => x });

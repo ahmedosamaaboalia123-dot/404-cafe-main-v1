@@ -1,0 +1,212 @@
+{
+  "generatedAt": "2026-09-13T10:28:36.695Z",
+  "sourceFileCount": 346,
+  "counts": {
+    "endpointLiterals": 0,
+    "mockImports": 0,
+    "localStorageUses": 39,
+    "numericIds": 0
+  },
+  "findings": {
+    "endpointLiterals": [],
+    "mockImports": [],
+    "localStorageUses": [
+      {
+        "file": "src/layouts/AdminLayout/components/Header/components/UserMenu.jsx",
+        "line": 37,
+        "value": "localStorage"
+      },
+      {
+        "file": "src/layouts/AdminLayout/components/Header/components/UserMenu.jsx",
+        "line": 39,
+        "value": "localStorage"
+      },
+      {
+        "file": "src/layouts/AdminLayout/components/Header/components/UserMenu.jsx",
+        "line": 40,
+        "value": "localStorage"
+      },
+      {
+        "file": "src/modules/auth/components/AuthBootstrap.jsx",
+        "line": 13,
+        "value": "localStorage"
+      },
+      {
+        "file": "src/modules/auth/components/AuthBootstrap.jsx",
+        "line": 23,
+        "value": "localStorage"
+      },
+      {
+        "file": "src/modules/auth/components/AuthBootstrap.jsx",
+        "line": 24,
+        "value": "localStorage"
+      },
+      {
+        "file": "src/modules/auth/login/useLogin.js",
+        "line": 22,
+        "value": "localStorage"
+      },
+      {
+        "file": "src/modules/auth/login/useLogin.js",
+        "line": 23,
+        "value": "localStorage"
+      },
+      {
+        "file": "src/modules/customer/checkout/services/checkoutCustomerService.js",
+        "line": 11,
+        "value": "localStorage"
+      },
+      {
+        "file": "src/modules/customer/checkout/services/checkoutCustomerService.js",
+        "line": 44,
+        "value": "localStorage"
+      },
+      {
+        "file": "src/modules/customer/menu/pages/MenuPage.jsx",
+        "line": 80,
+        "value": "localStorage"
+      },
+      {
+        "file": "src/modules/customer/menu/pages/MenuPage.jsx",
+        "line": 88,
+        "value": "localStorage"
+      },
+      {
+        "file": "src/modules/customer/orders/services/customerOrdersService.js",
+        "line": 4,
+        "value": "localStorage"
+      },
+      {
+        "file": "src/modules/customer/orders/services/customerOrdersService.js",
+        "line": 10,
+        "value": "localStorage"
+      },
+      {
+        "file": "src/modules/customer/orders/services/customerOrdersService.js",
+        "line": 173,
+        "value": "localStorage"
+      },
+      {
+        "file": "src/modules/customer/orders/services/customerOrdersService.js",
+        "line": 223,
+        "value": "localStorage"
+      },
+      {
+        "file": "src/modules/customer/orders/services/customerOrdersService.js",
+        "line": 284,
+        "value": "localStorage"
+      },
+      {
+        "file": "src/modules/customer/services/customerStorage.js",
+        "line": 2,
+        "value": "localStorage"
+      },
+      {
+        "file": "src/modules/customer/services/customerStorage.js",
+        "line": 5,
+        "value": "localStorage"
+      },
+      {
+        "file": "src/modules/customer/services/customerStorage.js",
+        "line": 6,
+        "value": "localStorage"
+      },
+      {
+        "file": "src/modules/customer/services/customerStorage.js",
+        "line": 9,
+        "value": "localStorage"
+      },
+      {
+        "file": "src/modules/customer/services/customerStorage.js",
+        "line": 10,
+        "value": "localStorage"
+      },
+      {
+        "file": "src/modules/table/context/TableContext.jsx",
+        "line": 43,
+        "value": "localStorage"
+      },
+      {
+        "file": "src/modules/table/context/TableContext.jsx",
+        "line": 115,
+        "value": "localStorage"
+      },
+      {
+        "file": "src/modules/table/services/tableOrdersService.js",
+        "line": 9,
+        "value": "localStorage"
+      },
+      {
+        "file": "src/modules/table/services/tableOrdersService.js",
+        "line": 21,
+        "value": "localStorage"
+      },
+      {
+        "file": "src/modules/table/services/tableOrdersService.js",
+        "line": 34,
+        "value": "localStorage"
+      },
+      {
+        "file": "src/modules/table/services/tableOrdersService.js",
+        "line": 211,
+        "value": "localStorage"
+      },
+      {
+        "file": "src/modules/table/services/tableOrdersService.js",
+        "line": 273,
+        "value": "localStorage"
+      },
+      {
+        "file": "src/realtime/socketManager.js",
+        "line": 62,
+        "value": "localStorage"
+      },
+      {
+        "file": "src/services/apiClient.js",
+        "line": 33,
+        "value": "localStorage"
+      },
+      {
+        "file": "src/services/apiClient.js",
+        "line": 34,
+        "value": "localStorage"
+      },
+      {
+        "file": "src/services/apiClient.js",
+        "line": 35,
+        "value": "localStorage"
+      },
+      {
+        "file": "src/services/apiClient.js",
+        "line": 53,
+        "value": "localStorage"
+      },
+      {
+        "file": "src/services/apiClient.js",
+        "line": 115,
+        "value": "localStorage"
+      },
+      {
+        "file": "src/services/apiClient.js",
+        "line": 126,
+        "value": "localStorage"
+      },
+      {
+        "file": "src/services/apiClient.js",
+        "line": 127,
+        "value": "localStorage"
+      },
+      {
+        "file": "src/store/authStore.js",
+        "line": 3,
+        "value": "localStorage"
+      },
+      {
+        "file": "src/test/setup.js",
+        "line": 10,
+        "value": "localStorage"
+      }
+    ],
+    "numericIds": []
+  }
+}

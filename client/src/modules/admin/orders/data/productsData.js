@@ -1,0 +1,36 @@
+export const PRODUCTS = {
+    مشروبات: [
+        { id: 101, name: "إسبريسو", variants: [{ type: "سخن", sizes: [{ name: "صغير", price: 25 }, { name: "كبير", price: 35 }] }] },
+        { id: 102, name: "كابوتشينو", variants: [{ type: "سخن", sizes: [{ name: "صغير", price: 35 }, { name: "كبير", price: 45 }] }] },
+        { id: 103, name: "لاتيه", variants: [{ type: "سخن", sizes: [{ name: "صغير", price: 40 }, { name: "كبير", price: 50 }] }, { type: "بارد", sizes: [{ name: "كبير", price: 55 }] }] },
+        { id: 104, name: "موكا", variants: [{ type: "سخن", sizes: [{ name: "صغير", price: 45 }, { name: "كبير", price: 55 }] }] },
+        { id: 105, name: "شاي أحمر", variants: [{ type: "سخن", sizes: [{ name: "كبير", price: 20 }] }] },
+        { id: 106, name: "شاي بالنعناع", variants: [{ type: "سخن", sizes: [{ name: "كبير", price: 25 }] }] },
+        { id: 107, name: "عصير برتقال", variants: [{ type: "بارد", sizes: [{ name: "كبير", price: 30 }] }] },
+        { id: 108, name: "عصير مانجو", variants: [{ type: "بارد", sizes: [{ name: "كبير", price: 35 }] }] },
+        { id: 109, name: "موهيتो", variants: [{ type: "بارد", sizes: [{ name: "كبير", price: 40 }] }] },
+        { id: 110, name: "آيس كوفي", variants: [{ type: "بارد", sizes: [{ name: "كبير", price: 45 }] }] },
+    ],
+    أكلات: [
+        { id: 201, name: "برجر لحم", variants: [{ type: "عادي", sizes: [{ name: "عادي", price: 85 }] }] },
+        { id: 202, name: "برجر دجاج", variants: [{ type: "عادي", sizes: [{ name: "عادي", price: 75 }] }] },
+        { id: 203, name: "ساندويتش شاورما", variants: [{ type: "دجاج", sizes: [{ name: "عادي", price: 55 }] }, { type: "لحم", sizes: [{ name: "عادي", price: 65 }] }] },
+        { id: 204, name: "باستا", variants: [{ type: "كريمية", sizes: [{ name: "عادي", price: 70 }] }, { type: "صلصة حمراء", sizes: [{ name: "عادي", price: 65 }] }] },
+        { id: 205, name: "بيتزا", variants: [{ type: "شيش طاووق", sizes: [{ name: "صغير", price: 80 }, { name: "كبير", price: 120 }] }, { type: "سوبريم", sizes: [{ name: "صغير", price: 90 }, { name: "كبير", price: 130 }] }] },
+        { id: 206, name: "ريزوتو", variants: [{ type: "فطر", sizes: [{ name: "عادي", price: 75 }] }] },
+    ],
+    حلويات: [
+        { id: 301, name: "كيكة الشوكولاتة", variants: [{ type: "عادي", sizes: [{ name: "slice", price: 40 }] }] },
+        { id: 302, name: "تيراميسو", variants: [{ type: "عادي", sizes: [{ name: "slice", price: 45 }] }] },
+        { id: 303, name: "ميلو كيك", variants: [{ type: "عادي", sizes: [{ name: "slice", price: 42 }] }] },
+        { id: 304, name: "آيس كريم", variants: [{ type: "فانيلا", sizes: [{ name: "كوب", price: 30 }] }, { type: "شوكولاتة", sizes: [{ name: "كوب", price: 30 }] }, { type: "فراولة", sizes: [{ name: "كوب", price: 30 }] }] },
+        { id: 305, name: "كنافة", variants: [{ type: "قشطة", sizes: [{ name: "عادي", price: 50 }] }] },
+    ],
+    مقبلات: [
+        { id: 401, name: "حلقات البصل", variants: [{ type: "عادي", sizes: [{ name: "عادي", price: 45 }] }] },
+        { id: 402, name: "ناجتس دجاج", variants: [{ type: "عادي", sizes: [{ name: "6 قطع", price: 55 }, { name: "12 قطع", price: 95 }] }] },
+        { id: 403, name: "فرايز", variants: [{ type: "عادي", sizes: [{ name: "عادي", price: 35 }] }] },
+        { id: 404, name: "بوب كورن", variants: [{ type: "مالح", sizes: [{ name: "عادي", price: 30 }] }, { type: "حلو", sizes: [{ name: "عادي", price: 30 }] }] },
+        { id: 405, name: "سلطة", variants: [{ type: "عادي", sizes: [{ name: "عادي", price: 40 }] }] },
+    ],
+};

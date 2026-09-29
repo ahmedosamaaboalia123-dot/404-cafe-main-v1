@@ -1,0 +1,146 @@
+{
+    "items":  [
+                  {
+                      "id":  "6aac2a0b30b03c483ea74c7c",
+                      "employeeId":  "6aa4b56f2f0c54bb6168b56d",
+                      "name":  "diag",
+                      "browser":  "Chrome",
+                      "os":  "Windows",
+                      "status":  "APPROVED",
+                      "firstSeenAt":  "2026-09-17T17:57:31.297Z",
+                      "lastSeenAt":  "2026-09-17T17:57:31.297Z",
+                      "lastLoginAt":  "2026-09-17T17:57:31.700Z",
+                      "attemptCount":  1,
+                      "version":  1
+                  },
+                  {
+                      "id":  "6aac284d30b03c483ea74981",
+                      "employeeId":  "6aa4b56f2f0c54bb6168b56d",
+                      "name":  "diag",
+                      "browser":  "Chrome",
+                      "os":  "Windows",
+                      "status":  "APPROVED",
+                      "firstSeenAt":  "2026-09-17T17:50:05.601Z",
+                      "lastSeenAt":  "2026-09-17T17:50:05.601Z",
+                      "lastLoginAt":  "2026-09-17T17:50:06.649Z",
+                      "attemptCount":  1,
+                      "version":  1
+                  },
+                  {
+                      "id":  "6aa954874e975127c23e385d",
+                      "employeeId":  "6aa4b56f2f0c54bb6168b56d",
+                      "name":  "Windows - Chromium",
+                      "browser":  "Chromium",
+                      "os":  "Windows",
+                      "status":  "APPROVED",
+                      "firstSeenAt":  "2026-09-15T14:21:59.924Z",
+                      "lastSeenAt":  "2026-09-15T14:21:59.924Z",
+                      "lastLoginAt":  "2026-09-15T14:22:00.374Z",
+                      "attemptCount":  1,
+                      "version":  1
+                  },
+                  {
+                      "id":  "6aa94cca8195cfeccf4f7c3b",
+                      "employeeId":  "6aa4b56f2f0c54bb6168b56d",
+                      "name":  "SmokeTest",
+                      "browser":  "PowerShell",
+                      "os":  "Windows",
+                      "status":  "APPROVED",
+                      "firstSeenAt":  "2026-09-15T13:48:58.950Z",
+                      "lastSeenAt":  "2026-09-15T13:48:58.950Z",
+                      "lastLoginAt":  "2026-09-15T13:48:59.354Z",
+                      "attemptCount":  1,
+                      "version":  1
+                  },
+                  {
+                      "id":  "6aa69ad8886605b242bb536f",
+                      "employeeId":  "6aa4b56f2f0c54bb6168b56d",
+                      "name":  "brand-new-laptop",
+                      "browser":  "test",
+                      "os":  "windows",
+                      "status":  "APPROVED",
+                      "firstSeenAt":  "2026-09-13T12:45:12.007Z",
+                      "lastSeenAt":  "2026-09-13T12:45:30.116Z",
+                      "lastLoginAt":  "2026-09-13T12:45:30.495Z",
+                      "attemptCount":  2,
+                      "version":  3
+                  },
+                  {
+                      "id":  "6aa677b863d6ab13ba37ec83",
+                      "employeeId":  "6aa4b56f2f0c54bb6168b56d",
+                      "name":  "Windows - Google Chrome",
+                      "browser":  "Google Chrome",
+                      "os":  "Windows",
+                      "status":  "APPROVED",
+                      "firstSeenAt":  "2026-09-13T10:15:20.488Z",
+                      "lastSeenAt":  "2026-09-17T17:51:13.696Z",
+                      "lastLoginAt":  "2026-09-17T17:51:14.221Z",
+                      "attemptCount":  17,
+                      "version":  33
+                  },
+                  {
+                      "id":  "6aa582dd66649b52206af8ec",
+                      "employeeId":  "6aa4b56f2f0c54bb6168b56d",
+                      "name":  "admin-helper",
+                      "browser":  "script",
+                      "os":  "windows",
+                      "status":  "APPROVED",
+                      "firstSeenAt":  "2026-09-12T16:50:37.899Z",
+                      "lastSeenAt":  "2026-09-12T16:55:24.986Z",
+                      "lastLoginAt":  "2026-09-12T16:55:25.525Z",
+                      "attemptCount":  3,
+                      "version":  5
+                  },
+                  {
+                      "id":  "6aa5828966649b52206af8c7",
+                      "employeeId":  "6aa4b56f2f0c54bb6168b56d",
+                      "name":  "Android - Google Chrome",
+                      "browser":  "Google Chrome",
+                      "os":  "Android",
+                      "status":  "APPROVED",
+                      "firstSeenAt":  "2026-09-12T16:49:13.143Z",
+                      "lastSeenAt":  "2026-09-12T16:51:14.888Z",
+                      "lastLoginAt":  "2026-09-12T16:51:15.317Z",
+                      "attemptCount":  7,
+                      "version":  10
+                  },
+                  {
+                      "id":  "6aa5825866649b52206af8b3",
+                      "employeeId":  "6aa4b56f2f0c54bb6168b56d",
+                      "name":  "verify-pc",
+                      "browser":  "test",
+                      "os":  "windows",
+                      "status":  "APPROVED",
+                      "firstSeenAt":  "2026-09-12T16:48:24.732Z",
+                      "lastSeenAt":  "2026-09-12T16:48:24.732Z",
+                      "lastLoginAt":  null,
+                      "attemptCount":  1,
+                      "version":  0
+                  },
+                  {
+                      "id":  "6aa57dee95e9700e1102c210",
+                      "employeeId":  "6aa4b56f2f0c54bb6168b56d",
+                      "name":  "test-pc",
+                      "browser":  "test",
+                      "os":  "windows",
+                      "status":  "APPROVED",
+                      "firstSeenAt":  "2026-09-12T16:29:34.785Z",
+                      "lastSeenAt":  "2026-09-12T16:29:34.785Z",
+                      "lastLoginAt":  null,
+                      "attemptCount":  1,
+                      "version":  1
+                  }
+              ],
+    "pageMeta":  {
+                     "page":  1,
+                     "limit":  10,
+                     "totalItems":  11,
+                     "totalPages":  2,
+                     "hasNextPage":  true,
+                     "hasPreviousPage":  false,
+                     "sort":  {
+                                  "createdAt":  -1,
+                                  "_id":  -1
+                              }
+                 }
+}

@@ -1,0 +1,176 @@
+.drawer-page{direction:rtl;min-width:0;color:#30251f}.drawer-shell{display:grid;gap:13px;padding:14px 20px 28px}.drawer-card,.drawer-head,.drawer-open-card,.drawer-forms form{background:#fff;border:1px solid #eadfd3;border-radius:14px;padding:15px;box-shadow:0 3px 14px #573b2510}.drawer-alert{padding:9px 12px;border-radius:9px;font-size:12px}.drawer-alert.error{background:#fdecec;color:#a72d31}.drawer-alert.success{background:#e7f6ec;color:#247342}.drawer-open-card{max-width:520px;width:100%;margin:35px auto;text-align:center;display:grid;justify-items:center;gap:8px}.drawer-open-card h2,.drawer-open-card p{margin:0}.drawer-open-card p{font-size:12px;color:#806e62}.drawer-open-card form{width:min(100%,330px);display:grid;gap:10px;margin-top:10px}.drawer-open-card label,.drawer-forms label{display:grid;gap:5px;text-align:right;font-size:11px;font-weight:700}.drawer-open-card input,.drawer-forms input{width:100%;min-height:38px;border:1px solid #dfd2c5;border-radius:9px;padding:7px 10px;font:inherit}.drawer-open-card button,.drawer-forms button,.drawer-head-actions button{border:0;border-radius:9px;min-height:38px;padding:7px 12px;display:inline-flex;align-items:center;justify-content:center;gap:6px;background:#4b2f22;color:#fff;font:inherit;font-weight:700;cursor:pointer}.drawer-head{display:flex;align-items:center;justify-content:space-between;gap:12px}.drawer-head h2{font-size:16px;margin:4px 0}.drawer-head p{font-size:11px;margin:0;color:#806e62}.drawer-live{display:inline-flex;background:#e7f6ec;color:#247342;border-radius:20px;padding:3px 9px;font-size:10px;font-weight:700}.drawer-head-actions{display:flex;gap:7px}.drawer-head-actions button{background:#f4ece4;color:#4b2f22}.drawer-head-actions .close{background:#4b2f22;color:#fff}.drawer-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.drawer-metrics article{background:#fff;border:1px solid #eadfd3;border-radius:12px;padding:13px;display:grid;gap:4px}.drawer-metrics span{font-size:11px;color:#806e62}.drawer-metrics strong{font-size:18px}.drawer-metrics .in strong,.green{color:#247342}.drawer-metrics .out strong,.red{color:#b22f34}.drawer-metrics .balance{background:#4b2f22;color:#fff}.drawer-metrics .balance span{color:#e7d9ce}.drawer-forms{display:grid;grid-template-columns:1fr 1fr;gap:10px}.drawer-forms form{display:grid;grid-template-columns:1fr 1fr auto;gap:9px;align-items:end}.drawer-forms h3{grid-column:1/-1;display:flex;align-items:center;gap:7px;font-size:13px;margin:0}.drawer-forms h3 svg{width:17px;color:#247342}.drawer-forms .expense{background:#b22f34}.drawer-card h3{font-size:13px;margin:0 0 11px}.drawer-table-scroll{width:100%;overflow:auto;border:1px solid #eee4da;border-radius:10px}.drawer-table-scroll table{width:100%;min-width:850px;border-collapse:collapse;font-size:11px}.drawer-table-scroll th,.drawer-table-scroll td{padding:9px 10px;text-align:right;white-space:nowrap;border-bottom:1px solid #eee4da}.drawer-table-scroll th{background:#f8f3ed;color:#685448}.drawer-status{display:inline-flex;padding:4px 9px;border-radius:20px;font-weight:700}.drawer-status.open{background:#e7f6ec;color:#247342}.drawer-status.closed{background:#eee9e4;color:#6e625a}.drawer-empty{text-align:center;color:#88766b;font-size:11px}@media(max-width:1000px){.drawer-metrics{grid-template-columns:repeat(2,1fr)}.drawer-forms{grid-template-columns:1fr}}@media(max-width:600px){.drawer-shell{padding:10px}.drawer-head{align-items:flex-start;flex-direction:column}.drawer-head-actions{width:100%}.drawer-head-actions button{flex:1;min-height:44px}.drawer-metrics{grid-template-columns:1fr 1fr}.drawer-metrics strong{font-size:15px}.drawer-forms form{grid-template-columns:1fr}.drawer-forms button,.drawer-open-card button{min-height:44px}.drawer-card,.drawer-head,.drawer-open-card,.drawer-forms form{padding:12px}}@media(max-width:380px){.drawer-metrics{grid-template-columns:1fr}}
+
+/* ==========================================================================
+   RESPONSIVE / MOBILE HARDENING
+   --------------------------------------------------------------------------
+   Fixes:
+   - the movement form used a 3-track grid for 4 inputs + button, so the 4th
+     field and the submit button wrapped onto a second, ragged row;
+   - money inputs were 38px tall (below the 44px touch target rule);
+   - the two 11-column tables relied on nowrap at a fixed 850px min-width, which
+     forced wide horizontal scrolling and could push the page itself sideways;
+   - summary cards could overflow at 320-360px.
+   ========================================================================== */
+
+/* Never let a grid/flex child force the page wider than the viewport. */
+.drawer-shell,
+.drawer-card,
+.drawer-head,
+.drawer-open-card,
+.drawer-forms,
+.drawer-forms form {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.drawer-shell {
+  overflow-x: clip;
+}
+
+/* Movement form: 2x2 fields + a full-width submit button, at every width. */
+.drawer-forms form {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: end;
+}
+
+.drawer-forms form > button {
+  grid-column: 1 / -1;
+  width: 100%;
+}
+
+/* Tables scroll inside their card, never on the page. */
+.drawer-table-scroll {
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.drawer-table-scroll table {
+  min-width: 640px;
+  font-size: 11.5px;
+}
+
+/* Let the free-text column wrap so the table needs far less horizontal scroll. */
+.drawer-table-scroll td:nth-child(4) {
+  white-space: normal;
+  min-width: 160px;
+  max-width: 320px;
+}
+
+.drawer-metrics article {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.drawer-metrics strong {
+  overflow-wrap: anywhere;
+  line-height: 1.25;
+}
+
+@media (max-width: 1000px) {
+  .drawer-forms form {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .drawer-open-card {
+    margin: 20px auto;
+  }
+
+  .drawer-metrics {
+    gap: 8px;
+  }
+
+  .drawer-metrics article {
+    padding: 10px;
+  }
+
+  /* Compact but still legible money labels/values. */
+  .drawer-metrics span {
+    font-size: 10.5px;
+  }
+
+  .drawer-metrics strong {
+    font-size: 14px;
+  }
+
+  .drawer-table-scroll table {
+    min-width: 560px;
+    font-size: 11px;
+  }
+
+  .drawer-table-scroll th,
+  .drawer-table-scroll td {
+    padding: 8px;
+  }
+}
+
+@media (max-width: 600px) {
+  .drawer-shell {
+    padding: 10px 10px 24px;
+    gap: 10px;
+  }
+
+  .drawer-card,
+  .drawer-head,
+  .drawer-open-card,
+  .drawer-forms form {
+    padding: 12px;
+  }
+
+  .drawer-head {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .drawer-head-actions {
+    width: 100%;
+  }
+
+  .drawer-head-actions button {
+    flex: 1;
+    min-height: 44px;
+  }
+
+  /* Single-column forms: vertical stacking is easier to hit with a thumb. */
+  .drawer-forms form {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .drawer-forms form > button,
+  .drawer-open-card button {
+    min-height: 44px;
+  }
+
+  /* Amount fields keep the 44px touch target (they were 38px). */
+  .drawer-open-card input,
+  .drawer-forms input {
+    min-height: 44px;
+    font-size: 16px; /* prevents iOS zoom-on-focus */
+  }
+
+  .drawer-open-card label,
+  .drawer-forms label {
+    font-size: 11.5px;
+  }
+}
+
+@media (max-width: 400px) {
+  .drawer-metrics {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .drawer-table-scroll table {
+    min-width: 480px;
+  }
+}
+
+@media (max-width: 340px) {
+  .drawer-metrics {
+    grid-template-columns: 1fr;
+  }
+}
+

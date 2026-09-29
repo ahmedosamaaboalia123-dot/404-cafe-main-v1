@@ -1,0 +1,251 @@
+.prep-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  height: 100%;
+  overflow-y: auto;
+  padding: var(--space-sm) var(--space-md);
+}
+
+.prep-error {
+  color: var(--danger);
+  font-size: var(--fs-xs);
+  padding: 0 var(--space-sm);
+}
+
+/* ── Tabs ── */
+.prep-tabs {
+  display: flex;
+  gap: 4px;
+  border-bottom: 2px solid var(--border-light);
+  padding-bottom: var(--space-xs);
+  flex-shrink: 0;
+}
+
+.prep-tab {
+  min-height: 44px;
+  padding: var(--space-xs) var(--space-md);
+  border: none;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-medium);
+  cursor: pointer;
+  font-family: var(--font-family);
+  transition: var(--transition);
+  white-space: nowrap;
+}
+
+.prep-tab.active {
+  background: var(--primary);
+  color: var(--button-primary-text);
+  font-weight: var(--fw-semibold);
+}
+
+/* ── Columns ── */
+.prep-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-sm);
+  align-items: flex-start;
+}
+
+.prep-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  min-width: 0;
+}
+
+.prep-col-title {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-bold);
+  color: var(--text-main);
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--primary);
+}
+
+/* ── Table ── */
+.prep-table-wrapper {
+  background: var(--card-bg);
+  border: var(--card-border);
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.prep-table {
+  width: 100%;
+  min-width: 480px;
+  border-collapse: collapse;
+}
+
+.prep-table thead {
+  background: var(--table-header-bg);
+}
+
+.prep-table th {
+  padding: var(--space-sm);
+  text-align: right;
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-bold);
+  color: var(--text-main);
+  border-bottom: 1px solid var(--border-main);
+}
+
+.prep-table td {
+  padding: var(--space-sm);
+  font-size: var(--fs-sm);
+  color: var(--text-main);
+  border-bottom: 1px solid var(--border-light);
+  vertical-align: middle;
+}
+
+.prep-table tr:last-child td {
+  border-bottom: none;
+}
+
+.prep-empty {
+  text-align: center;
+  color: var(--text-secondary);
+  padding: var(--space-lg) !important;
+}
+
+.prep-order-num {
+  font-weight: var(--fw-bold);
+  color: var(--primary);
+  white-space: nowrap;
+  font-size: var(--fs-sm);
+}
+
+.prep-order-source {
+  white-space: nowrap;
+}
+
+.prep-status {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  padding: 4px 10px;
+  border-radius: 8px;
+  background: var(--surface-soft);
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.prep-status--PREPARING,
+.prep-status--CONFIRMED {
+  background: var(--warning-bg);
+  color: var(--warning);
+}
+
+.prep-status--READY {
+  background: var(--success-bg);
+  color: var(--success);
+}
+
+.prep-status--COMPLETED {
+  background: var(--info-bg);
+  color: var(--info);
+}
+
+.prep-actions {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.btn-open,
+.btn-begin,
+.btn-deliver {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-bold);
+  padding: 8px 18px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-family: var(--font-family);
+  transition: var(--transition);
+  min-height: 44px;
+  white-space: nowrap;
+}
+
+.btn-open {
+  border: 1px solid var(--primary);
+  background: transparent;
+  color: var(--primary);
+}
+
+.btn-open:hover {
+  background: var(--surface-soft);
+}
+
+.btn-begin {
+  border: none;
+  background: var(--warning);
+  color: #fff;
+}
+
+.btn-begin:hover {
+  opacity: 0.9;
+}
+
+.btn-deliver {
+  border: none;
+  background: var(--success);
+  color: #fff;
+}
+
+.btn-deliver:hover {
+  opacity: 0.9;
+}
+
+.btn-begin:disabled,
+.btn-deliver:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── Responsive ── */
+@media (max-width: 800px) {
+  .prep-cols {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .prep-page {
+    padding: var(--space-xs);
+  }
+
+  .prep-tabs {
+    overflow-x: auto;
+  }
+
+  .prep-table-wrapper {
+    overflow-x: auto;
+  }
+
+  .prep-table {
+    min-width: 460px;
+  }
+
+  .prep-table th {
+    font-size: var(--fs-xs);
+  }
+
+  .prep-table td {
+    font-size: var(--fs-sm);
+  }
+
+  .btn-open,
+  .btn-deliver {
+    min-height: 44px;
+    width: 100%;
+  }
+
+  .prep-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+  }
+}

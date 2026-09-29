@@ -1,0 +1,89 @@
+.orders-home-page {
+    padding: var(--page-padding);
+    display: flex;
+    flex-direction: column;
+    gap: var(--section-gap);
+}
+
+.orders-home-content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.orders-home-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 280px));
+    gap: var(--space-2xl);
+    justify-content: center;
+}
+
+.orders-home-card {
+    width: 280px;
+    height: 280px;
+    background: var(--card-bg);
+    border: var(--card-border);
+    border-radius: var(--card-radius);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-lg);
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: var(--card-shadow);
+}
+
+.orders-home-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-md);
+}
+
+.orders-home-card--online {
+    border-color: var(--info);
+    color: var(--info);
+}
+
+.orders-home-card--online:hover {
+    background: var(--info-bg);
+}
+
+.orders-home-card--incoming {
+    border-color: #e0555a;
+    color: #e0555a;
+}
+
+.orders-home-card--incoming:hover {
+    background: #fdecec;
+    color: #b53a3f;
+}
+
+.orders-home-card--tables {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.orders-home-card--takeaway {
+    border-color: var(--warning, #b76e00);
+    color: var(--warning, #b76e00);
+}
+
+@media (max-width: 1000px) {
+    .orders-home-grid { grid-template-columns: repeat(2, minmax(0, 280px)); }
+}
+
+@media (max-width: 640px) {
+    .orders-home-page { padding: 14px; }
+    .orders-home-grid { grid-template-columns: 1fr; width: 100%; gap: 14px; }
+    .orders-home-card { width: 100%; height: 180px; min-height: 44px; }
+}
+
+.orders-home-card--tables:hover {
+    background: var(--surface-soft);
+}
+
+.orders-home-card h2 {
+    font-size: var(--fs-xl);
+    font-weight: var(--fw-bold);
+}

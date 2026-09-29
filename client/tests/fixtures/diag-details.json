@@ -1,0 +1,1138 @@
+{
+    "employee":  {
+                     "id":  "6aa4b56f2f0c54bb6168b56d",
+                     "name":  "admin",
+                     "position":  "????",
+                     "roleId":  "6aa4b56e2f0c54bb6168b523",
+                     "status":  "ACTIVE",
+                     "schedule":  {
+                                      "workStart":  "09:00",
+                                      "workEnd":  "17:00",
+                                      "crossesMidnight":  false,
+                                      "timezone":  "Africa/Cairo",
+                                      "graceMinutes":  0
+                                  },
+                     "permissionsVersion":  1,
+                     "lastLoginAt":  "2026-09-17T17:57:31.700Z",
+                     "version":  28
+                 },
+    "passwordPlainText":  "secret-pw",
+    "permissions":  {
+                        "permissionKeys":  [
+                                               "employees.read",
+                                               "employees.create",
+                                               "employees.update",
+                                               "employees.password.view",
+                                               "employees.devices.decide",
+                                               "employees.permissions.manage",
+                                               "attendance.read",
+                                               "attendance.check-out",
+                                               "attendance.adjust",
+                                               "attendance.force-close",
+                                               "suppliers.read",
+                                               "suppliers.create",
+                                               "suppliers.update",
+                                               "suppliers.account.write",
+                                               "suppliers.account.reverse",
+                                               "inventory.read",
+                                               "inventory.manage",
+                                               "inventory.withdraw",
+                                               "inventory.priorities",
+                                               "warnings.read",
+                                               "products.read",
+                                               "products.manage",
+                                               "purchases.read",
+                                               "purchases.manage",
+                                               "purchases.register",
+                                               "purchase-returns.read",
+                                               "purchase-returns.create",
+                                               "drawer.read",
+                                               "drawer.open",
+                                               "drawer.move",
+                                               "drawer.close",
+                                               "payments.read",
+                                               "payments.collect",
+                                               "payments.refund",
+                                               "payments.settle",
+                                               "invoices.read",
+                                               "invoices.print",
+                                               "orders.read",
+                                               "orders.create",
+                                               "orders.update",
+                                               "orders.cancel",
+                                               "orders.complete",
+                                               "preparation.read",
+                                               "preparation.update",
+                                               "customers.read",
+                                               "customers.manage",
+                                               "reviews.read",
+                                               "reviews.submit",
+                                               "reviews.moderate",
+                                               "delegates.read",
+                                               "delegates.manage",
+                                               "delivery.manage",
+                                               "tables.read",
+                                               "tables.manage",
+                                               "table-proposals.read",
+                                               "table-proposals.review",
+                                               "table-services.read",
+                                               "table-services.manage",
+                                               "order-cases.read",
+                                               "order-cases.manage",
+                                               "dashboard.read",
+                                               "reports.read",
+                                               "reports.export",
+                                               "audit.read",
+                                               "audit.export",
+                                               "notifications.read",
+                                               "media.read",
+                                               "media.upload"
+                                           ],
+                        "rows":  [
+                                     {
+                                         "_id":  "6aa4b1de9c7c780f08194869",
+                                         "key":  "employees.read",
+                                         "action":  "read",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "??? ????????",
+                                         "pageKey":  "employees",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1de9c7c780f0819486a",
+                                         "key":  "employees.create",
+                                         "action":  "create",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "????? ????????",
+                                         "pageKey":  "employees",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1de9c7c780f0819486b",
+                                         "key":  "employees.update",
+                                         "action":  "update",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "????? ????????",
+                                         "pageKey":  "employees",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1de9c7c780f0819486c",
+                                         "key":  "employees.password.view",
+                                         "action":  "view",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "??? ????? ???? ????????",
+                                         "pageKey":  "employees.password",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1de9c7c780f0819486d",
+                                         "key":  "employees.devices.decide",
+                                         "action":  "decide",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "?????? ????? ????????",
+                                         "pageKey":  "employees.devices",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1de9c7c780f0819486e",
+                                         "key":  "employees.permissions.manage",
+                                         "action":  "manage",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "????? ??????? ????????",
+                                         "pageKey":  "employees.permissions",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1de9c7c780f0819486f",
+                                         "key":  "attendance.read",
+                                         "action":  "read",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "??? ??????",
+                                         "pageKey":  "attendance",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1de9c7c780f08194870",
+                                         "key":  "attendance.check-out",
+                                         "action":  "check-out",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "?????? ??????",
+                                         "pageKey":  "attendance",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1de9c7c780f08194871",
+                                         "key":  "attendance.adjust",
+                                         "action":  "adjust",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "????? ??????",
+                                         "pageKey":  "attendance",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1de9c7c780f08194872",
+                                         "key":  "attendance.force-close",
+                                         "action":  "force-close",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "????? ???? ??????",
+                                         "pageKey":  "attendance",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1de9c7c780f08194873",
+                                         "key":  "suppliers.read",
+                                         "action":  "read",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "??? ????????",
+                                         "pageKey":  "suppliers",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1de9c7c780f08194874",
+                                         "key":  "suppliers.create",
+                                         "action":  "create",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "????? ????????",
+                                         "pageKey":  "suppliers",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1de9c7c780f08194875",
+                                         "key":  "suppliers.update",
+                                         "action":  "update",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "????? ????????",
+                                         "pageKey":  "suppliers",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1de9c7c780f08194876",
+                                         "key":  "suppliers.account.write",
+                                         "action":  "write",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "??? ?????? ????????",
+                                         "pageKey":  "suppliers.account",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1de9c7c780f08194877",
+                                         "key":  "suppliers.account.reverse",
+                                         "action":  "reverse",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "??? ?????? ????????",
+                                         "pageKey":  "suppliers.account",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1de9c7c780f08194878",
+                                         "key":  "inventory.read",
+                                         "action":  "read",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "??? ???????",
+                                         "pageKey":  "inventory",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1de9c7c780f08194879",
+                                         "key":  "inventory.manage",
+                                         "action":  "manage",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "????? ???????",
+                                         "pageKey":  "inventory",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1de9c7c780f0819487a",
+                                         "key":  "inventory.withdraw",
+                                         "action":  "withdraw",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "??? ???????",
+                                         "pageKey":  "inventory",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1de9c7c780f0819487b",
+                                         "key":  "inventory.priorities",
+                                         "action":  "priorities",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "??????? ???????",
+                                         "pageKey":  "inventory",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1de9c7c780f0819487c",
+                                         "key":  "warnings.read",
+                                         "action":  "read",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "??? ?????????",
+                                         "pageKey":  "warnings",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1de9c7c780f0819487d",
+                                         "key":  "products.read",
+                                         "action":  "read",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "??? ????????",
+                                         "pageKey":  "products",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1de9c7c780f0819487e",
+                                         "key":  "products.manage",
+                                         "action":  "manage",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "????? ????????",
+                                         "pageKey":  "products",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1de9c7c780f0819487f",
+                                         "key":  "purchases.read",
+                                         "action":  "read",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "??? ?????????",
+                                         "pageKey":  "purchases",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1de9c7c780f08194880",
+                                         "key":  "purchases.manage",
+                                         "action":  "manage",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "????? ?????????",
+                                         "pageKey":  "purchases",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1de9c7c780f08194881",
+                                         "key":  "purchases.register",
+                                         "action":  "register",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "????? ?????????",
+                                         "pageKey":  "purchases",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1de9c7c780f08194882",
+                                         "key":  "purchase-returns.read",
+                                         "action":  "read",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "??? ??????? ?????????",
+                                         "pageKey":  "purchase-returns",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1de9c7c780f08194883",
+                                         "key":  "purchase-returns.create",
+                                         "action":  "create",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "????? ??????? ?????????",
+                                         "pageKey":  "purchase-returns",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1de9c7c780f08194884",
+                                         "key":  "drawer.read",
+                                         "action":  "read",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "??? ?????",
+                                         "pageKey":  "drawer",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1de9c7c780f08194885",
+                                         "key":  "drawer.open",
+                                         "action":  "open",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "??? ?????",
+                                         "pageKey":  "drawer",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1de9c7c780f08194886",
+                                         "key":  "drawer.move",
+                                         "action":  "move",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "???? ?????",
+                                         "pageKey":  "drawer",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1de9c7c780f08194887",
+                                         "key":  "drawer.close",
+                                         "action":  "close",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "????? ?????",
+                                         "pageKey":  "drawer",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1de9c7c780f08194888",
+                                         "key":  "payments.read",
+                                         "action":  "read",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "??? ?????????",
+                                         "pageKey":  "payments",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1de9c7c780f08194889",
+                                         "key":  "payments.collect",
+                                         "action":  "collect",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "????? ?????????",
+                                         "pageKey":  "payments",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1de9c7c780f0819488a",
+                                         "key":  "payments.refund",
+                                         "action":  "refund",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "?? ?????????",
+                                         "pageKey":  "payments",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1de9c7c780f0819488b",
+                                         "key":  "payments.settle",
+                                         "action":  "settle",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "????? ?????????",
+                                         "pageKey":  "payments",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1de9c7c780f0819488c",
+                                         "key":  "invoices.read",
+                                         "action":  "read",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "??? ????????",
+                                         "pageKey":  "invoices",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1de9c7c780f0819488d",
+                                         "key":  "invoices.print",
+                                         "action":  "print",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "????? ????????",
+                                         "pageKey":  "invoices",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1de9c7c780f0819488e",
+                                         "key":  "orders.read",
+                                         "action":  "read",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "??? ???????",
+                                         "pageKey":  "orders",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1de9c7c780f0819488f",
+                                         "key":  "orders.create",
+                                         "action":  "create",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "????? ???????",
+                                         "pageKey":  "orders",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1de9c7c780f08194890",
+                                         "key":  "orders.update",
+                                         "action":  "update",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "????? ???????",
+                                         "pageKey":  "orders",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1de9c7c780f08194891",
+                                         "key":  "orders.cancel",
+                                         "action":  "cancel",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "????? ???????",
+                                         "pageKey":  "orders",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1de9c7c780f08194892",
+                                         "key":  "orders.complete",
+                                         "action":  "complete",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "????? ???????",
+                                         "pageKey":  "orders",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1de9c7c780f08194893",
+                                         "key":  "preparation.read",
+                                         "action":  "read",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "??? ???????",
+                                         "pageKey":  "preparation",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1de9c7c780f08194894",
+                                         "key":  "preparation.update",
+                                         "action":  "update",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "????? ???????",
+                                         "pageKey":  "preparation",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1de9c7c780f08194895",
+                                         "key":  "customers.read",
+                                         "action":  "read",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "??? ???????",
+                                         "pageKey":  "customers",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1de9c7c780f08194896",
+                                         "key":  "customers.manage",
+                                         "action":  "manage",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "????? ???????",
+                                         "pageKey":  "customers",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1df9c7c780f08194897",
+                                         "key":  "reviews.read",
+                                         "action":  "read",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "??? ?????????",
+                                         "pageKey":  "reviews",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1df9c7c780f08194898",
+                                         "key":  "reviews.submit",
+                                         "action":  "submit",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "????? ?????????",
+                                         "pageKey":  "reviews",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1df9c7c780f08194899",
+                                         "key":  "reviews.moderate",
+                                         "action":  "moderate",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "????? ?????????",
+                                         "pageKey":  "reviews",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1df9c7c780f0819489a",
+                                         "key":  "delegates.read",
+                                         "action":  "read",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "??? ????????",
+                                         "pageKey":  "delegates",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1df9c7c780f0819489b",
+                                         "key":  "delegates.manage",
+                                         "action":  "manage",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "????? ????????",
+                                         "pageKey":  "delegates",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1df9c7c780f0819489c",
+                                         "key":  "delivery.manage",
+                                         "action":  "manage",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "????? ???????",
+                                         "pageKey":  "delivery",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1df9c7c780f0819489d",
+                                         "key":  "tables.read",
+                                         "action":  "read",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "??? ????????",
+                                         "pageKey":  "tables",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1df9c7c780f0819489e",
+                                         "key":  "tables.manage",
+                                         "action":  "manage",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "????? ????????",
+                                         "pageKey":  "tables",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1df9c7c780f0819489f",
+                                         "key":  "table-proposals.read",
+                                         "action":  "read",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "??? ??????? ????????",
+                                         "pageKey":  "table-proposals",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1df9c7c780f081948a0",
+                                         "key":  "table-proposals.review",
+                                         "action":  "review",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "?????? ??????? ????????",
+                                         "pageKey":  "table-proposals",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1df9c7c780f081948a1",
+                                         "key":  "table-services.read",
+                                         "action":  "read",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "??? ????? ????????",
+                                         "pageKey":  "table-services",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1df9c7c780f081948a2",
+                                         "key":  "table-services.manage",
+                                         "action":  "manage",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "????? ????? ????????",
+                                         "pageKey":  "table-services",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1df9c7c780f081948a3",
+                                         "key":  "order-cases.read",
+                                         "action":  "read",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "??? ????? ???????",
+                                         "pageKey":  "order-cases",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1df9c7c780f081948a4",
+                                         "key":  "order-cases.manage",
+                                         "action":  "manage",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "????? ????? ???????",
+                                         "pageKey":  "order-cases",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1df9c7c780f081948a5",
+                                         "key":  "dashboard.read",
+                                         "action":  "read",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "??? ???? ???????",
+                                         "pageKey":  "dashboard",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1df9c7c780f081948a6",
+                                         "key":  "reports.read",
+                                         "action":  "read",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "??? ????????",
+                                         "pageKey":  "reports",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1df9c7c780f081948a7",
+                                         "key":  "reports.export",
+                                         "action":  "export",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "????? ????????",
+                                         "pageKey":  "reports",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1df9c7c780f081948a8",
+                                         "key":  "audit.read",
+                                         "action":  "read",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "??? ???????",
+                                         "pageKey":  "audit",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1df9c7c780f081948a9",
+                                         "key":  "audit.export",
+                                         "action":  "export",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "????? ???????",
+                                         "pageKey":  "audit",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1df9c7c780f081948aa",
+                                         "key":  "notifications.read",
+                                         "action":  "read",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "??? ?????????",
+                                         "pageKey":  "notifications",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1df9c7c780f081948ab",
+                                         "key":  "media.read",
+                                         "action":  "read",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "??? ???????",
+                                         "pageKey":  "media",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     },
+                                     {
+                                         "_id":  "6aa4b1df9c7c780f081948ac",
+                                         "key":  "media.upload",
+                                         "action":  "upload",
+                                         "createdAt":  "2026-09-12T01:58:54.979Z",
+                                         "label":  "??? ???????",
+                                         "pageKey":  "media",
+                                         "updatedAt":  "2026-09-13T15:51:47.565Z",
+                                         "effect":  "ALLOW"
+                                     }
+                                 ],
+                        "pages":  [
+
+                                  ]
+                    },
+    "attendance":  {
+                       "items":  [
+                                     {
+                                         "id":  "6aac284e30b03c483ea7498c",
+                                         "employeeId":  "6aa4b56f2f0c54bb6168b56d",
+                                         "attendanceDate":  "2026-09-17",
+                                         "scheduleSnapshot":  {
+                                                                  "workStart":  "09:00",
+                                                                  "workEnd":  "17:00",
+                                                                  "crossesMidnight":  false,
+                                                                  "timezone":  "Africa/Cairo",
+                                                                  "graceMinutes":  0
+                                                              },
+                                         "checkInAt":  "2026-09-17T17:50:06.183Z",
+                                         "checkInDeviceId":  "6aac284d30b03c483ea74981",
+                                         "checkOutAt":  null,
+                                         "checkedOutBy":  null,
+                                         "checkOutMethod":  null,
+                                         "lateMinutes":  710,
+                                         "workedMinutes":  null,
+                                         "status":  "OPEN",
+                                         "notes":  "",
+                                         "version":  0
+                                     },
+                                     {
+                                         "id":  "6aa4b6bce1e700deae621196",
+                                         "employeeId":  "6aa4b56f2f0c54bb6168b56d",
+                                         "attendanceDate":  "2026-09-12",
+                                         "scheduleSnapshot":  {
+                                                                  "workStart":  "09:00",
+                                                                  "workEnd":  "17:00",
+                                                                  "crossesMidnight":  false,
+                                                                  "timezone":  "Africa/Cairo",
+                                                                  "graceMinutes":  0
+                                                              },
+                                         "checkInAt":  "2026-09-12T02:19:40.285Z",
+                                         "checkInDeviceId":  "6aa4b56e9c7c780f08194ccb",
+                                         "checkOutAt":  "2026-09-17T16:29:49.036Z",
+                                         "checkedOutBy":  "6aa4b56f2f0c54bb6168b56d",
+                                         "checkOutMethod":  "ADMIN",
+                                         "lateMinutes":  0,
+                                         "workedMinutes":  8050,
+                                         "status":  "CLOSED",
+                                         "notes":  "",
+                                         "version":  1
+                                     }
+                                 ],
+                       "summary":  {
+                                       "total":  2,
+                                       "open":  1,
+                                       "closed":  1
+                                   },
+                       "pageMeta":  {
+                                        "page":  1,
+                                        "limit":  10,
+                                        "totalItems":  2,
+                                        "totalPages":  1,
+                                        "hasNextPage":  false,
+                                        "hasPreviousPage":  false,
+                                        "sort":  {
+                                                     "attendanceDate":  -1,
+                                                     "_id":  -1
+                                                 }
+                                    }
+                   },
+    "activity":  {
+                     "items":  [
+                                   {
+                                       "_id":  "6aac28c630b03c483ea74b43",
+                                       "eventNo":  71,
+                                       "eventType":  "EMPLOYEE_UPDATED",
+                                       "category":  "SECURITY",
+                                       "module":  "employees",
+                                       "action":  "UPDATED",
+                                       "actor":  {
+                                                     "type":  "EMPLOYEE",
+                                                     "id":  "6aa4b56f2f0c54bb6168b56d"
+                                                 },
+                                       "entity":  {
+                                                      "type":  "Employee",
+                                                      "id":  "6aac1551c64ec5386cb60caf"
+                                                  },
+                                       "relatedEntities":  [
+
+                                                           ],
+                                       "result":  "SUCCESS",
+                                       "severity":  "INFO",
+                                       "requestId":  "b78ddc49-aea2-4358-85fd-b3c10030e246",
+                                       "schemaVersion":  1,
+                                       "occurredAt":  "2026-09-17T17:52:06.456Z",
+                                       "createdAt":  "2026-09-17T17:52:06.457Z",
+                                       "updatedAt":  "2026-09-17T17:52:06.457Z"
+                                   },
+                                   {
+                                       "_id":  "6aac28c030b03c483ea74b2b",
+                                       "eventNo":  70,
+                                       "eventType":  "EMPLOYEE_UPDATED",
+                                       "category":  "SECURITY",
+                                       "module":  "employees",
+                                       "action":  "UPDATED",
+                                       "actor":  {
+                                                     "type":  "EMPLOYEE",
+                                                     "id":  "6aa4b56f2f0c54bb6168b56d"
+                                                 },
+                                       "entity":  {
+                                                      "type":  "Employee",
+                                                      "id":  "6aa6c3a778abf9a46187ace0"
+                                                  },
+                                       "relatedEntities":  [
+
+                                                           ],
+                                       "result":  "SUCCESS",
+                                       "severity":  "INFO",
+                                       "requestId":  "19ee1d4e-9274-4153-8c33-a33eef5b783d",
+                                       "schemaVersion":  1,
+                                       "occurredAt":  "2026-09-17T17:52:00.583Z",
+                                       "createdAt":  "2026-09-17T17:52:00.584Z",
+                                       "updatedAt":  "2026-09-17T17:52:00.584Z"
+                                   },
+                                   {
+                                       "_id":  "6aac26aac64ec5386cb61655",
+                                       "eventNo":  68,
+                                       "eventType":  "EMPLOYEE_UPDATED",
+                                       "category":  "SECURITY",
+                                       "module":  "employees",
+                                       "action":  "UPDATED",
+                                       "actor":  {
+                                                     "type":  "EMPLOYEE",
+                                                     "id":  "6aa4b56f2f0c54bb6168b56d"
+                                                 },
+                                       "entity":  {
+                                                      "type":  "Employee",
+                                                      "id":  "6aa4b56f2f0c54bb6168b56d"
+                                                  },
+                                       "relatedEntities":  [
+
+                                                           ],
+                                       "result":  "SUCCESS",
+                                       "severity":  "INFO",
+                                       "requestId":  "784bb9a4-50cb-4f17-8b3b-cc949866ad60",
+                                       "schemaVersion":  1,
+                                       "occurredAt":  "2026-09-17T17:43:06.345Z",
+                                       "createdAt":  "2026-09-17T17:43:06.346Z",
+                                       "updatedAt":  "2026-09-17T17:43:06.346Z"
+                                   },
+                                   {
+                                       "_id":  "6aac15a2c64ec5386cb60daf",
+                                       "eventNo":  67,
+                                       "eventType":  "ROLE_CREATED",
+                                       "category":  "SECURITY",
+                                       "module":  "employees",
+                                       "action":  "CREATED",
+                                       "actor":  {
+                                                     "type":  "EMPLOYEE",
+                                                     "id":  "6aa4b56f2f0c54bb6168b56d"
+                                                 },
+                                       "entity":  {
+                                                      "type":  "Role",
+                                                      "id":  "6aac15a2c64ec5386cb60dac"
+                                                  },
+                                       "relatedEntities":  [
+
+                                                           ],
+                                       "result":  "SUCCESS",
+                                       "severity":  "WARNING",
+                                       "requestId":  "52f795a8-ec55-4fde-b3b8-50280b33bcd1",
+                                       "schemaVersion":  1,
+                                       "occurredAt":  "2026-09-17T16:30:26.800Z",
+                                       "createdAt":  "2026-09-17T16:30:26.801Z",
+                                       "updatedAt":  "2026-09-17T16:30:26.801Z"
+                                   },
+                                   {
+                                       "_id":  "6aac1599c64ec5386cb60d90",
+                                       "eventNo":  66,
+                                       "eventType":  "ROLE_CREATED",
+                                       "category":  "SECURITY",
+                                       "module":  "employees",
+                                       "action":  "CREATED",
+                                       "actor":  {
+                                                     "type":  "EMPLOYEE",
+                                                     "id":  "6aa4b56f2f0c54bb6168b56d"
+                                                 },
+                                       "entity":  {
+                                                      "type":  "Role",
+                                                      "id":  "6aac1599c64ec5386cb60d8d"
+                                                  },
+                                       "relatedEntities":  [
+
+                                                           ],
+                                       "result":  "SUCCESS",
+                                       "severity":  "WARNING",
+                                       "requestId":  "96f291b4-c4d9-4136-8341-b7dd2ba07b65",
+                                       "schemaVersion":  1,
+                                       "occurredAt":  "2026-09-17T16:30:17.776Z",
+                                       "createdAt":  "2026-09-17T16:30:17.777Z",
+                                       "updatedAt":  "2026-09-17T16:30:17.777Z"
+                                   },
+                                   {
+                                       "_id":  "6aac157dc64ec5386cb60cef",
+                                       "eventNo":  65,
+                                       "eventType":  "ATTENDANCE_CHECKED_OUT",
+                                       "category":  "HR",
+                                       "module":  "attendance",
+                                       "action":  "CHECKED_OUT",
+                                       "actor":  {
+                                                     "type":  "EMPLOYEE",
+                                                     "id":  "6aa4b56f2f0c54bb6168b56d"
+                                                 },
+                                       "entity":  {
+                                                      "type":  "AttendanceRecord",
+                                                      "id":  "6aa4b6bce1e700deae621196"
+                                                  },
+                                       "relatedEntities":  [
+
+                                                           ],
+                                       "result":  "SUCCESS",
+                                       "severity":  "INFO",
+                                       "requestId":  "47961861-0696-4e58-9d1c-6cb9e6dcdda8",
+                                       "metadataSafe":  {
+                                                            "workedMinutes":  8050
+                                                        },
+                                       "occurredAt":  "2026-09-17T16:29:49.113Z",
+                                       "schemaVersion":  1,
+                                       "createdAt":  "2026-09-17T16:29:49.182Z",
+                                       "updatedAt":  "2026-09-17T16:29:49.182Z"
+                                   },
+                                   {
+                                       "_id":  "6aac1551c64ec5386cb60cb2",
+                                       "eventNo":  64,
+                                       "eventType":  "EMPLOYEE_CREATED",
+                                       "category":  "SECURITY",
+                                       "module":  "employees",
+                                       "action":  "CREATED",
+                                       "actor":  {
+                                                     "type":  "EMPLOYEE",
+                                                     "id":  "6aa4b56f2f0c54bb6168b56d"
+                                                 },
+                                       "entity":  {
+                                                      "type":  "Employee",
+                                                      "id":  "6aac1551c64ec5386cb60caf"
+                                                  },
+                                       "relatedEntities":  [
+
+                                                           ],
+                                       "result":  "SUCCESS",
+                                       "severity":  "INFO",
+                                       "requestId":  "269be8ed-fae2-4bb2-900c-0c9abbd0484c",
+                                       "schemaVersion":  1,
+                                       "occurredAt":  "2026-09-17T16:29:05.451Z",
+                                       "createdAt":  "2026-09-17T16:29:05.452Z",
+                                       "updatedAt":  "2026-09-17T16:29:05.452Z"
+                                   },
+                                   {
+                                       "_id":  "6aabffd30226ac4b6cc50354",
+                                       "eventNo":  63,
+                                       "eventType":  "TABLE_SERVICE_RESOLVED",
+                                       "category":  "BUSINESS",
+                                       "module":  "table-services",
+                                       "action":  "table-service.resolved",
+                                       "actor":  {
+                                                     "type":  "EMPLOYEE",
+                                                     "id":  "6aa4b56f2f0c54bb6168b56d"
+                                                 },
+                                       "entity":  {
+                                                      "type":  "TableServiceRequest",
+                                                      "id":  "6aab0bcd3b966c1c36ecbc44"
+                                                  },
+                                       "relatedEntities":  [
+
+                                                           ],
+                                       "result":  "SUCCESS",
+                                       "severity":  "INFO",
+                                       "requestId":  "1f18e5d2-6018-4f02-8858-24fbb0958b76",
+                                       "metadataSafe":  {
+                                                            "serviceRequestId":  "6aab0bcd3b966c1c36ecbc44",
+                                                            "type":  "WATER_REQUEST",
+                                                            "responseDurationSeconds":  62470,
+                                                            "sequence":  2
+                                                        },
+                                       "schemaVersion":  1,
+                                       "occurredAt":  "2026-09-17T14:57:23.367Z",
+                                       "createdAt":  "2026-09-17T14:57:23.368Z",
+                                       "updatedAt":  "2026-09-17T14:57:23.368Z"
+                                   },
+                                   {
+                                       "_id":  "6aab0f38a1b2b08953aae9e8",
+                                       "eventNo":  62,
+                                       "eventType":  "TABLE_SERVICE_RESOLVED",
+                                       "category":  "BUSINESS",
+                                       "module":  "table-services",
+                                       "action":  "table-service.resolved",
+                                       "actor":  {
+                                                     "type":  "EMPLOYEE",
+                                                     "id":  "6aa4b56f2f0c54bb6168b56d"
+                                                 },
+                                       "entity":  {
+                                                      "type":  "TableServiceRequest",
+                                                      "id":  "6aab0bb23b966c1c36ecbb11"
+                                                  },
+                                       "relatedEntities":  [
+
+                                                           ],
+                                       "result":  "SUCCESS",
+                                       "severity":  "INFO",
+                                       "requestId":  "84acd36c-c6a3-4d77-8eb3-792be1e38fc0",
+                                       "metadataSafe":  {
+                                                            "serviceRequestId":  "6aab0bb23b966c1c36ecbb11",
+                                                            "type":  "CALL_WAITER",
+                                                            "responseDurationSeconds":  902,
+                                                            "sequence":  2
+                                                        },
+                                       "schemaVersion":  1,
+                                       "occurredAt":  "2026-09-16T21:50:48.769Z",
+                                       "createdAt":  "2026-09-16T21:50:48.770Z",
+                                       "updatedAt":  "2026-09-16T21:50:48.770Z"
+                                   },
+                                   {
+                                       "_id":  "6aab0bcd3b966c1c36ecbc52",
+                                       "eventNo":  61,
+                                       "eventType":  "TABLE_SERVICE_CREATED",
+                                       "category":  "BUSINESS",
+                                       "module":  "table-services",
+                                       "action":  "table-service.created",
+                                       "actor":  {
+                                                     "type":  "EMPLOYEE",
+                                                     "id":  "6aa4b56f2f0c54bb6168b56d"
+                                                 },
+                                       "entity":  {
+                                                      "type":  "TableServiceRequest",
+                                                      "id":  "6aab0bcd3b966c1c36ecbc44"
+                                                  },
+                                       "relatedEntities":  [
+
+                                                           ],
+                                       "result":  "SUCCESS",
+                                       "severity":  "INFO",
+                                       "requestId":  "5ff6ba2b-b0c6-4ca8-8d6d-56d7b02c725c",
+                                       "metadataSafe":  {
+                                                            "serviceRequestId":  "6aab0bcd3b966c1c36ecbc44",
+                                                            "type":  "WATER_REQUEST",
+                                                            "tableNumber":  1
+                                                        },
+                                       "schemaVersion":  1,
+                                       "occurredAt":  "2026-09-16T21:36:13.352Z",
+                                       "createdAt":  "2026-09-16T21:36:13.352Z",
+                                       "updatedAt":  "2026-09-16T21:36:13.352Z"
+                                   }
+                               ],
+                     "pageMeta":  {
+                                      "page":  1,
+                                      "limit":  10,
+                                      "totalItems":  67,
+                                      "totalPages":  7,
+                                      "hasNextPage":  true,
+                                      "hasPreviousPage":  false,
+                                      "sort":  {
+                                                   "occurredAt":  -1,
+                                                   "_id":  -1
+                                               }
+                                  }
+                 }
+}

@@ -1,0 +1,13 @@
+.search-select { position: relative; min-width: 0; direction: rtl; }
+.search-select > label { display: block; margin-bottom: 8px; font-size: 13px; font-weight: 700; color: #4b382a; }
+.search-select__control { display: flex; align-items: center; gap: 8px; min-height: 46px; padding-inline: 12px 4px; border: 1px solid #dccfc1; border-radius: 12px; background: #fff; color: #8d755f; }
+.search-select__control:focus-within { border-color: #946b48; box-shadow: 0 0 0 3px #946b481c; }
+.search-select__control input { flex: 1; width: 0; min-width: 0; border: 0; outline: none; padding: 12px 0; font: inherit; color: #35291f; background: transparent; }
+.search-select__control button { display: grid; place-items: center; min-width: 44px; min-height: 44px; border: 0; background: transparent; color: inherit; cursor: pointer; }
+.search-select__menu { position: absolute; z-index: 30; inset-inline: 0; top: calc(100% + 6px); padding: 6px; border: 1px solid #e5d9cb; border-radius: 14px; background: #fff; box-shadow: 0 12px 28px #37271b24; max-height: 280px; overflow-y: auto; overscroll-behavior: contain; }
+.search-select__menu ul { list-style: none; padding: 0; margin: 0; }
+.search-select__menu li { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 12px; min-height: 48px; box-sizing: border-box; border-radius: 8px; cursor: pointer; color: #35291f; }
+.search-select__menu li.is-active, .search-select__menu li[aria-selected="true"] { background: #f6eee5; }
+.search-select__menu strong { display: block; font-size: 14px; overflow-wrap: anywhere; }
+.search-select__menu small { display: block; font-size: 12px; color: #816c59; margin-top: 4px; }
+.search-select__menu p { margin: 12px; font-size: 13px; color: #816c59; }

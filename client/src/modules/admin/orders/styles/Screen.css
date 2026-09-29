@@ -1,0 +1,11 @@
+.online-screen,
+.tables-screen {
+    padding: var(--page-padding);
+    display: flex;
+    flex-direction: column;
+    gap: var(--section-gap);
+}
+
+.screen-content {
+    flex: 1;
+}

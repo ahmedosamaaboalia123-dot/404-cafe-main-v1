@@ -1,0 +1,18 @@
+import { useRef } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { beginOperation, finishOperation } from "@/api/idempotency";
+import { ordersApi } from "../api/orders.api";
+const useCommand = (scope, fn) => { const client = useQueryClient(); const operation = useRef(`${scope}:${globalThis.crypto?.randomUUID?.() || Date.now()}`); const mutation = useMutation({ mutationFn: (value) => fn(value, beginOperation(operation.current)), onSuccess: async () => { finishOperation(operation.current); await Promise.all([client.invalidateQueries({ queryKey: ["orders"] }), client.invalidateQueries({ queryKey: ["preparation"] }), client.invalidateQueries({ queryKey: ["tables"] }), client.invalidateQueries({ queryKey: ["payments"] }), client.invalidateQueries({ queryKey: ["invoices"] }), client.invalidateQueries({ queryKey: ["order-cases"] })]); } }); return { ...mutation, resetAttempt: () => { finishOperation(operation.current); mutation.reset(); } }; };
+export const useCreateOrder = () => useCommand("order:create", (b, k) => ordersApi.create(b, k));
+export const useAddOrderItems = () => useCommand("order:add-items", (v, k) => ordersApi.addItems(v.orderId, v.body, k));
+export const useCancelOrderItem = () => useCommand("order:cancel-item", (v, k) => ordersApi.cancelItem(v.orderId, v.itemId, v.body, k));
+export const useCancelOrder = () => useCommand("order:cancel", (v, k) => ordersApi.cancel(v.orderId, v.body, k));
+export const useReadyOrderItem = () => useCommand("order:ready", (v, k) => ordersApi.readyItem(v.itemId, v.body, k));
+export const useCompleteTakeaway = () => useCommand("order:complete-takeaway", (v, k) => ordersApi.completeTakeaway(v.orderId, v.body, k));
+export const useOpenTableOrder = () => useCommand("table:open", (v, k) => ordersApi.tableOrder(v.tableId, v.body, k));
+export const useAddSessionItems = () => useCommand("table:add-items", (v, k) => ordersApi.sessionItems(v.sessionId, v.body, k));
+export const useCancelSession = () => useCommand("table:cancel", (v, k) => ordersApi.sessionCancel(v.sessionId, v.body, k));
+export const useCloseSession = () => useCommand("table:close", (v, k) => ordersApi.sessionClose(v.sessionId, v.body, k));
+export const useCollectPayment = () => useCommand("payment:collect", (v, k) => ordersApi.collectPayment(v.orderId, v.body, k));
+export const useApproveCancellation = () => useCommand("cancellation:approve", (v, k) => ordersApi.approveCancellation(v.id, v.body, k));
+export const useRejectCancellation = () => useCommand("cancellation:reject", (v, k) => ordersApi.rejectCancellation(v.id, v.body, k));

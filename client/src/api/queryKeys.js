@@ -1,0 +1,38 @@
+const stableParams = (params = {}) => Object.fromEntries(Object.entries(params).filter(([, value]) => value !== undefined).sort(([a], [b]) => a.localeCompare(b)));
+const entityKeys = (name) => ({
+  all: [name],
+  lists: () => [name, "list"],
+  list: (params = {}) => [name, "list", stableParams(params)],
+  details: () => [name, "detail"],
+  detail: (id, include) => [name, "detail", String(id), include || null],
+});
+
+export const queryKeys = {
+  bootstrap: ["admin", "bootstrap"],
+  dashboard: { screen: (params = {}) => ["dashboard", stableParams(params)] },
+  suppliers: entityKeys("suppliers"),
+  materials: entityKeys("raw-materials"),
+  purchases: entityKeys("purchases"),
+  returns: entityKeys("purchase-returns"),
+  products: entityKeys("products"),
+  employees: entityKeys("employees"),
+  attendance: entityKeys("attendance"),
+  orders: entityKeys("orders"),
+  preparation: { screen: (params = {}) => ["preparation", "screen", stableParams(params)] },
+  tables: { board: ["tables", "board"], detail: (number) => ["tables", String(number)] },
+  tableProposals: entityKeys("table-proposals"),
+  tableServices: entityKeys("table-services"),
+  orderCases: entityKeys("order-cases"),
+  customers: entityKeys("customers"),
+  delegates: entityKeys("delegates"),
+  delivery: entityKeys("delivery"),
+  payments: entityKeys("payments"),
+  invoices: entityKeys("invoices"),
+  reviews: entityKeys("reviews"),
+  audit: entityKeys("audit-events"),
+  reports: { financial: (params = {}) => ["reports", "financial", stableParams(params)], exports: entityKeys("report-exports") },
+  notifications: entityKeys("notifications"),
+  drawer: { screen: ["drawer", "screen"], shift: (id) => ["drawer", "shift", String(id)] },
+  warnings: { screen: (params = {}) => ["warnings", "screen", stableParams(params)], summary: ["warnings", "summary"] },
+  catalog: ["catalog"],
+};

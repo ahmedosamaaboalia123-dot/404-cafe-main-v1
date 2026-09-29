@@ -1,0 +1,58 @@
+.select-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.select-field label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #2B211B;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.select-field .required {
+  color: #E85B5B;
+  font-weight: 700;
+}
+
+.select-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.select-field select {
+  height: 44px;
+  width: 100%;
+  border: 1px solid #EDE3DA;
+  border-radius: 10px;
+  padding: 0 16px 0 42px;
+  background: #FFFFFF;
+  color: #2B211B;
+  font-family: var(--font-family, 'Cairo', sans-serif);
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.select-field select:focus {
+  border-color: #C89D72;
+  box-shadow: 0 0 0 3px rgba(200, 157, 114, 0.12);
+}
+
+.select-arrow {
+  position: absolute;
+  left: 14px;
+  pointer-events: none;
+  color: #6F6258;
+}
+

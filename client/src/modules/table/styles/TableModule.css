@@ -1,0 +1,1267 @@
+/* ==========================================================================
+   404 COFFEE - Table / Dine-In (قسم الطاولات) Comprehensive Styling
+   ========================================================================== */
+
+:root {
+  --tbl-espresso-dark: #2C1E16;
+  --tbl-espresso-medium: #4A3427;
+  --tbl-espresso-light: #70533F;
+  --tbl-accent-amber: #E5832E;
+  --tbl-accent-gold: #C89058;
+  --tbl-warm-cream: #FAF6F0;
+  --tbl-card-bg: #FFFFFF;
+  --tbl-border-subtle: #E8DDCE;
+  --tbl-border-light: rgba(232, 221, 206, 0.7);
+  --tbl-text-main: #2C1E16;
+  --tbl-text-muted: #7A695C;
+  --tbl-text-hint: #A39385;
+  --tbl-success: #1E7E34;
+  --tbl-success-bg: #EBF7EE;
+  --tbl-warning: #B76E00;
+  --tbl-warning-bg: #FFF6E5;
+}
+
+.table-root-layout {
+  min-height: 100vh;
+  min-height: 100dvh;
+  background-color: var(--tbl-warm-cream);
+  color: var(--tbl-text-main);
+  font-family: 'Cairo', system-ui, -apple-system, sans-serif;
+  direction: rtl;
+  position: relative;
+  overflow-x: hidden;
+  padding-bottom: 85px;
+}
+
+/* 1. Header Bar */
+.tbl-header-bar {
+  position: sticky;
+  top: 0;
+  z-index: 45;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1.5px solid var(--tbl-border-subtle);
+  padding: 10px 16px;
+  box-shadow: 0 4px 20px rgba(44, 30, 22, 0.04);
+}
+
+.tbl-header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.tbl-header-brand-side {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.tbl-drawer-trigger-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: #F4ECE1;
+  border: 1px solid var(--tbl-border-subtle);
+  color: var(--tbl-espresso-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tbl-drawer-trigger-btn:hover {
+  background: #EADECE;
+}
+
+.tbl-logo-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.tbl-logo-icon-box {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--tbl-espresso-dark) 0%, var(--tbl-espresso-medium) 100%);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(44, 30, 22, 0.15);
+}
+
+.tbl-brand-texts {
+  display: flex;
+  flex-direction: column;
+}
+
+.tbl-brand-title {
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: var(--tbl-espresso-dark);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.tbl-brand-subtitle {
+  font-size: 0.72rem;
+  color: var(--tbl-accent-amber);
+  font-weight: 700;
+}
+
+/* Table Badge & Order Badge in Header */
+.tbl-meta-badges-cluster {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tbl-table-badge-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: #FFF8EE;
+  border: 1.5px solid var(--tbl-accent-amber);
+  border-radius: 20px;
+  color: var(--tbl-espresso-dark);
+  font-size: 0.85rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tbl-table-badge-btn:hover {
+  background: #FEE7CE;
+  transform: translateY(-1px);
+}
+
+.tbl-table-badge-pulse {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--tbl-accent-amber);
+  animation: pulseAmber 2s infinite;
+}
+
+@keyframes pulseAmber {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(229, 131, 46, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(229, 131, 46, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(229, 131, 46, 0); }
+}
+
+.tbl-active-order-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: #EBF7EE;
+  border: 1.5px solid #A3E0B4;
+  border-radius: 20px;
+  color: var(--tbl-success);
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.tbl-active-order-pill:hover {
+  background: #DCF2E2;
+}
+
+.tbl-header-actions-side {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tbl-call-waiter-btn {
+  height: 44px;
+  padding: 0 14px;
+  border-radius: 12px;
+  background: #FFFFFF;
+  border: 1.5px solid var(--tbl-border-subtle);
+  color: var(--tbl-espresso-dark);
+  font-size: 0.84rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tbl-call-waiter-btn:hover {
+  background: #FFF4E5;
+  border-color: var(--tbl-accent-amber);
+  color: var(--tbl-accent-amber);
+}
+
+.tbl-cart-icon-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--tbl-espresso-dark);
+  color: #FFFFFF;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.tbl-cart-icon-btn:hover {
+  background: var(--tbl-espresso-medium);
+  transform: translateY(-2px);
+}
+
+.tbl-cart-badge-count {
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  background: var(--tbl-accent-amber);
+  color: #FFFFFF;
+  font-size: 0.72rem;
+  font-weight: 800;
+  min-width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  border: 2px solid #FFFFFF;
+}
+
+/* 2. Desktop Navigation Link Bar */
+.tbl-desktop-nav-links {
+  display: none;
+  align-items: center;
+  gap: 20px;
+}
+
+.tbl-desktop-link {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--tbl-text-muted);
+  text-decoration: none;
+  transition: color 0.2s ease;
+  padding: 6px 0;
+  position: relative;
+}
+
+.tbl-desktop-link:hover,
+.tbl-desktop-link.active {
+  color: var(--tbl-espresso-dark);
+}
+
+.tbl-desktop-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2.5px;
+  background: var(--tbl-accent-amber);
+  border-radius: 2px;
+}
+
+@media (min-width: 900px) {
+  .tbl-desktop-nav-links {
+    display: flex;
+  }
+}
+
+/* 3. Sticky Active Order & Table Indicator Bar (Pinned in every page) */
+.tbl-pinned-status-strip {
+  background: linear-gradient(90deg, #2C1E16 0%, #4A3427 100%);
+  color: #FFFFFF;
+  padding: 8px 16px;
+  border-bottom: 1px solid rgba(229, 131, 46, 0.4);
+  font-size: 0.85rem;
+}
+
+.tbl-pinned-status-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tbl-pinned-left-side {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.tbl-pinned-tag {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 800;
+}
+
+.tbl-pinned-order-highlight {
+  background: rgba(229, 131, 46, 0.25);
+  border: 1px solid var(--tbl-accent-amber);
+  color: #FFFFFF;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.tbl-pinned-status-caption {
+  color: #F8D7B0;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.tbl-pinned-actions-side {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tbl-pinned-btn {
+  font-size: 0.76rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 8px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tbl-pinned-btn-track {
+  background: var(--tbl-accent-amber);
+  color: #FFFFFF;
+  border: none;
+}
+
+.tbl-pinned-btn-track:hover {
+  background: #CC6F20;
+}
+
+.tbl-pinned-btn-switch {
+  background: rgba(255, 255, 255, 0.15);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.tbl-pinned-btn-switch:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* 4. Table Hero Banner with Welcome to Table X */
+.tbl-hero-section {
+  max-width: 1200px;
+  margin: 16px auto 0;
+  padding: 0 16px;
+}
+
+.tbl-hero-card {
+  background: linear-gradient(135deg, #FFFFFF 0%, #FAF2E8 100%);
+  border: 1.5px solid var(--tbl-border-subtle);
+  border-radius: 24px;
+  padding: 28px 24px;
+  box-shadow: 0 10px 30px rgba(44, 30, 22, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+.tbl-hero-watermark {
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  font-size: 8rem;
+  font-weight: 900;
+  color: rgba(44, 30, 22, 0.03);
+  user-select: none;
+  pointer-events: none;
+}
+
+.tbl-hero-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tbl-hero-top-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.tbl-hero-table-pill {
+  background: var(--tbl-espresso-dark);
+  color: #FFFFFF;
+  padding: 6px 14px;
+  border-radius: 30px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 4px 12px rgba(44, 30, 22, 0.15);
+}
+
+.tbl-hero-order-pill {
+  background: #FFF0DF;
+  border: 1.5px solid var(--tbl-accent-amber);
+  color: var(--tbl-espresso-dark);
+  padding: 5px 12px;
+  border-radius: 30px;
+  font-size: 0.82rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.tbl-hero-title-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tbl-hero-greeting {
+  font-size: 1.85rem;
+  font-weight: 900;
+  color: var(--tbl-espresso-dark);
+  margin: 0;
+  line-height: 1.3;
+}
+
+.tbl-hero-greeting-accent {
+  color: var(--tbl-accent-amber);
+}
+
+.tbl-hero-subtext {
+  font-size: 0.95rem;
+  color: var(--tbl-text-muted);
+  margin: 0;
+  max-width: 600px;
+  line-height: 1.6;
+}
+
+.tbl-hero-quick-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.tbl-hero-action-btn-primary {
+  height: 46px;
+  padding: 0 20px;
+  border-radius: 14px;
+  background: var(--tbl-espresso-dark);
+  color: #FFFFFF;
+  border: none;
+  font-size: 0.9rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(44, 30, 22, 0.15);
+}
+
+.tbl-hero-action-btn-primary:hover {
+  background: var(--tbl-accent-amber);
+  transform: translateY(-2px);
+}
+
+.tbl-hero-action-btn-secondary {
+  height: 46px;
+  padding: 0 16px;
+  border-radius: 14px;
+  background: #FFFFFF;
+  border: 1.5px solid var(--tbl-border-subtle);
+  color: var(--tbl-espresso-dark);
+  font-size: 0.88rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tbl-hero-action-btn-secondary:hover {
+  background: #F4ECE1;
+  border-color: var(--tbl-accent-gold);
+}
+
+/* 5. Section Header with Table & Order Badge */
+.tbl-section-container {
+  max-width: 1200px;
+  margin: 28px auto 0;
+  padding: 0 16px;
+}
+
+.tbl-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.tbl-section-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tbl-section-icon-box {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: #F4ECE1;
+  color: var(--tbl-espresso-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tbl-section-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--tbl-espresso-dark);
+  margin: 0;
+}
+
+.tbl-section-table-badge {
+  font-size: 0.72rem;
+  font-weight: 800;
+  background: #FFF4E5;
+  color: var(--tbl-accent-amber);
+  padding: 3px 8px;
+  border-radius: 8px;
+  border: 1px solid rgba(229, 131, 46, 0.3);
+}
+
+.tbl-section-view-all-link {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--tbl-accent-amber);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.tbl-section-view-all-link:hover {
+  text-decoration: underline;
+}
+
+/* 6. Table Menu Cards Grid */
+.tbl-products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.tbl-product-card {
+  background: #FFFFFF;
+  border: 1.5px solid var(--tbl-border-subtle);
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 16px rgba(44, 30, 22, 0.03);
+}
+
+.tbl-product-card:hover {
+  border-color: var(--tbl-accent-amber);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 28px rgba(44, 30, 22, 0.08);
+}
+
+.tbl-card-img-wrap {
+  position: relative;
+  width: 100%;
+  height: 160px;
+  background: #F4ECE1;
+  overflow: hidden;
+}
+
+.tbl-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.tbl-product-card:hover .tbl-card-img {
+  transform: scale(1.06);
+}
+
+.tbl-card-top-badges {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  gap: 6px;
+}
+
+.tbl-badge-hot {
+  background: #C81E1E;
+  color: #FFFFFF;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+.tbl-badge-best {
+  background: var(--tbl-accent-amber);
+  color: #FFFFFF;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+.tbl-card-table-tag {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  background: rgba(44, 30, 22, 0.85);
+  backdrop-filter: blur(6px);
+  color: #FFFFFF;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+.tbl-card-content {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.tbl-card-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.tbl-card-title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--tbl-espresso-dark);
+  margin: 0;
+}
+
+.tbl-card-rating {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--tbl-espresso-dark);
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.tbl-card-desc {
+  font-size: 0.82rem;
+  color: var(--tbl-text-muted);
+  line-height: 1.45;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.tbl-card-footer {
+  margin-top: auto;
+  padding-top: 10px;
+  border-top: 1px solid var(--tbl-border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.tbl-card-price-block {
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
+}
+
+.tbl-card-price-amount {
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: var(--tbl-espresso-dark);
+}
+
+.tbl-card-price-cur {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--tbl-text-muted);
+}
+
+.tbl-card-add-btn {
+  height: 40px;
+  padding: 0 14px;
+  border-radius: 10px;
+  background: var(--tbl-espresso-dark);
+  color: #FFFFFF;
+  border: none;
+  font-size: 0.82rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tbl-card-add-btn:hover {
+  background: var(--tbl-accent-amber);
+}
+
+/* 7. Dine-In Quick Services Bar */
+.tbl-services-banner {
+  background: #FFFFFF;
+  border: 1.5px solid var(--tbl-border-subtle);
+  border-radius: 20px;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.tbl-service-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  border-radius: 12px;
+  background: #FAF6F0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tbl-service-item:hover {
+  background: #F4ECE1;
+  transform: translateY(-2px);
+}
+
+.tbl-service-icon-wrap {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--tbl-espresso-dark);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.tbl-service-texts {
+  display: flex;
+  flex-direction: column;
+}
+
+.tbl-service-name {
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: var(--tbl-espresso-dark);
+  margin: 0;
+}
+
+.tbl-service-hint {
+  font-size: 0.75rem;
+  color: var(--tbl-text-muted);
+}
+
+/* 8. Table Bottom Navigation Bar (Mobile) */
+.tbl-bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 40;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-top: 1.5px solid var(--tbl-border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 8px 10px calc(8px + env(safe-area-inset-bottom, 0px));
+  box-shadow: 0 -4px 20px rgba(44, 30, 22, 0.05);
+}
+
+.tbl-bottom-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  color: var(--tbl-text-muted);
+  text-decoration: none;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  position: relative;
+  min-height: 44px;
+  justify-content: center;
+}
+
+.tbl-bottom-nav-item.active {
+  color: var(--tbl-accent-amber);
+  background: #FFF4E5;
+}
+
+.tbl-bottom-nav-item:hover {
+  color: var(--tbl-espresso-dark);
+}
+
+.tbl-nav-badge-dot {
+  position: absolute;
+  top: 4px;
+  left: 14px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--tbl-accent-amber);
+}
+
+/* 9. Modal Overlays (Call Waiter, Table Switcher, Cart) */
+.tbl-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: rgba(44, 30, 22, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  animation: modalFadeIn 0.25s ease-out;
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.tbl-modal-card {
+  background: #FFFFFF;
+  border-radius: 24px;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: 0 20px 60px rgba(44, 30, 22, 0.2);
+  overflow: hidden;
+  border: 1.5px solid var(--tbl-border-subtle);
+  animation: modalSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes modalSlideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.tbl-modal-header {
+  padding: 18px 20px;
+  background: #FAF6F0;
+  border-bottom: 1px solid var(--tbl-border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tbl-modal-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tbl-modal-title {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--tbl-espresso-dark);
+  margin: 0;
+}
+
+.tbl-modal-close-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: #FFFFFF;
+  border: 1px solid var(--tbl-border-subtle);
+  color: var(--tbl-espresso-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.tbl-modal-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Waiter Options Grid */
+.tbl-waiter-options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tbl-waiter-opt-btn {
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: #FAF6F0;
+  border: 1.5px solid var(--tbl-border-subtle);
+  color: var(--tbl-espresso-dark);
+  font-size: 0.9rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: right;
+}
+
+.tbl-waiter-opt-btn:hover {
+  background: #FFF4E5;
+  border-color: var(--tbl-accent-amber);
+  transform: translateX(-3px);
+}
+
+/* Table Selector Grid */
+.tbl-tables-grid-picker {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  max-height: 280px;
+  overflow-y: auto;
+  padding: 4px;
+}
+
+.tbl-table-picker-item {
+  height: 60px;
+  border-radius: 14px;
+  background: #FAF6F0;
+  border: 1.5px solid var(--tbl-border-subtle);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--tbl-espresso-dark);
+}
+
+.tbl-table-picker-item.active {
+  background: var(--tbl-espresso-dark);
+  color: #FFFFFF;
+  border-color: var(--tbl-espresso-dark);
+}
+
+.tbl-table-picker-item:hover:not(.active) {
+  background: #FEE7CE;
+  border-color: var(--tbl-accent-amber);
+}
+
+.tbl-picker-num {
+  font-size: 1.1rem;
+  font-weight: 900;
+}
+
+.tbl-picker-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .tbl-hero-greeting {
+    font-size: 1.45rem;
+  }
+
+  .tbl-hero-card {
+    padding: 20px 16px;
+    border-radius: 18px;
+  }
+
+  .tbl-tables-grid-picker {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .tbl-products-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   TABLE INVOICE (RECEIPT) MODAL + PRINTABLE SHEET
+   ==========================================================================
+   The receipt markup lives in TableInvoiceSheet and is mounted twice: inside
+   this modal (screen) and inside the shared print layer (#print-root, print).
+   Nothing screen-only survives printing because PrintDocument.css removes the
+   app shell from the printed page. */
+.tbl-invoice-modal-card {
+  max-width: 460px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.tbl-modal-title-icon {
+  color: #B98A4E;
+  flex-shrink: 0;
+}
+
+.tbl-invoice-modal-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 20px;
+  background: #FFFFFF;
+}
+
+.tbl-invoice-modal-actions {
+  display: flex;
+  gap: 10px;
+  padding: 14px 20px;
+  border-top: 1px solid var(--tbl-border-subtle);
+  background: #FAF6F0;
+  flex-shrink: 0;
+}
+
+.tbl-invoice-action {
+  min-height: 42px;
+  padding: 0 14px;
+  border-radius: 10px;
+  background: #FFFFFF;
+  color: #2C1E16;
+  border: 1px solid var(--tbl-border-subtle);
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.tbl-invoice-action--primary {
+  flex: 1;
+  background: #2C1E16;
+  color: #FFFFFF;
+  border: none;
+}
+
+/* ---- Receipt sheet (shared by the modal preview and the print layer) ---- */
+.tbl-receipt {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  color: #2C1E16;
+  font-size: 0.85rem;
+  min-width: 0;
+}
+
+.tbl-receipt__head {
+  text-align: center;
+  border-bottom: 1.5px dashed #E8DDCE;
+  padding-bottom: 14px;
+}
+
+.tbl-receipt__brand {
+  margin: 0 0 4px;
+  font-size: 1.4rem;
+  font-weight: 900;
+  letter-spacing: 1px;
+  color: #2C1E16;
+}
+
+.tbl-receipt__tagline {
+  margin: 0;
+  font-size: 0.78rem;
+  color: #7A695C;
+}
+
+.tbl-receipt__branch {
+  margin: 2px 0 0;
+  font-size: 0.72rem;
+  color: #A39385;
+}
+
+.tbl-receipt__meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  padding: 10px 14px;
+  background: #FFF8EE;
+  border: 1.5px solid #E5832E;
+  border-radius: 12px;
+  font-size: 0.85rem;
+}
+
+.tbl-receipt__meta > div {
+  min-width: 0;
+}
+
+.tbl-receipt__meta span {
+  display: block;
+  color: #7A695C;
+  font-size: 0.75rem;
+}
+
+.tbl-receipt__meta strong {
+  display: block;
+  font-size: 1rem;
+  color: #2C1E16;
+  overflow-wrap: anywhere;
+}
+
+.tbl-receipt__block {
+  border-bottom: 1.5px dashed #E8DDCE;
+  padding-bottom: 12px;
+}
+
+.tbl-receipt__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+}
+
+.tbl-receipt__table th {
+  background: #FAF6F0;
+  color: #7A695C;
+  font-weight: 800;
+  padding: 5px 6px;
+  text-align: right;
+  border-bottom: 1px solid #E8DDCE;
+}
+
+.tbl-receipt__table td {
+  padding: 5px 6px;
+  text-align: right;
+  border-bottom: 1px dotted #EFE6DA;
+  vertical-align: top;
+  overflow-wrap: anywhere;
+}
+
+.tbl-receipt__item-name {
+  display: block;
+  font-weight: 700;
+}
+
+.tbl-receipt__item-meta {
+  display: block;
+  font-size: 0.72rem;
+  color: #7A695C;
+}
+
+.tbl-receipt__qty,
+.tbl-receipt__line-total {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.tbl-receipt__totals {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.82rem;
+}
+
+.tbl-receipt__payment {
+  margin: 0;
+  text-align: center;
+  padding: 6px;
+  border-radius: 8px;
+  background: #FFF6E5;
+  color: #B76E00;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.tbl-receipt__qr {
+  color: #2C1E16;
+  margin-bottom: 4px;
+}
+
+@media (max-width: 640px) {
+  .tbl-invoice-modal-body {
+    padding: 14px;
+  }
+
+  .tbl-invoice-modal-actions {
+    padding: 12px 14px;
+    flex-wrap: wrap;
+  }
+
+  .tbl-invoice-action {
+    flex: 1 1 auto;
+    min-height: 44px;
+  }
+
+  .tbl-receipt__meta {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .tbl-receipt__brand {
+    font-size: 1.2rem;
+  }
+
+  .tbl-receipt__table {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .tbl-receipt__table th,
+  .tbl-receipt__table td {
+    padding: 4px 4px;
+  }
+}
