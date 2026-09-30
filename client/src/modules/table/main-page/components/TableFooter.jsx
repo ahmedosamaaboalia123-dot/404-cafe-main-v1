@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Coffee, MapPin, Clock, Phone, LayoutDashboard, Heart } from "lucide-react";
+import { MapPin, Clock, Phone, LayoutDashboard, Heart } from "lucide-react";
+import logo from "@/assets/images/new-logo.jpeg";
 import { useTable } from "../../context/TableContext";
 
 export default function TableFooter({ footerData }) {
@@ -19,7 +20,7 @@ export default function TableFooter({ footerData }) {
           <div className="footer-col brand-col">
             <div className="footer-brand-title">
               <div className="footer-logo-badge">
-                <Coffee size={20} className="footer-coffee-icon" />
+                <img src={logo} alt="404 Caffee" />
               </div>
               <div className="footer-brand-name-group">
                 <span className="brand-primary-name">{brandName}</span>

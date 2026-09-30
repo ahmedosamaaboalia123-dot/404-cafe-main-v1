@@ -59,7 +59,7 @@ import {
   OrderItemStatusEvent,
   OrderStatusEvent
 } from '../../modules/orders/order.models.js';
-import { Customer } from '../../modules/customers/customer.models.js';
+import { Customer, CustomerMarketingMessage, CustomerMarketingTemplate } from '../../modules/customers/customer.models.js';
 import { OrderReview, OrderReviewRevision } from '../../modules/reviews/review.models.js';
 import {
   Delegate,
@@ -130,6 +130,8 @@ const MODELS = [
   OrderItemStatusEvent,
   OrderStatusEvent,
   Customer,
+  CustomerMarketingTemplate,
+  CustomerMarketingMessage,
   OrderReview,
   OrderReviewRevision,
   Delegate,

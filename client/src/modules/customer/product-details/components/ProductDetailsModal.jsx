@@ -12,6 +12,7 @@ import {
   Check,
 } from "lucide-react";
 import "../styles/ProductDetails.css";
+import logo from "@/assets/images/new-logo.jpeg";
 
 // Sizes in exact order: كبير (Right) | وسط (Center) | صغير (Left)
 const DEFAULT_SIZES = [
@@ -172,12 +173,7 @@ export default function ProductDetailsModal({
 
           <div className="pd-brand-center">
             <div className="pd-brand-logo-wrap">
-              <span className="pd-brand-number">404</span>
-              <div className="pd-brand-sub-line">
-                <span className="pd-brand-divider"></span>
-                <span className="pd-brand-coffee-text">COFFEE</span>
-                <span className="pd-brand-divider"></span>
-              </div>
+              <img src={logo} alt="404 Caffee" />
             </div>
           </div>
 

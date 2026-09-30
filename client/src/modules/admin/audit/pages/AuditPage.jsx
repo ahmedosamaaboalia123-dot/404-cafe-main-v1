@@ -11,26 +11,15 @@ import { useAuthStore } from "@/store/authStore";
 import { AUDIT_RESULTS, AUDIT_SEVERITIES, EVENT_TYPE_LABELS } from "../adapters/audit.adapter";
 import {
   useAuditEvent,
-  useAuditExportStatus,
   useAuditScreen,
-  useEntityTimeline,
 } from "../hooks/audit.queries";
-import { useRequestAuditExport } from "../hooks/audit.mutations";
 import {
-  auditExportSchema,
   auditFilterSchema,
   firstAuditFormError,
 } from "../schemas/audit.schema";
 import "./AuditPage.css";
 
 const PAGE_LIMIT = 10;
-const EXPORT_FORMAT_OPTIONS = [
-  { value: "PDF", label: "PDF" },
-  { value: "XLSX", label: "جدول بيانات" },
-  { value: "CSV", label: "CSV" },
-];
-const EXPORT_STATUS_LABELS = { PROCESSING: "قيد التجهيز", READY: "جاهز", FAILED: "فشل" };
-
 const emptyDraft = { module: "", eventType: "", actorId: "", result: "", severity: "", from: "", to: "" };
 
 const toIsoWithOffset = (localValue) => {
@@ -50,8 +39,6 @@ function AuditEventDetails({ event }) {
     <dl className="audit-event-grid">
       <div><dt>الحدث</dt><dd>{full.eventLabel}</dd></div>
       <div><dt>السجل المتأثر</dt><dd>{ENTITY_LABELS[full.entity?.type] || 'سجل بالنظام'}{full.entity?.snapshot?.name ? ' · ' + full.entity.snapshot.name : ''}</dd></div>
-      {full.entity?.id && <div><dt>رقم مرجع السجل</dt><dd dir="ltr">{String(full.entity.id)}</dd></div>}
-      <div><dt>الأهمية</dt><dd>{full.severityLabel}</dd></div>
       {rows.map((row, index) => <div key={row.label + index}><dt>{row.label}</dt><dd>{row.value}</dd></div>)}
     </dl>
     {!details.isLoading && !details.isError && rows.length === 0 && <p className="audit-muted">لا توجد تفاصيل إضافية مسجّلة لهذا الحدث.</p>}
@@ -76,7 +63,6 @@ function AuditEventRow({ event, expanded, onToggle }) {
 export default function AuditPage() {
   const permissions = useAuthStore((state) => state.permissions);
   const canRead = can(permissions, "audit.read");
-  const canExport = can(permissions, "audit.export");
 
   const [draft, setDraft] = useState(emptyDraft);
   const [applied, setApplied] = useState({});
@@ -84,21 +70,8 @@ export default function AuditPage() {
   const [page, setPage] = useState(1);
   const [expandedId, setExpandedId] = useState(null);
 
-  const [timelineDraft, setTimelineDraft] = useState({ entityType: "", entityId: "" });
-  const [timelineLookup, setTimelineLookup] = useState(null);
-  const [timelineError, setTimelineError] = useState("");
-
-  const [format, setFormat] = useState("PDF");
-  const [exportError, setExportError] = useState("");
-  const [statusUrl, setStatusUrl] = useState(null);
-
   const params = useMemo(() => ({ ...applied, page, limit: PAGE_LIMIT }), [applied, page]);
   const screen = useAuditScreen(params);
-  const timeline = useEntityTimeline(timelineLookup?.entityType, timelineLookup?.entityId);
-  const requestExport = useRequestAuditExport({
-    onSuccess: (data) => setStatusUrl(data?.export?.statusUrl || data?.statusUrl || null),
-  });
-  const exportStatus = useAuditExportStatus(statusUrl, { enabled: canExport && Boolean(statusUrl) });
 
   if (!canRead) {
     return (
@@ -111,7 +84,6 @@ export default function AuditPage() {
 
   const summary = screen.data?.summary;
   const items = screen.data?.items || [];
-  const job = exportStatus.data?.export || exportStatus.data || null;
 
   const applyFilters = (event) => {
     event.preventDefault();
@@ -137,24 +109,6 @@ export default function AuditPage() {
     setApplied({});
     setPage(1);
     setExpandedId(null);
-  };
-
-  const lookupTimeline = (event) => {
-    event.preventDefault();
-    const entityType = timelineDraft.entityType.trim();
-    const entityId = timelineDraft.entityId.trim();
-    if (!entityType || !entityId) { setTimelineError("أدخل نوع الكيان ومعرفه أولًا"); return; }
-    setTimelineError("");
-    setTimelineLookup({ entityType, entityId });
-  };
-
-  const submitExport = (event) => {
-    event.preventDefault();
-    const parsed = auditExportSchema.safeParse({ filters: applied, format });
-    if (!parsed.success) { setExportError(firstAuditFormError(parsed)); return; }
-    setExportError("");
-    setStatusUrl(null);
-    requestExport.mutate({ reportType: "audit:events", ...parsed.data });
   };
 
   const chips = [
@@ -208,56 +162,6 @@ export default function AuditPage() {
         </AsyncState>
       </section>
 
-      <section className="audit-card" aria-label="الخط الزمني لكيان">
-        <h2>الخط الزمني لكيان</h2>
-        <form className="audit-timeline-form" onSubmit={lookupTimeline}>
-          <Select label="نوع السجل" value={timelineDraft.entityType} onChange={(e) => setTimelineDraft((c) => ({ ...c, entityType: e.target.value }))} placeholder="اختر نوع السجل" options={Object.entries(ENTITY_LABELS).map(([value,label]) => ({value,label}))}/>
-          <Input label="رقم مرجع السجل" placeholder="رقم السجل المطلوب" value={timelineDraft.entityId} onChange={(e) => setTimelineDraft((c) => ({ ...c, entityId: e.target.value }))} />
-          <div className="audit-timeline-form__actions">
-            <Button type="submit" loading={timeline.isFetching}>عرض الخط الزمني</Button>
-          </div>
-        </form>
-        {timelineError && <p className="audit-error" role="alert">{timelineError}</p>}
-        {!timelineLookup ? (
-          <p className="audit-muted">أدخل نوع الكيان ومعرفه ثم اضغط عرض الخط الزمني.</p>
-        ) : (
-          <AsyncState loading={timeline.isLoading} error={timeline.error} onRetry={timeline.refetch} empty={!timeline.isLoading && !timeline.isError && (timeline.data?.items?.length ?? 0) === 0} emptyText="لا توجد أحداث لهذا الكيان.">
-            <ul className="audit-timeline">
-              {(timeline.data?.items || []).map((entry) => (
-                <li key={entry.id}>
-                  <strong>{entry.eventLabel || "حدث مسجّل"}</strong>
-                  <p>{entry.actorName || entry.actorLabel} — {entry.resultLabel}</p>
-                  <AuditTime value={entry.occurredAt} />
-                </li>
-              ))}
-            </ul>
-          </AsyncState>
-        )}
-      </section>
-
-      {canExport && (
-        <section className="audit-card" aria-label="تصدير سجل الأحداث">
-          <h2>تصدير سجل الأحداث</h2>
-          <p className="audit-muted">يتم تصدير الأحداث المطابقة للفلاتر الحالية.</p>
-          <form className="audit-export-form" onSubmit={submitExport}>
-            <Select label="الصيغة" value={format} onChange={(e) => setFormat(e.target.value)} options={EXPORT_FORMAT_OPTIONS} placeholder="اختر الصيغة" />
-            <div className="audit-export-form__actions">
-              <Button type="submit" loading={requestExport.isPending}>طلب تصدير</Button>
-            </div>
-          </form>
-          {exportError && <p className="audit-error" role="alert">{exportError}</p>}
-          {requestExport.isError && <p className="audit-error" role="alert">{requestExport.error?.message || "تعذر طلب التصدير"}</p>}
-          {requestExport.isSuccess && !statusUrl && <p className="audit-muted">تم استلام طلب التصدير.</p>}
-          {statusUrl && (
-            <div className="audit-export-status" role="status">
-              <span>حالة التصدير: {job ? (EXPORT_STATUS_LABELS[job.status] || "قيد التجهيز") : "قيد التجهيز..."}</span>
-              {exportStatus.isError && <p className="audit-error">تعذر متابعة حالة التصدير.</p>}
-              {job?.status === "FAILED" && <p className="audit-error">{"تعذر تجهيز التصدير، أعد المحاولة"}</p>}
-              {job?.status === "READY" && <p className="audit-muted">اكتمل التصدير: {job.rowCount ?? "—"} صف — بصمة التحقق {job.checksum || "—"} (الباك يعيد بيانات التصدير الوصفية فقط، بلا ملف للتنزيل).</p>}
-            </div>
-          )}
-        </section>
-      )}
     </div>
   );
 }

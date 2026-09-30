@@ -1,5 +1,6 @@
 import React from "react";
 import { Coffee, ReceiptText, Bot, ConciergeBell } from "lucide-react";
+import logo from "@/assets/images/new-logo.jpeg";
 
 export default function HeroBanner({
   tableNumber,
@@ -74,9 +75,7 @@ export default function HeroBanner({
                 loading="eager"
               />
               <div className="cup-brand-overlay">
-                <span className="cup-logo-num">404</span>
-                <span className="cup-logo-text">COFFEE</span>
-                <span className="cup-logo-est">EST. 2025</span>
+                <img src={logo} alt="404 Caffee" />
               </div>
             </div>
             {/* Marble / Stone pedestal slab */}

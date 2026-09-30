@@ -46,3 +46,15 @@ export const listQuery = z
     limit: z.coerce.number().int().min(1).max(10).default(10)
   })
   .strict();
+
+export const templateBody = z.object({
+  name: z.string().trim().min(2).max(100),
+  greeting: z.string().trim().min(1).max(500),
+  body: z.string().trim().min(1).max(4000),
+  active: z.boolean().optional()
+}).strict();
+
+export const marketingMessageBody = z.object({
+  templateId: id,
+  message: z.string().trim().min(1).max(5000)
+}).strict();

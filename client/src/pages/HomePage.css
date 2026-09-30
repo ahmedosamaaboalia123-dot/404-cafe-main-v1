@@ -37,7 +37,11 @@
 }
 
 .brand-icon {
-  color: #6B3F1D;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 3px 10px rgba(43, 33, 27, 0.14);
 }
 
 .brand-name {

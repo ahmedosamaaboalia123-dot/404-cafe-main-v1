@@ -62,7 +62,7 @@ const cleanEvent = (event = {}) => ({
   actorName: event.actor?.name ?? null,
   actorType: event.actor?.type ?? "",
   actorId: event.actor?.id ? String(event.actor.id) : "",
-  actorLabel: ACTOR_TYPES[event.actor?.type] || "غير محدد",
+  actorLabel: event.actor?.roleName || ACTOR_TYPES[event.actor?.type] || "غير محدد",
   entity: event.entity ?? null,
   result: event.result || "",
   resultLabel: AUDIT_RESULTS[event.result] || "غير محددة",

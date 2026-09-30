@@ -38,6 +38,7 @@ const TableSummaryPage = lazy(() => import("@/modules/admin/orders/pages/TableSu
 const TableOrderTrackPage = lazy(() => import("@/modules/admin/orders/pages/TableOrderTrackPage"));
 const CustomersPage = lazy(() => import("@/modules/admin/customers/pages/CustomersPage"));
 const CustomerDetailsPage = lazy(() => import("@/modules/admin/customers/pages/CustomerDetailsPage"));
+const MarketingMessagesPage = lazy(() => import("@/modules/admin/customers/pages/MarketingMessagesPage"));
 const DelegatesPage = lazy(() => import("@/modules/admin/delegates/pages/DelegatesPage"));
 const DelegateDetailsPage = lazy(() => import("@/modules/admin/delegates/pages/DelegateDetailsPage"));
 const AuditPage = lazy(() => import("@/modules/admin/audit/pages/AuditPage"));
@@ -134,7 +135,7 @@ const adminRoutes = {
 
             path:"employees",
 
-            element:<ProtectedRoute pageKey="employees"><EmployeesPage/></ProtectedRoute>
+            element:<ProtectedRoute pageKey="employees" adminOnly><EmployeesPage/></ProtectedRoute>
 
         },
 
@@ -143,7 +144,7 @@ const adminRoutes = {
 
             path:"employees/:id",
 
-            element:<ProtectedRoute pageKey="employees"><EmployeeDetailsPage/></ProtectedRoute>
+            element:<ProtectedRoute pageKey="employees" adminOnly><EmployeeDetailsPage/></ProtectedRoute>
 
         },
 
@@ -239,6 +240,8 @@ const adminRoutes = {
 
                 { index: true, element: <ProtectedRoute pageKey="customers"><CustomersPage/></ProtectedRoute> },
 
+                { path: "marketing", element: <ProtectedRoute pageKey="customers"><MarketingMessagesPage/></ProtectedRoute> },
+
                 { path: ":id", element: <ProtectedRoute pageKey="customers"><CustomerDetailsPage/></ProtectedRoute> },
 
             ]
@@ -253,6 +256,4 @@ const adminRoutes = {
 
 
 export default adminRoutes;
-
-
 

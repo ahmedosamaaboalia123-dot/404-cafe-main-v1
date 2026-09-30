@@ -32,8 +32,12 @@ export const checkoutBody = z
 
 export const lookupBody = z
   .object({
-    orderNumber,
+    orderNumber: orderNumber.optional(),
     phone: z.string().trim().min(7).max(30)
+  })
+  .refine((value) => Boolean(value.orderNumber || value.phone), {
+    message: 'رقم الهاتف أو رقم الطلب مطلوب',
+    path: ['phone']
   })
   .strict();
 

@@ -5,6 +5,20 @@ import { enqueueDomainEvent } from '../../platform/events/outbox-writer.js';
 import { AuthSession, Employee, Permission, Role, RolePermission } from './employee.models.js';
 
 const defaults = { AuthSession, Employee, Permission, Role, RolePermission };
+const EMPLOYEES_PAGE_KEY = 'employees';
+
+function isSystemAdminRole(role) {
+  return role?.name === 'Admin';
+}
+
+function assertEmployeesModulePermissionsAreAdminOnly(role, permissions) {
+  if (!isSystemAdminRole(role) && permissions.some((permission) => permission.pageKey === EMPLOYEES_PAGE_KEY))
+    throw new ApiError({
+      code: 'EMPLOYEES_MODULE_ADMIN_ONLY',
+      status: 422,
+      messageAr: 'لا يمكن منح صلاحيات قسم الموظفين إلا لمدير النظام'
+    });
+}
 
 export async function ensureSystemRoles(context = {}) {
   const model = context.models?.Role ?? Role;
@@ -59,6 +73,12 @@ export async function createRole(input, context = {}) {
     async (tx) => {
       const models = context.models ?? defaults;
       const permissions = await resolveCatalog(input.permissionKeys, models, tx.session);
+      if (permissions.some((permission) => permission.pageKey === EMPLOYEES_PAGE_KEY))
+        throw new ApiError({
+          code: 'EMPLOYEES_MODULE_ADMIN_ONLY',
+          status: 422,
+          messageAr: 'لا يمكن إنشاء دور جديد بصلاحيات قسم الموظفين'
+        });
       const [role] = await models.Role.create(
         [{ name: input.name, level: input.level, description: input.description, isSystem: false }],
         { session: tx.session }
@@ -90,6 +110,7 @@ export async function replaceRolePermissions(roleId, input, context = {}) {
           messageAr: 'الدور غير موجود أو تم تعديله'
         });
       const permissions = await resolveCatalog(input.permissionKeys, models, tx.session);
+      assertEmployeesModulePermissionsAreAdminOnly(role, permissions);
       await models.RolePermission.deleteMany({ roleId }, { session: tx.session });
       if (permissions.length)
         await models.RolePermission.insertMany(

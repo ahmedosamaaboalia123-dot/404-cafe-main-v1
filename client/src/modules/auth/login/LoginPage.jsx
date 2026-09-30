@@ -6,7 +6,7 @@ import Button from "@/shared/components/Button/Button";
 import Input from "@/shared/components/Input/Input";
 import { useLogin } from "./useLogin";
 import LoginArt from "./LoginArt";
-import logo from "@/assets/images/404_logo-640.webp";
+import logo from "@/assets/images/new-logo.jpeg";
 import "./LoginPage.css";
 
 const loginSchema = z.object({

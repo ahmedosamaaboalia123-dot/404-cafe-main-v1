@@ -14,6 +14,7 @@ import {
   ExternalLink,
   Info,
 } from "lucide-react";
+import logo from "@/assets/images/new-logo.jpeg";
 import { useTable } from "../context/TableContext";
 
 export default function TableNavDrawer({ isOpen, onClose }) {
@@ -37,7 +38,7 @@ export default function TableNavDrawer({ isOpen, onClose }) {
         <div className="drawer-header-section">
           <div className="drawer-brand-row">
             <div className="drawer-logo-icon">
-              <Coffee size={24} />
+              <img src={logo} alt="404 Caffee" />
             </div>
             <div>
               <h2 className="drawer-brand-name">404 COFFEE</h2>

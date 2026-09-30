@@ -1,8 +1,14 @@
 import { sendAccepted, sendSuccess } from '../../platform/http/response.js';
 import { getAuditEvent, getAuditScreen, getEntityTimeline } from './audit.queries.js';
 import { getReportExportStatus, requestReportExport } from '../reports/reports.public-service.js';
+import { Employee, Role } from '../employees/employee.models.js';
+import { Order } from '../orders/order.models.js';
 
-const ctx = (r, d) => ({ ...r.auth, ...d.serviceContext });
+const ctx = (r, d) => ({
+  ...r.auth,
+  ...d.serviceContext,
+  auditModels: d.serviceContext?.auditModels ?? { Employee, Role, Order }
+});
 
 export function createAuditController(d) {
   return {

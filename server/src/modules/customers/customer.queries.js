@@ -2,11 +2,11 @@ import { buildPageMeta, buildSkipLimit, parsePage } from '../../platform/databas
 import { ApiError } from '../../platform/http/api-error.js';
 import { normalizePhone } from '../../shared/utils/normalize-phone.js';
 import { normalizeName } from '../../shared/utils/normalize-name.js';
-import { Customer } from './customer.models.js';
+import { Customer, CustomerMarketingMessage } from './customer.models.js';
 import { customerDto } from './customer.mapper.js';
 
 export async function getCustomersScreen(filters = {}, context = {}) {
-  const models = context.customerModels ?? { Customer };
+  const models = context.customerModels ?? { Customer, CustomerMarketingMessage };
   const { page, limit } = parsePage(filters);
   const { skip } = buildSkipLimit({ page, limit });
   const query = {};
@@ -38,7 +38,7 @@ export async function getCustomersScreen(filters = {}, context = {}) {
 }
 
 export async function getCustomerDetails(id, include = {}, context = {}) {
-  const models = context.customerModels ?? { Customer };
+  const models = context.customerModels ?? { Customer, CustomerMarketingMessage };
   const customer = await models.Customer.findById(id).lean();
   if (!customer)
     throw new ApiError({ code: 'CUSTOMER_NOT_FOUND', status: 404, messageAr: 'العميل غير موجود' });
@@ -52,6 +52,14 @@ export async function getCustomerDetails(id, include = {}, context = {}) {
     result.reviews = context.customersReviewsPort?.listByCustomer
       ? await context.customersReviewsPort.listByCustomer(customer._id, include.reviews, context)
       : null;
+  }
+  if (include.marketing) {
+    const messages = await models.CustomerMarketingMessage.find({ customerId: customer._id })
+      .sort({ createdAt: -1, _id: -1 }).limit(100).populate('sentBy', 'name').lean();
+    result.marketing = {
+      total: await models.CustomerMarketingMessage.countDocuments({ customerId: customer._id }),
+      items: messages.map((message) => ({ id: String(message._id), templateName: message.templateName, phone: message.phone, message: message.message, sentAt: message.createdAt, employeeName: message.sentBy?.name ?? 'غير متاح' }))
+    };
   }
   return result;
 }

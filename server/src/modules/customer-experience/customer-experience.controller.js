@@ -13,13 +13,18 @@ import {
 } from './customer-experience.service.js';
 import { getPublicTracking } from './customer-experience.queries.js';
 
-const ctx = (r, d) => ({
-  ...d.serviceContext,
-  actorType: 'CUSTOMER',
-  requestId: r.requestId,
-  operationRequestId: r.operationRequestId,
-  clientIp: r.ip
-});
+const ctx = (r, d) => {
+  const customer = r.publicOrder?.order;
+  return {
+    ...d.serviceContext,
+    actorType: 'CUSTOMER',
+    actorId: customer?.customerId ? String(customer.customerId) : undefined,
+    actorName: customer?.customerName ?? undefined,
+    requestId: r.requestId,
+    operationRequestId: r.operationRequestId,
+    clientIp: r.ip
+  };
+};
 
 export function createCustomerExperienceController(d) {
   return {

@@ -118,6 +118,15 @@
   line-height: 1;
 }
 
+.header-brand-logo {
+  display: block;
+  width: 68px;
+  height: 68px;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 0 4px 14px rgba(43, 33, 27, 0.16);
+}
+
 .brand-number {
   font-family: "Playfair Display", Georgia, serif;
   font-size: 28px;
@@ -592,8 +601,10 @@
   transform: translate(-50%, -30%);
   background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(4px);
-  padding: 4px 10px;
-  border-radius: 6px;
+  width: 52px;
+  height: 52px;
+  padding: 0;
+  border-radius: 50%;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -1397,14 +1408,22 @@
 }
 
 .footer-logo-badge {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  background-color: var(--coffee-primary);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background:#fff;
   color: #FFFFFF;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.footer-logo-badge img,
+.cup-brand-overlay img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
 }
 
 .brand-primary-name {

@@ -11,6 +11,7 @@ import {
   ChevronDown,
 } from "lucide-react";
 import { useTable } from "../../context/TableContext";
+import logo from "@/assets/images/new-logo.jpeg";
 
 export default function TableMainHeader({
   onOpenCart,
@@ -47,9 +48,7 @@ export default function TableMainHeader({
 
           <Link to={`/table/${tableNumber}`} className="header-brand-link">
             <div className="header-brand-container">
-              <div className="brand-number">404</div>
-              <div className="brand-text">COFFEE</div>
-              <div className="brand-est">EST. 2025</div>
+              <img className="header-brand-logo" src={logo} alt="404 Caffee" />
             </div>
           </Link>
         </div>

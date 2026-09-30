@@ -17,30 +17,79 @@ const listItemDto = (event) => ({
 
 async function attachActorNames(events, context = {}) {
   const list = Array.isArray(events) ? events : [events];
-  const ids = [
+  const employeeIds = [
     ...new Set(
       list
-        .filter((event) => event?.actor?.type === 'EMPLOYEE' && event?.actor?.id && !event.actor.name)
+        .filter((event) => event?.actor?.type === 'EMPLOYEE' && event?.actor?.id)
         .map((event) => String(event.actor.id))
     )
   ];
-  if (!ids.length) return events;
+  const customerOrderIds = [
+    ...new Set(
+      list
+        .filter((event) => event?.actor?.type === 'CUSTOMER' && event?.entity?.type === 'CustomerOrder' && event?.entity?.id)
+        .map((event) => String(event.entity.id))
+    )
+  ];
+
   const port = context.employeeDirectoryPort;
   let names = {};
-  if (port?.getNamesByIds) {
-    names = (await port.getNamesByIds(ids, context)) ?? {};
-  } else if (context.models?.Employee) {
-    const rows = await context.models.Employee.find({ _id: { $in: ids } })
-      .select('name')
-      .lean();
-    names = Object.fromEntries(rows.map((row) => [String(row._id), row.name ?? null]));
-  } else {
-    return events;
+  if (employeeIds.length && port?.getNamesByIds)
+    names = (await port.getNamesByIds(employeeIds, context)) ?? {};
+
+  const employeeModel = context.auditModels?.Employee;
+  const roleModel = context.auditModels?.Role;
+  let employeeRows = [];
+  if (employeeIds.length && employeeModel) {
+    employeeRows = await employeeModel.find({ _id: { $in: employeeIds } }).select('name roleId').lean();
+    for (const row of employeeRows) names[String(row._id)] ??= row.name ?? null;
   }
-  const apply = (event) =>
-    !event?.actor || event.actor.type !== 'EMPLOYEE'
-      ? event
-      : { ...event, actor: { ...event.actor, name: event.actor.name ?? names[String(event.actor.id)] ?? null } };
+  const roleIds = [...new Set(employeeRows.map((row) => row.roleId).filter(Boolean).map(String))];
+  const roles = roleIds.length && roleModel
+    ? await roleModel.find({ _id: { $in: roleIds } }).select('name').lean()
+    : [];
+  const roleNames = Object.fromEntries(roles.map((row) => [String(row._id), row.name ?? null]));
+  const employeeRoleIds = Object.fromEntries(employeeRows.map((row) => [String(row._id), String(row.roleId ?? '')]));
+
+  const orderModel = context.auditModels?.Order;
+  const customerOrders = customerOrderIds.length && orderModel
+    ? await orderModel.find({ _id: { $in: customerOrderIds } }).select('customerId customerName').lean()
+    : [];
+  const customerByOrderId = Object.fromEntries(
+    customerOrders.map((row) => [String(row._id), { id: row.customerId ? String(row.customerId) : null, name: row.customerName ?? null }])
+  );
+
+  const apply = (event) => {
+    if (!event?.actor) return event;
+    if (event.actor.type === 'EMPLOYEE') {
+      const employeeId = String(event.actor.id);
+      const name = event.actor.name ?? names[employeeId] ?? null;
+      const roleName = event.actor.roleName ?? roleNames[employeeRoleIds[employeeId]] ?? null;
+      const hasResolvedName = event.actor.name !== undefined || Boolean(port?.getNamesByIds) || employeeRows.length > 0;
+      return {
+        ...event,
+        actor: {
+          ...event.actor,
+          ...(hasResolvedName ? { name } : {}),
+          ...(roleName ? { roleName } : {})
+        }
+      };
+    }
+    if (event.actor.type === 'CUSTOMER') {
+      const customer = customerByOrderId[String(event.entity?.id)];
+      const customerId = event.actor.id ?? customer?.id ?? null;
+      const name = event.actor.name ?? customer?.name ?? null;
+      return {
+        ...event,
+        actor: {
+          ...event.actor,
+          ...(customerId ? { id: customerId } : {}),
+          ...(name ? { name } : {})
+        }
+      };
+    }
+    return event;
+  };
   return Array.isArray(events) ? list.map(apply) : apply(events);
 }
 

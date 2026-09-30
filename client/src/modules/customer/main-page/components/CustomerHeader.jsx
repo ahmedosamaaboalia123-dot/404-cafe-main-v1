@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { ShoppingCart, Menu } from "lucide-react";
+import logo from "@/assets/images/new-logo.jpeg";
 
 export default function CustomerHeader({
   tableNumber,
@@ -28,11 +29,7 @@ export default function CustomerHeader({
           </button>
 
           <Link to={tableNumber ? `/table/${tableNumber}` : "/"} className="header-brand-link">
-            <div className="header-brand-container">
-              <div className="brand-number">404</div>
-              <div className="brand-text">COFFEE</div>
-              <div className="brand-est">EST. 2025</div>
-            </div>
+            <img className="header-brand-logo" src={logo} alt="404 Caffee" />
           </Link>
         </div>
 

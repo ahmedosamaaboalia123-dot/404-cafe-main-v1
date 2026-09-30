@@ -202,6 +202,14 @@
   align-items: center;
 }
 
+.menu-brand-logo {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 4px 14px rgba(43, 33, 27, 0.16);
+}
+
 .menu-brand-number {
   font-family: "Playfair Display", Georgia, serif;
   font-size: 46px;

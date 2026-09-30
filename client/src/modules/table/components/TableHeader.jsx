@@ -2,7 +2,6 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   Menu,
-  Coffee,
   Bell,
   ShoppingBag,
   Clock,
@@ -12,6 +11,7 @@ import {
   CheckCircle2,
 } from "lucide-react";
 import { useTable } from "../context/TableContext";
+import logo from "@/assets/images/new-logo.jpeg";
 
 export default function TableHeader({ onOpenDrawer }) {
   const location = useLocation();
@@ -44,7 +44,7 @@ export default function TableHeader({ onOpenDrawer }) {
 
           <Link to={`/table/${tableNumber}`} className="tbl-logo-link">
             <div className="tbl-logo-icon-box">
-              <Coffee size={22} />
+              <img className="tbl-logo-image" src={logo} alt="404 Caffee" />
             </div>
             <div className="tbl-brand-texts">
               <h1 className="tbl-brand-title">404 COFFEE</h1>

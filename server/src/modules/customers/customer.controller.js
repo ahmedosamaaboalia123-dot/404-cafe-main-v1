@@ -2,6 +2,7 @@ import { sendCreated, sendSuccess } from '../../platform/http/response.js';
 import { customerDto } from './customer.mapper.js';
 import { createCustomer, updateCustomerProfile } from './customer.service.js';
 import { getCustomerDetails, getCustomersScreen } from './customer.queries.js';
+import { createMarketingTemplate, listMarketingTemplates, recordMarketingMessage } from './marketing.service.js';
 
 const ctx = (r, d) => ({ ...r.auth, ...d.serviceContext });
 
@@ -33,6 +34,9 @@ export function createCustomerController(d) {
         customer: customerDto(
           await updateCustomerProfile(r.validated.params.id, r.validated.body, ctx(r, d))
         )
-      })
+      }),
+    marketingTemplates: async (r, s) => sendSuccess(s, { items: await listMarketingTemplates(ctx(r, d)) }),
+    createMarketingTemplate: async (r, s) => sendCreated(s, { template: await createMarketingTemplate(r.validated.body, ctx(r, d)) }),
+    recordMarketingMessage: async (r, s) => sendCreated(s, { message: await recordMarketingMessage(r.validated.params.id, r.validated.body, ctx(r, d)) })
   };
 }

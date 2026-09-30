@@ -5,6 +5,7 @@ import { asyncHandler } from '../../platform/http/async-handler.js';
 import { validate } from '../../platform/http/validate.middleware.js';
 import { AUTH_PERMISSIONS } from '../../shared/constants/auth.constants.js';
 import { createEmployeeController } from './employee.controller.js';
+import { requireEmployeesModuleAdmin } from './employees-admin.middleware.js';
 import {
   createEmployeeBody,
   deleteEmployeeBody,
@@ -27,6 +28,7 @@ export function createEmployeeRouter(dependencies) {
   const router = Router();
   const controller = createEmployeeController(dependencies);
   router.use(employeeAuth(dependencies.config, dependencies.authDependencies));
+  router.use(requireEmployeesModuleAdmin(dependencies.authDependencies));
   router.get(
     '/employees-screen',
     requirePermission(AUTH_PERMISSIONS.EMPLOYEES_READ),

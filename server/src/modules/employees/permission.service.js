@@ -14,6 +14,11 @@ import {
 const permissionCache = new Map();
 const PERMISSION_CACHE_TTL_MS = 30_000;
 const PERMISSION_CACHE_MAX = 500;
+const EMPLOYEES_PAGE_KEY = 'employees';
+
+function isSystemAdminRole(role) {
+  return role?.name === 'Admin';
+}
 
 function permissionCacheKey(employee) {
   return `${employee._id}:${employee.roleId}:${employee.permissionsVersion}`;
@@ -94,6 +99,16 @@ async function replacePermissionMatrixInTransaction(input, context = {}) {
       status: 422,
       messageAr: 'توجد صلاحية غير معرفة'
     });
+  const employeesPermissions = permissions.filter((permission) => permission.pageKey === EMPLOYEES_PAGE_KEY);
+  if (!isSystemAdminRole(role) && employeesPermissions.length)
+    throw new ApiError({
+      code: 'EMPLOYEES_MODULE_ADMIN_ONLY',
+      status: 422,
+      messageAr: 'لا يمكن منح صلاحيات قسم الموظفين إلا لمدير النظام'
+    });
+  const pages = isSystemAdminRole(role)
+    ? input.pages
+    : input.pages.filter((page) => page.pageKey !== EMPLOYEES_PAGE_KEY);
   await models.EmployeePermission.deleteMany(
     { employeeId: employee._id },
     { session: context.session }
@@ -112,9 +127,9 @@ async function replacePermissionMatrixInTransaction(input, context = {}) {
     { employeeId: employee._id },
     { session: context.session }
   );
-  if (input.pages.length)
+  if (pages.length)
     await models.EmployeePageAccess.insertMany(
-      input.pages.map((page) => ({
+      pages.map((page) => ({
         ...page,
         employeeId: employee._id,
         updatedBy: context.actorId
@@ -156,7 +171,7 @@ async function replacePermissionMatrixInTransaction(input, context = {}) {
     employee,
     role,
     permissions,
-    pages: input.pages,
+    pages,
     permissionsVersion: employee.permissionsVersion
   };
 }

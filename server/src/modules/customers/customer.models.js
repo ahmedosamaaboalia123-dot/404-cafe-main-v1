@@ -29,3 +29,35 @@ const customerSchema = new mongoose.Schema(
 customerSchema.index({ status: 1, createdAt: -1, _id: -1 });
 
 export const Customer = mongoose.models.Customer ?? mongoose.model('Customer', customerSchema);
+
+const marketingTemplateSchema = new mongoose.Schema(
+  {
+    name: { type: String, required: true, trim: true, unique: true },
+    greeting: { type: String, required: true, trim: true, maxlength: 500 },
+    body: { type: String, required: true, trim: true, maxlength: 4000 },
+    active: { type: Boolean, default: true },
+    createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'Employee', required: true },
+    updatedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'Employee' }
+  },
+  { timestamps: true, versionKey: 'version', optimisticConcurrency: true }
+);
+
+const marketingMessageSchema = new mongoose.Schema(
+  {
+    customerId: { type: mongoose.Schema.Types.ObjectId, ref: 'Customer', required: true },
+    templateId: { type: mongoose.Schema.Types.ObjectId, ref: 'CustomerMarketingTemplate', required: true },
+    templateName: { type: String, required: true },
+    phone: { type: String, required: true },
+    message: { type: String, required: true, maxlength: 5000 },
+    sentBy: { type: mongoose.Schema.Types.ObjectId, ref: 'Employee', required: true }
+  },
+  { timestamps: true, versionKey: false }
+);
+marketingMessageSchema.index({ customerId: 1, createdAt: -1, _id: -1 });
+
+export const CustomerMarketingTemplate =
+  mongoose.models.CustomerMarketingTemplate ??
+  mongoose.model('CustomerMarketingTemplate', marketingTemplateSchema);
+export const CustomerMarketingMessage =
+  mongoose.models.CustomerMarketingMessage ??
+  mongoose.model('CustomerMarketingMessage', marketingMessageSchema);

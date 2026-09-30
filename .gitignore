@@ -1,2 +1,4 @@
 skills-lock.json
 .agents
+# Upload packages (never commit)
+*-upload.zip

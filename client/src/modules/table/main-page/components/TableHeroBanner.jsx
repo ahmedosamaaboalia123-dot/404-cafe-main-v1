@@ -1,5 +1,6 @@
 import React from "react";
 import { Coffee, ReceiptText, Bell, Sparkles } from "lucide-react";
+import logo from "@/assets/images/new-logo.jpeg";
 import { useTable } from "../../context/TableContext";
 
 export default function TableHeroBanner({
@@ -118,9 +119,7 @@ export default function TableHeroBanner({
                 loading="eager"
               />
               <div className="cup-brand-overlay">
-                <span className="cup-logo-num">404</span>
-                <span className="cup-logo-text">COFFEE</span>
-                <span className="cup-logo-est">EST. 2025</span>
+                <img src={logo} alt="404 Caffee" />
               </div>
             </div>
 

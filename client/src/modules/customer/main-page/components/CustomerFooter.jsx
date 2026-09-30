@@ -1,5 +1,6 @@
 import React from "react";
-import { Coffee, MapPin, Clock, Phone, Heart } from "lucide-react";
+import { MapPin, Clock, Phone, Heart } from "lucide-react";
+import logo from "@/assets/images/new-logo.jpeg";
 
 export default function CustomerFooter({ footerData }) {
   const brandName = footerData?.brandName || "Coffee 404";
@@ -14,7 +15,7 @@ export default function CustomerFooter({ footerData }) {
           <div className="footer-col brand-col">
             <div className="footer-brand-title">
               <div className="footer-logo-badge">
-                <Coffee size={20} className="footer-coffee-icon" />
+                <img src={logo} alt="404 Caffee" />
               </div>
               <div className="footer-brand-name-group">
                 <span className="brand-primary-name">{brandName}</span>
@@ -50,4 +51,3 @@ export default function CustomerFooter({ footerData }) {
     </footer>
   );
 }
-

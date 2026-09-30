@@ -11,6 +11,7 @@ import {
   idParams,
   screenQuery,
   updateBody
+  ,templateBody, marketingMessageBody
 } from './customer.validation.js';
 
 export function createCustomerRouter(d) {
@@ -29,6 +30,8 @@ export function createCustomerRouter(d) {
     validate({ body: createBody }),
     asyncHandler(c.create)
   );
+  r.get('/customer-marketing/templates', requirePermission(AUTH_PERMISSIONS.CUSTOMERS_READ), asyncHandler(c.marketingTemplates));
+  r.post('/customer-marketing/templates', requirePermission(AUTH_PERMISSIONS.CUSTOMERS_MANAGE), validate({ body: templateBody }), asyncHandler(c.createMarketingTemplate));
   r.get(
     '/customers/:id',
     requirePermission(AUTH_PERMISSIONS.CUSTOMERS_READ),
@@ -41,5 +44,6 @@ export function createCustomerRouter(d) {
     validate({ params: idParams, body: updateBody }),
     asyncHandler(c.update)
   );
+  r.post('/customers/:id/marketing-messages', requirePermission(AUTH_PERMISSIONS.CUSTOMERS_MANAGE), validate({ params: idParams, body: marketingMessageBody }), asyncHandler(c.recordMarketingMessage));
   return r;
 }

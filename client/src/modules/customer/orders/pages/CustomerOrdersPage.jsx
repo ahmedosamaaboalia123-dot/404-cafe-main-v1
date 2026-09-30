@@ -177,7 +177,7 @@ export default function CustomerOrdersPage({ tableMode = false, orders: ordersOv
               <input
                 type="text"
                 className="orders-search-input"
-                placeholder="ابحث برقم الطلب أو رقم الهاتف..."
+                placeholder="ابحث برقم الطلب"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />

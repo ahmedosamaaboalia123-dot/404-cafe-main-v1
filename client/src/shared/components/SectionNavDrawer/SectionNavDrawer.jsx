@@ -11,6 +11,7 @@ import {
   Globe,
 } from "lucide-react";
 import "./SectionNavDrawer.css";
+import logo from "@/assets/images/new-logo.jpeg";
 
 // Single source of truth for the section navigation: the side drawer always
 // mirrors the links exposed by the page header.
@@ -97,7 +98,7 @@ export default function SectionNavDrawer({
         <header className="section-nav-header">
           <div className="section-nav-brand">
             <span className="section-nav-logo">
-              <Coffee size={22} />
+              <img src={logo} alt="404 Caffee" />
             </span>
             <div className="section-nav-brand-texts">
               <strong>404 COFFEE</strong>

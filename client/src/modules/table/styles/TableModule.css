@@ -88,15 +88,39 @@
 }
 
 .tbl-logo-icon-box {
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
-  background: linear-gradient(135deg, var(--tbl-espresso-dark) 0%, var(--tbl-espresso-medium) 100%);
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #fff;
   color: #FFFFFF;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 12px rgba(44, 30, 22, 0.15);
+  box-shadow: 0 4px 14px rgba(44, 30, 22, 0.18);
+}
+
+.tbl-logo-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
+
+.drawer-logo-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex: 0 0 56px;
+  background: #fff;
+  box-shadow: 0 4px 14px rgba(44, 30, 22, .18);
+}
+
+.drawer-logo-icon img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .tbl-brand-texts {

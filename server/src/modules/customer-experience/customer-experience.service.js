@@ -155,14 +155,27 @@ export async function createPublicOrder(input, context = {}) {
 export async function lookupPublicOrder(input, context = {}) {
   const models = context.publicOrderModels ?? defaults;
   const limiter = context.lookupLimiter ?? lookupRateLimiter;
-  limiter.check(`${context.clientIp ?? 'unknown'}:${input.orderNumber}`);
-  const order = await models.Order.findOne({
-    $or: [{ orderNumber: input.orderNumber }, { publicOrderNumber: input.orderNumber }]
-  }).lean();
+  const normalizedPhone = normalizePhone(input.phone);
+  const phoneDigits = normalizedPhone.replace(/\D/g, '');
+  const phoneCandidates = [...new Set([
+    String(input.phone).trim(),
+    phoneDigits,
+    normalizedPhone,
+    phoneDigits.startsWith('20') ? `0${phoneDigits.slice(2)}` : null,
+    phoneDigits.startsWith('20') ? `+${phoneDigits}` : null
+  ].filter(Boolean))];
+  limiter.check(`${context.clientIp ?? 'unknown'}:${input.orderNumber ?? normalizedPhone}`);
+  const query = { customerPhone: { $in: phoneCandidates } };
+  if (input.orderNumber)
+    query.$or = [{ orderNumber: input.orderNumber }, { publicOrderNumber: input.orderNumber }];
+  const result = models.Order.findOne(query);
+  const order = input.orderNumber || typeof result.sort !== 'function'
+    ? await result.lean()
+    : await result.sort({ createdAt: -1, _id: -1 }).lean();
   const notFound = () =>
     new ApiError({ code: 'ORDER_NOT_FOUND', status: 404, messageAr: 'الطلب غير موجود' });
   if (!order) throw notFound();
-  if (normalizePhone(order.customerPhone) !== normalizePhone(input.phone)) throw notFound();
+  if (normalizePhone(order.customerPhone) !== normalizedPhone) throw notFound();
   const itemModel = models.OrderItem ?? OrderItem;
   const itemRows = itemModel?.find ? await itemModel.find({ orderId: order._id }).lean() : [];
   const activeItems = itemRows.filter((item) => item.status !== 'CANCELLED');

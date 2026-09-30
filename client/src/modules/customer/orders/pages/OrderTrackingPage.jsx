@@ -135,10 +135,6 @@ export default function OrderTrackingPage({ tableMode = false }) {
   const handleManualTrack = async () => {
     const num = trackNumberInput.trim();
     const ph = phoneInput.trim();
-    if (!num) {
-      setSearchError("اكتب رقم الطلب أولاً");
-      return;
-    }
     if (!/^0\d{9,10}$/.test(ph)) {
       setSearchError("اكتب رقم الهاتف بشكل صحيح (مثال: 01xxxxxxxxx)");
       return;
@@ -149,9 +145,10 @@ export default function OrderTrackingPage({ tableMode = false }) {
     try {
       const result = await lookupOrderByPhone({ orderNumber: num, phone: ph });
       if (result) {
-        const access = customerStorage.getOrderAccess(num);
+        const resolvedOrderNumber = result.publicOrderNumber || result.orderNumber;
+        const access = customerStorage.getOrderAccess(resolvedOrderNumber);
         if (access?.trackingReadToken) {
-          const tracked = await getPublicOrderTracking(num, access.trackingReadToken);
+          const tracked = await getPublicOrderTracking(resolvedOrderNumber, access.trackingReadToken);
           setOrder({ ...tracked, trackingToken: access.trackingReadToken });
         } else {
           setOrder(result);
@@ -176,12 +173,12 @@ export default function OrderTrackingPage({ tableMode = false }) {
         <div className="tracking-search-title-wrap">
           <Coffee size={22} className="text-coffee-gold" />
           <h3>تتبع طلبك</h3>
-          <p>اكتب رقم الطلب ورقم هاتفك الذي استخدمته عند الطلب للبحث عنه</p>
+          <p>اكتب رقم هاتفك للعثور على أحدث طلب، ويمكنك إضافة رقم الطلب لتحديده.</p>
         </div>
 
         <div className="tracking-search-fields">
           <label className="tracking-search-field">
-            <span>رقم الطلب</span>
+            <span>رقم الطلب (اختياري)</span>
             <input
               type="text"
               value={trackNumberInput}

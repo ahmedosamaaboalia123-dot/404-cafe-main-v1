@@ -253,13 +253,14 @@ function PermissionMatrixSection({ employeeId, employee, roles, canManage, onSav
       if (page?.pageKey) initialPages[String(page.pageKey)] = page.visible !== false;
     }
     setRoleId(initialRole);
-    setAllowed(initialAllowed);
+    setAllowed(initialAllowed.filter((key) => !key.startsWith("employees.")));
     setPagesVisible(initialPages);
   }, [stored, fallbackRoleId]);
 
   const sidebarPages = useMemo(() => {
     const seen = new Map();
     for (const entry of adminNavigation) {
+      if (entry?.adminOnly) continue;
       if (entry?.pageKey && !seen.has(entry.pageKey)) seen.set(entry.pageKey, entry.pageName || entry.pageKey);
     }
     return [...seen.entries()].map(([pageKey, pageName]) => ({ pageKey, pageName }));

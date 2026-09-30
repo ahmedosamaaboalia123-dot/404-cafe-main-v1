@@ -309,7 +309,7 @@ async function buildInventory(range, extra, context) {
 
 async function buildDrawer(range, extra, context) {
   const models = context.reportsModels ?? { CashDrawerTransaction, CashDrawerShift };
-  const [transactions, openShifts] = await sequentialReads([
+  const [transactions, openShifts, totalShifts] = await sequentialReads([
     () => models.CashDrawerTransaction.find({
       recordedAt: { $gte: range.start, $lt: range.endExclusive }
     })
@@ -322,7 +322,10 @@ async function buildDrawer(range, extra, context) {
       })
       .sort({ recordedAt: -1, _id: -1 })
       .session(context.session).lean(),
-    () => models.CashDrawerShift.countDocuments({ status: { $in: ['OPEN', 'CLOSING'] } }).session(context.session)
+    () => models.CashDrawerShift.countDocuments({ status: { $in: ['OPEN', 'CLOSING'] } }).session(context.session),
+    () => models.CashDrawerShift.countDocuments({
+      openedAt: { $gte: range.start, $lt: range.endExclusive }
+    }).session(context.session)
   ]);
   const byClass = new Map();
   for (const row of transactions) {
@@ -344,6 +347,7 @@ async function buildDrawer(range, extra, context) {
     summary: {
       cashIn: classTotals('in'),
       cashOut: classTotals('out'),
+      totalShifts,
       net: toApiString(
         transactions.reduce(
           (sum, row) => (row.direction === 'IN' ? add(sum, row.amount) : subtract(sum, row.amount)),
@@ -586,6 +590,7 @@ export async function getDrawerReport(filters = {}, context = {}) {
         summary: built?.summary ?? {
           cashIn: null,
           cashOut: null,
+          totalShifts: null,
           net: null,
           openShifts: null,
           transactions: null

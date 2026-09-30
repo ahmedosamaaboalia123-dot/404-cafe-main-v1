@@ -91,6 +91,8 @@ const SUMMARY_LABELS = {
   closingBalance: "رصيد الإغلاق",
   openingBalance: "رصيد الافتتاح",
   cashIn: "الوارد النقدي",
+  totalCashIn: "إجمالي الوارد",
+  totalShifts: "إجمالي الورديات",
   cashOut: "الصادر النقدي",
   delegates: "عدد المناديب",
   suppliers: "عدد الموردين",
@@ -147,7 +149,7 @@ const COUNT_KEYS = new Set([
   "transactionCount",
   "movements",
   "count",
-  "totalCount", "batchCount", "expiringBatches", "expiredBatches", "openShifts", "activeDelegates", "failedDeliveries", "assignments",
+  "totalCount", "batchCount", "expiringBatches", "expiredBatches", "openShifts", "totalShifts", "activeDelegates", "failedDeliveries", "assignments",
   "quantity",
   "totalQuantity",
   "delegates",
@@ -178,8 +180,8 @@ function summaryEntries(summary) {
   return Object.entries(summary);
 }
 
-function SummaryGrid({ summary }) {
-  const entries = summaryEntries(summary);
+function SummaryGrid({ summary, excludeKeys = [] }) {
+  const entries = summaryEntries(summary).filter(([key]) => !excludeKeys.includes(key));
   if (entries.length === 0) return <p className="fr-empty">لا يوجد ملخص لهذه الفترة.</p>;
   return (
     <div className="fr-summary-grid">
@@ -285,7 +287,7 @@ function OverviewTab() {
   };
 
   const screen = query.data;
-  const cards = screen?.cards ? summaryEntries(screen.cards) : [];
+  const cards = screen?.cards ? summaryEntries(screen.cards).filter(([key]) => key !== "delegateOutstanding") : [];
   const trend = screen?.charts?.salesTrend || [];
   const topProducts = screen?.topProducts || [];
   const alerts = screen?.alerts || [];
@@ -446,7 +448,7 @@ function SalesTab() {
       )}
       <AsyncState loading={query.isLoading} error={query.error} onRetry={query.refetch} empty={false}>
         <QualityBanner dataQuality={report?.dataQuality} failedSources={report?.failedSources} />
-        <SummaryGrid summary={report?.summary} />
+        <SummaryGrid summary={report?.summary} excludeKeys={["refunded"]} />
         <h3>اتجاه المبيعات</h3>
         <DataTable
           columns={["الفترة", "القناة", "الفواتير", "المبيعات", "التكلفة", "الربح"]}
@@ -576,7 +578,12 @@ function DrawerTab() {
       )}
       <AsyncState loading={query.isLoading} error={query.error} onRetry={query.refetch} empty={false}>
         <QualityBanner dataQuality={report?.dataQuality} failedSources={report?.failedSources} />
-        <SummaryGrid summary={report?.summary} />
+        <SummaryGrid
+          summary={{
+            totalShifts: report?.summary?.totalShifts,
+            totalCashIn: report?.summary?.cashIn,
+          }}
+        />
         <h3>حركات الدرج</h3>
         <DataTable
           columns={["التسلسل", "الاتجاه", "المبلغ", "البيان", "التاريخ"]}

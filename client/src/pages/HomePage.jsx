@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { ShieldCheck, ArrowLeft, Coffee, LayoutDashboard } from "lucide-react";
+import logo from "@/assets/images/new-logo.jpeg";
 import "./HomePage.css";
 
 function HomePage() {
@@ -7,7 +8,7 @@ function HomePage() {
         <div className="home-page-container">
             <div className="home-card">
                 <div className="brand-badge">
-                    <Coffee size={32} className="brand-icon" />
+                    <img className="brand-icon" src={logo} alt="404 Caffee" />
                     <span className="brand-name">404 COFFEE</span>
                 </div>
 

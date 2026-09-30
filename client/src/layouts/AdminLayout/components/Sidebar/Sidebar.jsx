@@ -6,8 +6,9 @@ import SidebarItem from "./SidebarItem";
 import { useAuthStore } from "@/store/authStore";
 import { canSeePage } from "@/modules/auth/permissions/permission";
 import { adminNavigation } from "@/modules/auth/permissions/adminNavigation";
+import { isAdminRole } from "@/modules/auth/permissions/role";
 
-import logo from "@/assets/images/404_logo-640.webp";
+import logo from "@/assets/images/new-logo.jpeg";
 
 import "./Sidebar.css";
 
@@ -16,16 +17,19 @@ function Sidebar({ isDesktopOpen = true, isMobileOpen = false, onMobileClose }){
 
 
     const permissions = useAuthStore((state) => state.permissions);
+    const role = useAuthStore((state) => state.role);
 
     const location = useLocation();
 
     const orderedPermissions = useMemo(() => {
-        const visible = adminNavigation.filter((item) => canSeePage(permissions, item.pageKey));
+        const visible = adminNavigation.filter((item) =>
+            item.adminOnly ? isAdminRole(role) : canSeePage(permissions, item.pageKey)
+        );
         const result = visible.filter((item) => !item.section);
         const orderItems = visible.filter((item) => item.section === "الطلبات");
         if (orderItems.length) result.push({ section: "الطلبات", items: orderItems });
         return result;
-    }, [permissions]);
+    }, [permissions, role]);
 
     useEffect(() => {
         onMobileClose?.();
@@ -82,5 +86,3 @@ function Sidebar({ isDesktopOpen = true, isMobileOpen = false, onMobileClose }){
 
 
 export default Sidebar;
-
-

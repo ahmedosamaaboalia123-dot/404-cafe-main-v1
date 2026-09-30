@@ -181,6 +181,32 @@ describe('public customer web', () => {
       )
     ).rejects.toMatchObject({ code: 'ORDER_NOT_FOUND' });
   });
+  it('finds the newest order when the customer searches by phone only', async () => {
+    const order = {
+      ...publicOrder(),
+      customerPhone: '01001234567',
+      subtotal: money('120'),
+      discount: money('0'),
+      tax: money('0'),
+      deliveryFee: money('0'),
+      total: money('120')
+    };
+    const sort = vi.fn(() => ({ lean: async () => order }));
+    const findOne = vi.fn(() => ({ sort, lean: async () => order }));
+    const result = await lookupPublicOrder(
+      { phone: '+20 100 123 4567' },
+      {
+        ...infrastructure(),
+        publicOrderModels: {
+          Order: { findOne },
+          OrderItem: { find: () => ({ lean: async () => [] }) }
+        }
+      }
+    );
+    expect(result.orderNumber).toBe(order.orderNumber);
+    expect(sort).toHaveBeenCalledWith({ createdAt: -1, _id: -1 });
+    expect(findOne.mock.calls[0][0].customerPhone.$in).toContain('+201001234567');
+  });
   it('builds tracking without cost or recipe internals', async () => {
     const order = {
       ...publicOrder(),

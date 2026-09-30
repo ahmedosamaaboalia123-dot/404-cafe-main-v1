@@ -2,10 +2,12 @@ import { Navigate } from 'react-router-dom'
 
 import { useAuthStore } from '@/store/authStore'
 import { canSeePage } from '@/modules/auth/permissions/permission'
+import { isAdminRole } from '@/modules/auth/permissions/role'
 
-function ProtectedRoute({ children, pageKey }) {
+function ProtectedRoute({ children, pageKey, adminOnly = false }) {
   const employee = useAuthStore((state) => state.employee)
   const permissions = useAuthStore((state) => state.permissions)
+  const role = useAuthStore((state) => state.role)
   const isAuthChecking = useAuthStore((state) => state.isAuthChecking)
 
   if (isAuthChecking) return <div className="route-loading" role="status">جاري التحقق من الجلسة...</div>
@@ -14,7 +16,11 @@ function ProtectedRoute({ children, pageKey }) {
     return <Navigate to="/login" replace />
   }
 
-  if (pageKey && !canSeePage(permissions, pageKey)) {
+  if (adminOnly && !isAdminRole(role)) {
+    return <Navigate to="/admin/dashboard" replace />
+  }
+
+  if (pageKey && !(adminOnly && isAdminRole(role)) && !canSeePage(permissions, pageKey)) {
     return <div className="route-loading" role="alert">ليس لديك صلاحية لعرض هذه الصفحة.</div>
   }
 
@@ -22,4 +28,3 @@ function ProtectedRoute({ children, pageKey }) {
 }
 
 export default ProtectedRoute
-

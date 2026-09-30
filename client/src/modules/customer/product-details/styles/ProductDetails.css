@@ -134,6 +134,14 @@
   align-items: center;
 }
 
+.pd-brand-logo-wrap img {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 4px 12px rgba(43, 33, 27, .16);
+}
+
 .pd-brand-number {
   font-size: 26px;
   font-weight: 900;

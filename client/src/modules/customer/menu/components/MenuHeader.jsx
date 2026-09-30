@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Menu, Search, ShoppingCart, ArrowLeft, FileText, Home } from "lucide-react";
+import logo from "@/assets/images/new-logo.jpeg";
 
 export default function MenuHeader({
   cartCount = 0,
@@ -56,14 +57,7 @@ export default function MenuHeader({
         <div className="menu-header-center">
           <Link to={homePath} className="menu-brand-link">
             <div className="menu-brand-content">
-              <span className="menu-brand-number">404</span>
-              <span className="menu-brand-title">COFFEE</span>
-              <span className="menu-brand-slogan">GOOD COFFEE, BETTER MOMENTS</span>
-              <div className="menu-brand-est-wrapper">
-                <span className="est-line" />
-                <span className="menu-brand-est">EST. 2025</span>
-                <span className="est-line" />
-              </div>
+              <img className="menu-brand-logo" src={logo} alt="404 Caffee" />
             </div>
           </Link>
         </div>

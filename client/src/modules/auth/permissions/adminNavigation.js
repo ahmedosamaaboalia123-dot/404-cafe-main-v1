@@ -17,5 +17,5 @@ export const adminNavigation = Object.freeze([
   { id: "reports", pageKey: "reports", pageName: "التقارير المالية", path: "/admin/financial-reports", iconKey: "reports" },
   { id: "audit", pageKey: "audit", pageName: "سجل التدقيق", path: "/admin/audit", iconKey: "audit" },
   { id: "reviews", pageKey: "reviews", pageName: "التقييمات", path: "/admin/reviews", iconKey: "reviews" },
-  { id: "employees", pageKey: "employees", pageName: "الموظفون", path: "/admin/employees", iconKey: "employees" },
+  { id: "employees", pageKey: "employees", pageName: "الموظفون", path: "/admin/employees", iconKey: "employees", adminOnly: true },
 ]);
