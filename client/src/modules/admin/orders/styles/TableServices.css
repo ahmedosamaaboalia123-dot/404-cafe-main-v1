@@ -181,6 +181,30 @@
     cursor: not-allowed;
 }
 
+.btn-transfer-sales {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-xs);
+    min-height: 44px;
+    padding: 0 var(--space-md);
+    border: 1px solid var(--primary);
+    border-radius: var(--radius-md);
+    background: transparent;
+    color: var(--primary);
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-bold);
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: var(--font-family);
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+.btn-transfer-sales:hover:not(:disabled) {
+    background: var(--surface-soft);
+}
+
 .service-order {
     flex: 1 1 100%;
     display: flex;

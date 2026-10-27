@@ -159,8 +159,8 @@ export default function TableMainHeader({
               color: "#593215",
               border: "1px solid #E8DED3",
               borderRadius: "50%",
-              width: "40px",
-              height: "40px",
+              width: "44px",
+              height: "44px",
             }}
           >
             <Bell size={19} />

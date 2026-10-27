@@ -140,8 +140,8 @@ export default function TableCartDrawer({ isOpen, onClose }) {
                       type="button"
                       onClick={() => updateCartQuantity(item.id, item.quantity - 1)}
                       style={{
-                        width: "28px",
-                        height: "28px",
+                        width: "44px",
+                        height: "44px",
                         borderRadius: "8px",
                         background: "#FAF6F0",
                         border: "1px solid #E8DDCE",
@@ -151,7 +151,7 @@ export default function TableCartDrawer({ isOpen, onClose }) {
                         cursor: "pointer",
                       }}
                     >
-                      {item.quantity === 1 ? <Trash2 size={13} color="#C81E1E" /> : <Minus size={13} />}
+                      {item.quantity === 1 ? <Trash2 size={16} color="#C81E1E" /> : <Minus size={16} />}
                     </button>
                     <span style={{ fontSize: "0.9rem", fontWeight: 800, minWidth: "18px", textAlign: "center" }}>
                       {item.quantity}
@@ -160,8 +160,8 @@ export default function TableCartDrawer({ isOpen, onClose }) {
                       type="button"
                       onClick={() => updateCartQuantity(item.id, item.quantity + 1)}
                       style={{
-                        width: "28px",
-                        height: "28px",
+                        width: "44px",
+                        height: "44px",
                         borderRadius: "8px",
                         background: "#FAF6F0",
                         border: "1px solid #E8DDCE",
@@ -171,7 +171,7 @@ export default function TableCartDrawer({ isOpen, onClose }) {
                         cursor: "pointer",
                       }}
                     >
-                      <Plus size={13} />
+                      <Plus size={16} />
                     </button>
                   </div>
                 </div>

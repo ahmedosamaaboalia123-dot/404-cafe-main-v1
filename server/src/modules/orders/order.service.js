@@ -593,6 +593,63 @@ export async function markOrderItemReady(itemId, input, context = {}) {
   );
 }
 
+export async function markWholeOrderReady(orderId, input, context = {}) {
+  return runInTransaction(
+    async (tx) => {
+      const models = context.orderModels ?? defaults;
+      const order = await models.Order.findOne({
+        _id: orderId,
+        version: input.expectedVersion
+      }).session(tx.session);
+      if (!order || !['CONFIRMED', 'PREPARING', 'READY'].includes(order.status))
+        throw new ApiError({
+          code: 'ORDER_READY_CONFLICT',
+          status: 409,
+          messageAr: 'الطلب غير متاح للتحضير أو تغير'
+        });
+      const pending = await models.OrderItem.find({
+        orderId: order._id,
+        status: 'PREPARING'
+      }).session(tx.session);
+      if (!pending.length)
+        throw new ApiError({
+          code: 'ORDER_ALREADY_READY',
+          status: 409,
+          messageAr: 'الطلب جاهز بالفعل'
+        });
+      for (const item of pending) {
+        await itemEvent(models, order, item, 'READY', 'ITEM_READY', context, tx);
+      }
+      const items = await models.OrderItem.find({ orderId: order._id }).session(tx.session);
+      const progress = progressOf(items);
+      if (progress.total > 0 && progress.ready === progress.total)
+        await statusEvent(models, order, 'READY', 'ALL_ITEMS_READY', context, tx);
+      else
+        await record(
+          'order.updated',
+          order._id,
+          {
+            orderId: String(order._id),
+            orderNumber: order.orderNumber,
+            toStatus: order.status,
+            sequence: order.eventSequence
+          },
+          { ...context, ...tx }
+        );
+      return {
+        order: {
+          id: String(order._id),
+          status: order.status,
+          progress,
+          eventSequence: order.eventSequence
+        },
+        readyCount: pending.length
+      };
+    },
+    context,
+    context.transactionOptions
+  );
+}
 export async function completeTakeawayOrder(orderId, input, context = {}) {
   return runInTransaction(
     async (tx) => {

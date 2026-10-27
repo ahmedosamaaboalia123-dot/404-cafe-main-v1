@@ -22,7 +22,7 @@
 }
 
 .form-group input {
-    height: 40px;
+    height: 44px;
     padding: 0 12px;
     border: 1px solid var(--input-border);
     border-radius: var(--input-radius);
@@ -45,7 +45,7 @@
 }
 
 .form-group select {
-    height: 36px;
+    height: 44px;
     padding: 0 12px;
     border: 1px solid var(--input-border);
     border-radius: var(--input-radius);
@@ -68,7 +68,7 @@
     align-items: center;
     justify-content: center;
     gap: var(--space-sm);
-    height: 40px;
+    height: 44px;
     padding: 0 var(--button-padding-x);
     border: none;
     border-radius: var(--button-radius);
@@ -101,7 +101,7 @@
     align-items: center;
     justify-content: center;
     gap: var(--space-sm);
-    height: 40px;
+    height: 44px;
     padding: 0 var(--button-padding-x);
     border: 1px solid var(--border-main);
     border-radius: var(--button-radius);
@@ -119,6 +119,12 @@
 }
 
 /* ── Responsive ── */
+@media (max-width: 700px) {
+    .customer-form {
+        grid-template-columns: 1fr;
+    }
+}
+
 @media (max-width: 600px) {
     .customer-form {
         grid-template-columns: 1fr;

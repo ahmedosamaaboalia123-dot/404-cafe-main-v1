@@ -287,7 +287,7 @@ describe('table services', () => {
     });
     const { serviceRequest, alreadyOpen } = await createOrderReviewRequest(proposal, {
       ...infrastructure(),
-      tableServiceModels: serviceModels({ findOne: () => chain(open) }),
+      tableServiceModels: serviceModels({ findOne: (query) => chain(query?.$or ? null : open) }),
       serviceSessionModels: { TableSession: { findOne: async () => null } }
     });
     expect(alreadyOpen).toBe(true);
@@ -297,15 +297,42 @@ describe('table services', () => {
     expect(open.save).toHaveBeenCalled();
   });
 
-  it('never re-attaches a proposal to a request that already carries one', async () => {
+  it('replays a retry of the same proposal without duplicating its waiter call', async () => {
     const proposal = proposalDoc();
-    const open = requestDoc({ type: 'CALL_WAITER', proposalId: id(), save: vi.fn() });
-    const { serviceRequest } = await createOrderReviewRequest(proposal, {
+    const scoped = requestDoc({ type: 'CALL_WAITER', proposalId: proposal._id, purpose: 'ORDER_REVIEW' });
+    const create = vi.fn(async () => {
+      throw new Error('must reuse the scoped request');
+    });
+    const { serviceRequest, alreadyOpen } = await createOrderReviewRequest(proposal, {
       ...infrastructure(),
-      tableServiceModels: serviceModels({ findOne: () => chain(open) }),
+      tableServiceModels: serviceModels({ findOne: () => chain(scoped), create }),
       serviceSessionModels: { TableSession: { findOne: async () => null } }
     });
-    expect(serviceRequest).toBe(open);
+    expect(alreadyOpen).toBe(true);
+    expect(serviceRequest).toBe(scoped);
+    expect(create).not.toHaveBeenCalled();
+  });
+
+  it('opens a separate waiter call when another proposal is already pending', async () => {
+    const first = proposalDoc();
+    const second = proposalDoc({ _id: id(), proposalNumber: 'PO-00000043' });
+    const open = requestDoc({ type: 'CALL_WAITER', proposalId: first._id, save: vi.fn() });
+    const created = [];
+    const { serviceRequest, alreadyOpen } = await createOrderReviewRequest(second, {
+      ...infrastructure(),
+      tableServiceModels: serviceModels({
+        findOne: (query) => chain(query?.$or ? null : open),
+        create: async ([v]) => {
+          const row = { _id: id(), version: 0, status: 'OPEN', ...v };
+          created.push(row);
+          return [row];
+        }
+      }),
+      serviceSessionModels: { TableSession: { findOne: async () => null } }
+    });
+    expect(alreadyOpen).toBe(false);
+    expect(String(serviceRequest.proposalId)).toBe(String(second._id));
+    expect(serviceRequest).not.toBe(open);
     expect(open.save).not.toHaveBeenCalled();
   });
   it('settles bill calls automatically while cancelling the rest on close', async () => {
@@ -427,5 +454,50 @@ describe('table services', () => {
 
   it('leaves plain waiter calls without an order block', () => {
     expect(serviceRequestDto(requestDoc({ type: 'WATER_REQUEST' })).order).toBeNull();
+  });
+
+  it('exposes the table id and catalog ids for instant sales transfer', () => {
+    const tableId = id();
+    const productId = id();
+    const productSizeId = id();
+    const addonId = id();
+    const row = serviceRequestDto(
+      requestDoc({
+        type: 'CALL_WAITER',
+        purpose: 'ORDER_REVIEW',
+        tableId,
+        proposalId: id(),
+        orderSnapshot: {
+          proposalNumber: 'PO-00000042',
+          orderNumber: null,
+          lineCount: 1,
+          quantityCount: 2,
+          subtotal: '100',
+          items: [
+            {
+              productId,
+              productName: 'لاتيه',
+              typeName: 'ساخن',
+              productSizeId,
+              sizeName: 'كبير',
+              addonIds: [addonId],
+              quantity: 2,
+              lineSubtotal: '100',
+              notes: ''
+            }
+          ]
+        }
+      })
+    );
+    expect(row.tableId).toBe(String(tableId));
+    expect(row.order.items[0]).toMatchObject({
+      productId: String(productId),
+      productName: 'لاتيه',
+      typeName: 'ساخن',
+      productSizeId: String(productSizeId),
+      sizeName: 'كبير',
+      addonIds: [String(addonId)],
+      quantity: 2
+    });
   });
 });

@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { AlertTriangle, CheckCircle2, Coffee, Minus, Pencil, Plus, Trash2 } from "lucide-react";
 import PageHeader from "@/shared/components/PageHeader/PageHeader";
 import { useAddSessionItems, useCreateOrder, useOpenTableOrder } from "../hooks/order.mutations";
@@ -31,6 +31,7 @@ const lineKey = (selection) =>
 const buildLine = (selection) => ({
   productId: selection.product.id,
   productName: selection.product.name,
+  typeId: selection.type?.id ?? null,
   productSizeId: selection.size.id,
   variant: selection.type?.type || "",
   size: selection.size.name,
@@ -46,6 +47,8 @@ const buildLine = (selection) => ({
 export default function SalesPage() {
   const { type, id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
+  const prefillApplied = useRef(false);
 
   const [sections, setSections] = useState([]);
   const [products, setProducts] = useState([]);
@@ -95,6 +98,64 @@ export default function SalesPage() {
     if (!isTable) return;
     ordersApi.table(id).then(async (context) => context.session?.id ? { ...context, ...(await ordersApi.session(context.session.id)) } : context).then(setTableContext).catch((e) => setError(e.response?.data?.error?.messageAr || e.message));
   }, [id, isTable]);
+
+  // Transfer from the table-services screen: prefill the invoice with the
+  // guest's cart once, matched by catalog ids (single product source).
+  useEffect(() => {
+    if (prefillApplied.current || loading || !products.length) return;
+    const incoming = location.state?.prefillItems;
+    if (!Array.isArray(incoming) || !incoming.length) return;
+    prefillApplied.current = true;
+    let skipped = 0;
+    const lines = [];
+    const allSizes = (product) =>
+      (product?.variants || []).flatMap((t) => (t.sizes || []).map((s) => ({ type: t, size: s })));
+    for (const item of incoming) {
+      // Primary: exact id match. Fallback: name match (snapshots frozen
+      // before the catalog-ids update carry names only).
+      const product =
+        products.find((p) => item.productId && String(p.id) === String(item.productId)) ||
+        (item.productName ? products.find((p) => p.name === item.productName) : null);
+      const sizes = allSizes(product);
+      const sizeEntry =
+        sizes.find((entry) => item.productSizeId && String(entry.size.id) === String(item.productSizeId)) ||
+        (item.sizeName ? sizes.find((entry) => entry.size.name === item.sizeName) : null);
+      if (!product || !sizeEntry) { skipped += 1; continue; }
+      const wantedAddons = new Set((item.addonIds || []).map(String));
+      const addons = (product.addons || []).filter((a) => wantedAddons.has(String(a.id)));
+      lines.push({
+        key: "",
+        ...buildLine({
+          product,
+          type: sizeEntry.type,
+          size: sizeEntry.size,
+          addons,
+          notes: item.notes || "",
+          quantity: Number(item.quantity) || 1,
+        }),
+      });
+    }
+    if (lines.length) {
+      setInvoice((current) => {
+        const next = [...current];
+        for (const line of lines) {
+          const key = [
+            line.productId,
+            line.typeId ?? "-",
+            line.productSizeId,
+            [...(line.addonIds || [])].map(String).sort().join("+") || "-",
+            line.notes || "-",
+          ].join("|");
+          const index = next.findIndex((x) => x.key === key);
+          if (index !== -1) next[index] = { ...next[index], qty: next[index].qty + line.qty };
+          else next.push({ ...line, key });
+        }
+        return next;
+      });
+    }
+    if (skipped > 0) setError(`تم نقل ${lines.length} صنف، وتعذر مطابقة ${skipped} صنف مع الكتالوج الحالي.`);
+    navigate(location.pathname, { replace: true, state: {} });
+  }, [loading, products, location.state, location.pathname, navigate]);
 
   const visible = useMemo(() => {
     const base =

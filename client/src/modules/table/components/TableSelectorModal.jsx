@@ -93,6 +93,7 @@ export default function TableSelectorModal({ isOpen, onClose }) {
                 onClick={() => setSelectedSection(sec.id)}
                 style={{
                   padding: "6px 14px",
+                  minHeight: "44px",
                   borderRadius: "20px",
                   fontSize: "0.8rem",
                   fontWeight: 700,

@@ -71,6 +71,11 @@ export const readyBody = z
   })
   .strict();
 
+export const readyWholeBody = z
+  .object({
+    expectedVersion: version
+  })
+  .strict();
 export const completeTakeawayBody = z
   .object({
     payment: z

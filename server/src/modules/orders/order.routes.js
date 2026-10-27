@@ -18,6 +18,7 @@ import {
   itemIdParams,
   readyBody,
   readyItemParams,
+  readyWholeBody,
   screenQuery
 } from './order.validation.js';
 
@@ -84,6 +85,12 @@ export function createOrderRouter(d) {
     requirePermission(AUTH_PERMISSIONS.PREPARATION_UPDATE),
     validate({ params: readyItemParams, body: readyBody }),
     idempotentAsyncHandler('orders.item-ready', c.markReady)
+  );
+  r.post(
+    '/preparation/orders/:id/ready-all',
+    requirePermission(AUTH_PERMISSIONS.PREPARATION_UPDATE),
+    validate({ params: idParams, body: readyWholeBody }),
+    idempotentAsyncHandler('orders.ready-all', c.markWholeReady)
   );
   return r;
 }

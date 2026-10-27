@@ -156,6 +156,9 @@ export function normalizeBackendTableOrder(order) {
     __tableNormalized: true,
     id: order.id,
     orderNumber: order.orderNumber,
+    // Optimistic-concurrency version the server requires on writes
+    // (e.g. review submit). Must survive normalization.
+    version: order.version ?? 0,
     trackingToken: order.trackingToken,
     tableNumber,
     table: order.table || String(tableNumber),
@@ -322,11 +325,11 @@ export async function cancelV1TableService(serviceId, tableToken) {
   );
 }
 
-export async function submitV1TableReview(orderId, tableToken, { rating, comment, expectedOrderVersion }) {
+export async function submitV1TableReview(orderId, tableToken, { rating, comment, displayName, expectedOrderVersion }) {
   return unwrap(
     await apiClient.post(
       endpoints.v1.tableGuest.reviews(orderId),
-      { rating, comment, expectedOrderVersion },
+      { rating, comment, displayName, expectedOrderVersion },
       v1GuestHeaders(tableToken, makeIdempotencyKey())
     )
   );

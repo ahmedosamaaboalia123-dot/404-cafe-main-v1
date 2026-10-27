@@ -37,20 +37,23 @@ vi.mock("@/modules/admin/employees/api/employees.api", async (importOriginal) =>
 
 const catalogPayload = {
   items: [
-    { _id: "p1", key: "employees.read", pageKey: "employees", action: "read" },
-    { _id: "p2", key: "employees.create", pageKey: "employees", action: "create" },
+    { _id: "p1", key: "inventory.read", pageKey: "inventory", action: "read" },
+    { _id: "p2", key: "inventory.create", pageKey: "inventory", action: "create" },
     { _id: "p3", key: "suppliers.read", pageKey: "suppliers", action: "read" },
   ],
 };
 
-vi.mock("@/modules/admin/employees/hooks/employee.queries", async (importOriginal) => {
+vi.mock("../src/modules/admin/employees/hooks/employee.queries", async (importOriginal) => {
   const original = await importOriginal();
   return {
     ...original,
     usePermissionsCatalog: () => ({
       data: {
         permissions: catalogPayload.items.map((item) => ({ id: item._id, key: item.key, pageKey: item.pageKey, action: item.action })),
-        byPage: [],
+        byPage: [
+          { pageKey: "inventory", title: "المخزون", actions: ["read", "create"] },
+          { pageKey: "suppliers", title: "الموردون", actions: ["read"] },
+        ],
       },
       isLoading: false,
       isError: false,
@@ -120,12 +123,12 @@ describe("employee details page with server payloads", () => {
     const { body } = globalThis.__matrixBody;
     expect(body.roleId).toBe(EMPLOYEE_ROLE_ID);
     const sentKeys = body.permissions.map((entry) => entry.permissionKey);
-    expect(sentKeys).toContain("employees.read");
+    expect(sentKeys).toContain("inventory.read");
     expect(sentKeys).not.toContain("suppliers.read");
     const suppliersPage = body.pages.find((page) => page.pageKey === "suppliers");
     expect(suppliersPage.visible).toBe(false);
-    const employeesPage = body.pages.find((page) => page.pageKey === "employees");
-    expect(employeesPage.visible).toBe(true);
+    const inventoryPage = body.pages.find((page) => page.pageKey === "inventory");
+    expect(inventoryPage.visible).toBe(true);
     unmount();
   });
 });

@@ -18,8 +18,12 @@ const sessionDefaults = { TableSession };
  */
 function buildOrderSnapshot(proposal) {
   const items = (proposal.items ?? []).map((item) => ({
+    productId: item.productId ? String(item.productId) : null,
     productName: item.productName,
+    typeName: item.typeName ?? null,
+    productSizeId: item.productSizeId ? String(item.productSizeId) : null,
     sizeName: item.sizeName ?? null,
+    addonIds: (item.addonIds ?? []).map(String),
     quantity: Number(item.quantity) || 0,
     lineSubtotal: toApiString(item.lineSubtotal ?? '0'),
     notes: item.notes ?? ''
@@ -117,10 +121,11 @@ async function ownerScope(sessionModels, guestSession) {
 }
 
 export async function createServiceRequest(guestSession, input, context = {}) {
-  return runInTransaction(
-    async (tx) => {
-      const models = context.tableServiceModels ?? defaults;
-      const sessionModels = context.serviceSessionModels ?? sessionDefaults;
+  const models = context.tableServiceModels ?? defaults;
+  const sessionModels = context.serviceSessionModels ?? sessionDefaults;
+  try {
+    return await runInTransaction(
+      async (tx) => {
       const scope = await ownerScope(sessionModels, guestSession);
       if (input.type === 'BILL_REQUEST' && !scope.activeOrderId)
         throw new ApiError({
@@ -191,10 +196,24 @@ export async function createServiceRequest(guestSession, input, context = {}) {
         if (!existing) throw error;
         return { serviceRequest: existing, alreadyOpen: true };
       }
-    },
-    context,
-    context.transactionOptions
-  );
+      },
+      context,
+      context.transactionOptions
+    );
+  } catch (error) {
+    // Commit-time unique-index conflict (rapid double tap): the winner is
+    // already committed, so re-read outside the transaction and reuse it
+    // instead of surfacing a raw duplicate-key error.
+    if (error?.code !== 11000) throw error;
+    const scope = await ownerScope(sessionModels, guestSession);
+    const existing = await models.TableServiceRequest.findOne({
+      requestOwnerKey: scope.requestOwnerKey,
+      type: input.type,
+      status: 'OPEN'
+    });
+    if (!existing) throw error;
+    return { serviceRequest: existing, alreadyOpen: true };
+  }
 }
 
 export async function createOrderReviewRequest(proposal, context = {}) {
@@ -207,7 +226,16 @@ export async function createOrderReviewRequest(proposal, context = {}) {
         status: { $in: ['OPEN', 'CLOSING'] }
       });
       const requestOwnerKey = active ? `SESSION:${active._id}` : `GUEST:${proposal.guestSessionId}`;
+      // Review requests are scoped per proposal so concurrent carts never hit
+      // the single-open-request unique index against each other.
+      const scopedKey = `${requestOwnerKey}:proposal:${proposal._id}`;
       const orderSnapshot = buildOrderSnapshot(proposal);
+      const sameProposal = await models.TableServiceRequest.findOne({
+        $or: [{ requestOwnerKey: scopedKey }, { requestOwnerKey, proposalId: proposal._id }],
+        type: 'CALL_WAITER',
+        status: 'OPEN'
+      }).session(tx.session);
+      if (sameProposal) return { serviceRequest: sameProposal, alreadyOpen: true };
       const duplicate = await models.TableServiceRequest.findOne({
         requestOwnerKey,
         type: 'CALL_WAITER',
@@ -216,25 +244,30 @@ export async function createOrderReviewRequest(proposal, context = {}) {
       if (duplicate) {
         // A plain waiter call opened before the order arrived must become the
         // order review request instead of swallowing the proposal silently.
-        if (duplicate.proposalId) return { serviceRequest: duplicate, alreadyOpen: true };
-        duplicate.proposalId = proposal._id;
-        duplicate.purpose = 'ORDER_REVIEW';
-        duplicate.tableSessionId = active ? active._id : duplicate.tableSessionId;
-        duplicate.orderSnapshot = orderSnapshot;
-        await duplicate.save({ session: tx.session });
-        await record(
-          'table-service.order-attached',
-          duplicate._id,
-          {
-            serviceRequestId: String(duplicate._id),
-            type: 'CALL_WAITER',
-            purpose: 'ORDER_REVIEW',
-            proposalId: String(proposal._id),
-            tableNumber: proposal.tableNumber
-          },
-          { ...context, ...tx }
-        );
-        return { serviceRequest: duplicate, alreadyOpen: true };
+        // But a request already carrying a *different* proposal must not swallow
+        // this one — every proposal gets its own waiter notification.
+        if (!duplicate.proposalId) {
+          duplicate.proposalId = proposal._id;
+          duplicate.purpose = 'ORDER_REVIEW';
+          duplicate.tableSessionId = active ? active._id : duplicate.tableSessionId;
+          duplicate.orderSnapshot = orderSnapshot;
+          await duplicate.save({ session: tx.session });
+          await record(
+            'table-service.order-attached',
+            duplicate._id,
+            {
+              serviceRequestId: String(duplicate._id),
+              type: 'CALL_WAITER',
+              purpose: 'ORDER_REVIEW',
+              proposalId: String(proposal._id),
+              tableNumber: proposal.tableNumber
+            },
+            { ...context, ...tx }
+          );
+          return { serviceRequest: duplicate, alreadyOpen: true };
+        }
+        if (String(duplicate.proposalId) === String(proposal._id))
+          return { serviceRequest: duplicate, alreadyOpen: true };
       }
       const sequence = await nextSequence('table-service-request', { ...context, ...tx });
       const [serviceRequest] = await models.TableServiceRequest.create(
@@ -248,7 +281,7 @@ export async function createOrderReviewRequest(proposal, context = {}) {
             proposalId: proposal._id,
             orderSnapshot,
             purpose: 'ORDER_REVIEW',
-            requestOwnerKey,
+            requestOwnerKey: scopedKey,
             type: 'CALL_WAITER',
             source: 'GUEST',
             requestedAt: context.now ?? new Date(),

@@ -97,16 +97,8 @@ export async function submitProposal(guestSession, input, context = {}) {
       // Same default as the order pricing path: the public catalog snapshot is
       // the source of truth, the port only exists as a test/DI seam.
       const snapshot = context.guestProductsPort?.snapshot ?? snapshotForOrder;
-      const open = await models.TableOrderProposal.findOne({
-        guestSessionId: guestSession._id,
-        status: { $in: ['WAITING_WAITER', 'UNDER_REVIEW', 'NEEDS_CHANGES'] }
-      }).session(tx.session);
-      if (open)
-        throw new ApiError({
-          code: 'PROPOSAL_ALREADY_OPEN',
-          status: 409,
-          messageAr: 'يوجد مقترح نشط بالفعل لهذه الجلسة'
-        });
+      // Guests may submit multiple carts while earlier ones are still pending
+      // review — each proposal gets its own waiter notification downstream.
       const items = [];
       let subtotal = ZERO;
       for (const entry of input.items) {
@@ -371,23 +363,31 @@ export async function submitGuestReview(guestSession, orderId, input, baseContex
   const models = context.tableGuestModels ?? defaults;
   const orderModels = context.guestOrderModels ?? orderDefaults;
   const order = await orderModels.Order.findById(orderId).session(context.session).lean();
-  if (!order || order.fulfillmentType !== 'DINE_IN' || order.status !== 'COMPLETED')
+  if (!order || order.fulfillmentType !== 'DINE_IN' || !['READY', 'COMPLETED'].includes(order.status))
     throw new ApiError({
       code: 'REVIEW_ORDER_NOT_COMPLETED',
       status: 409,
-      messageAr: 'التقييم متاح بعد اكتمال طلب الصالة فقط'
+      messageAr: 'التقييم متاح بعد تجهيز طلب الصالة فقط'
     });
   const link = await models.TableOrderProposal.findOne({
     guestSessionId: guestSession._id,
     confirmedOrderId: order._id,
     status: 'CONFIRMED'
   }).session(context.session).lean();
-  if (!link)
-    throw new ApiError({
-      code: 'REVIEW_GUEST_NOT_LINKED',
-      status: 403,
-      messageAr: 'هذا الطلب غير مرتبط بجلستك'
-    });
+  if (!link) {
+    // Waiter-entered orders have no proposal: fall back to seating proof —
+    // the guest may rate an order served on their own table.
+    const sessionModels = context.tableSessionModels ?? { TableSession };
+    const session = order.tableSessionId
+      ? await sessionModels.TableSession.findById(order.tableSessionId).session(context.session).lean()
+      : null;
+    if (!session || String(session.tableId) !== String(guestSession.tableId))
+      throw new ApiError({
+        code: 'REVIEW_GUEST_NOT_LINKED',
+        status: 403,
+        messageAr: 'هذا الطلب غير مرتبط بجلستك'
+      });
+  }
   const submit = context.guestReviewModule?.submit;
   if (!submit)
     throw new ApiError({
@@ -400,10 +400,11 @@ export async function submitGuestReview(guestSession, orderId, input, baseContex
     {
       rating: input.rating,
       comment: input.comment,
+      displayName: input.displayName,
       expectedOrderVersion: input.expectedOrderVersion,
       owner: { type: 'GUEST', guestSessionId: guestSession._id }
     },
-    context
+    { ...context, reviewReadyAllowed: true }
   );
 
   }, baseContext, baseContext.transactionOptions);

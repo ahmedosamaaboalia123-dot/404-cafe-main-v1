@@ -6,7 +6,8 @@ import {
   cancelWholeOrder,
   completeTakeawayOrder,
   confirmNewOrder,
-  markOrderItemReady
+  markOrderItemReady,
+  markWholeOrderReady
 } from './order.service.js';
 import { getOrderDetails, getOrderHistoryScreen, getOrdersOnlineScreen } from './order.queries.js';
 
@@ -93,6 +94,17 @@ export function createOrderController(d) {
         order: orderDto(result.order),
         payment: result.payment,
         invoice: result.invoice
+      });
+    },
+    markWholeReady: async (r, s) => {
+      const result = await markWholeOrderReady(
+        r.validated.params.id,
+        r.validated.body,
+        ctx(r, d)
+      );
+      return sendSuccess(s, {
+        order: result.order,
+        readyCount: result.readyCount
       });
     },
     markReady: async (r, s) => {

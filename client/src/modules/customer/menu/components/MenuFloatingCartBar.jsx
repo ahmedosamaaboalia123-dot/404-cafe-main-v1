@@ -8,6 +8,7 @@ export default function MenuFloatingCartBar({
   onOpenCart,
   onRemoveItem,
   onConfirmOrder,
+  confirmLabel = "تأكيد الطلب",
 }) {
   if (cartItems.length === 0) return null;
 
@@ -74,7 +75,7 @@ export default function MenuFloatingCartBar({
           className="floating-confirm-order-btn"
           onClick={onConfirmOrder || onOpenCart}
         >
-          <span className="btn-label-text">تأكيد الطلب</span>
+          <span className="btn-label-text">{confirmLabel}</span>
           <div className="btn-arrow-circle">
             <ArrowLeft size={16} />
           </div>

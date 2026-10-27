@@ -47,7 +47,7 @@
   /* ======================
      Sidebar
   ====================== */
-  --sidebar-width: 240px;
+  --sidebar-width: 200px;
   --sidebar-bg: var(--header-bg);
   --sidebar-item-height: 46px;
   --sidebar-item-radius: 12px;

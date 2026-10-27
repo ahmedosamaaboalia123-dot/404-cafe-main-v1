@@ -8,6 +8,7 @@ export const useAddOrderItems = () => useCommand("order:add-items", (v, k) => or
 export const useCancelOrderItem = () => useCommand("order:cancel-item", (v, k) => ordersApi.cancelItem(v.orderId, v.itemId, v.body, k));
 export const useCancelOrder = () => useCommand("order:cancel", (v, k) => ordersApi.cancel(v.orderId, v.body, k));
 export const useReadyOrderItem = () => useCommand("order:ready", (v, k) => ordersApi.readyItem(v.itemId, v.body, k));
+export const useReadyWholeOrder = () => useCommand("order:ready-all", (v, k) => ordersApi.readyWholeOrder(v.orderId, v.body, k));
 export const useCompleteTakeaway = () => useCommand("order:complete-takeaway", (v, k) => ordersApi.completeTakeaway(v.orderId, v.body, k));
 export const useOpenTableOrder = () => useCommand("table:open", (v, k) => ordersApi.tableOrder(v.tableId, v.body, k));
 export const useAddSessionItems = () => useCommand("table:add-items", (v, k) => ordersApi.sessionItems(v.sessionId, v.body, k));

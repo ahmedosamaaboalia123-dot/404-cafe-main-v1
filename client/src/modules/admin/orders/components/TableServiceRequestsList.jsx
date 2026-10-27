@@ -1,4 +1,5 @@
-import { Bell, Check, Clock } from "lucide-react";
+import { Bell, Check, Clock, ShoppingCart } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { formatDecimal } from "@/shared/utils/decimal";
 
 const typeText = { CALL_WAITER: "مناداة جرسون", WATER_REQUEST: "طلب مياه", PARTY_SURPRISE: "تجهيز مفاجأة حفلة", BILL_REQUEST: "طلب الحساب", REPORT_PROBLEM: "ظهور مشكلة" };
@@ -24,12 +25,25 @@ function ServiceOrder({ order }) {
 }
 
 export default function TableServiceRequestsList({ title, services, finished = false, pendingId, onStatusChange }) {
+  const navigate = useNavigate();
+  const transferToSales = (service) => {
+    const items = Array.isArray(service.order?.items) ? service.order.items : [];
+    if (!service.tableId || !items.length) return;
+    navigate(`/admin/orders/sales/table/${service.tableId}`, {
+      state: { prefillItems: items, fromServiceId: service.id },
+    });
+  };
   return <section className="services-section"><h3>{title} ({services.length})</h3><div className="services-list">
     {services.length ? services.map((service) => <article key={service.id} className={`service-card ${finished ? "service-card--done" : "service-card--active"}`}>
       <div className={`service-icon ${finished ? "done" : ""}`}>{finished ? <Check size={20}/> : <Bell size={20}/>}</div>
       <div className="service-info"><span className="service-type">{service.purpose === "ORDER_REVIEW" ? "عميل يريد الطلب — مراجعة طلب" : (typeText[service.type] || service.reason || service.type)}</span><span className="service-table">طاولة {service.tableNumber}{service.purpose === "ORDER_REVIEW" ? " • سلة" : ""}</span></div>
       <div className="service-time"><Clock size={14}/>{service.priority === "HIGH" ? "أولوية عالية" : service.purpose === "ORDER_REVIEW" ? "مراجعة طلب" : service.serviceRequestNumber}</div>
       {!finished && <button className="btn-mark-done" disabled={pendingId === service.id} onClick={() => onStatusChange(service.id, service.version, "تم التعامل مع الطلب")}><Check size={16}/>{pendingId === service.id ? "جاري..." : "تم التعامل"}</button>}
+      {!finished && service.purpose === "ORDER_REVIEW" && service.tableId && Array.isArray(service.order?.items) && service.order.items.length > 0 && (
+        <button className="btn-transfer-sales" onClick={() => transferToSales(service)}>
+          <ShoppingCart size={16}/> نقل إلى صفحة البيع
+        </button>
+      )}
       {service.order ? <ServiceOrder order={service.order}/> : null}
     </article>) : <div className="empty-msg">لا توجد طلبات</div>}
   </div></section>;

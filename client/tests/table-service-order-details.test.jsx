@@ -1,5 +1,6 @@
 import { fireEvent, render, screen, within } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
+import { MemoryRouter } from "react-router-dom";
 import TableServiceRequestsList from "@/modules/admin/orders/components/TableServiceRequestsList";
 
 const orderService = (overrides = {}) => ({
@@ -27,13 +28,15 @@ const orderService = (overrides = {}) => ({
 
 const renderList = (services, props = {}) =>
   render(
-    <TableServiceRequestsList
-      title="الطلبات المفتوحة"
-      services={services}
-      pendingId={null}
-      onStatusChange={vi.fn()}
-      {...props}
-    />,
+    <MemoryRouter>
+      <TableServiceRequestsList
+        title="الطلبات المفتوحة"
+        services={services}
+        pendingId={null}
+        onStatusChange={vi.fn()}
+        {...props}
+      />
+    </MemoryRouter>,
   );
 
 describe("admin table services order details", () => {

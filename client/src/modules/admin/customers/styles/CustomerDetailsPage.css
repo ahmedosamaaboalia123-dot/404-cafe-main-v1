@@ -328,7 +328,7 @@
     align-items: center;
     gap: 6px;
     margin-inline-start: auto;
-    min-height: 38px;
+    min-height: 44px;
     padding: 0 14px;
     border: 1px solid var(--border-main);
     border-radius: var(--button-radius);
@@ -343,6 +343,38 @@
 
 .customer-edit-btn:hover {
     background: var(--surface-soft);
+}
+.customer-info-actions {
+    display: inline-flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-inline-start: auto;
+}
+.customer-info-actions .customer-edit-btn {
+    margin-inline-start: 0;
+}
+.customer-archive-btn,
+.customer-restore-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 44px;
+    padding: 0 14px;
+    border: 1px solid var(--border-main);
+    border-radius: var(--button-radius);
+    background: var(--card-bg);
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-semibold);
+    cursor: pointer;
+    font-family: var(--font-family);
+}
+.customer-archive-btn {
+    border-color: #e0b4b0;
+    color: #a12622;
+}
+.customer-restore-btn {
+    border-color: #bcd9c2;
+    color: #246b39;
 }
 
 .customer-edit-section {
@@ -496,6 +528,79 @@
 
     .customer-orders-table td button {
         min-height: 44px;
+    }
+
+    .customer-info-actions {
+        width: 100%;
+    }
+
+    .customer-info-actions button {
+        flex: 1;
+        min-height: 44px;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 600px) {
+    .customer-orders-table {
+        min-width: 0;
+    }
+
+    .customer-orders-table-wrapper {
+        overflow: visible;
+        background: transparent;
+        border: none;
+        box-shadow: none;
+    }
+
+    .customer-orders-table,
+    .customer-orders-table tbody,
+    .customer-orders-table tbody tr,
+    .customer-orders-table tbody td {
+        display: block;
+        width: auto;
+        min-width: 0;
+    }
+
+    .customer-orders-table thead {
+        display: none;
+    }
+
+    .customer-orders-table tbody {
+        display: grid;
+        gap: var(--space-sm);
+    }
+
+    .customer-orders-table tbody tr {
+        background: var(--card-bg);
+        border: var(--card-border);
+        border-radius: var(--card-radius);
+        overflow: hidden;
+    }
+
+    .customer-orders-table td {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-sm);
+        min-height: 44px;
+        padding: 10px 14px;
+        text-align: right;
+        border-bottom: 1px solid var(--border-light);
+        white-space: normal;
+    }
+
+    .customer-orders-table td::before {
+        content: attr(data-label);
+        flex-shrink: 0;
+        color: var(--text-secondary);
+        font-weight: var(--fw-semibold);
+        text-align: right;
+    }
+
+    .customer-orders-table tbody tr td:last-child {
+        border-bottom: none;
+        justify-content: flex-end;
     }
 }
 

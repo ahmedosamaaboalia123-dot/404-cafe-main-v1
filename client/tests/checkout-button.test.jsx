@@ -57,9 +57,11 @@ describe("checkout button visibility by role", () => {
 });
 
 describe("isAdminRole", () => {
-  it("matches the system admin by name and by level", () => {
+  it("matches the system admin by name and ignores the level", () => {
     expect(isAdminRole({ id: "r-1", name: "Admin" })).toBe(true);
-    expect(isAdminRole({ id: "r-9", name: "Supervisor", level: 100 })).toBe(true);
+    expect(isAdminRole({ id: "r-1", name: "Admin", level: 1 })).toBe(true);
+    // A high level on a non-admin name must never grant admin modules.
+    expect(isAdminRole({ id: "r-9", name: "Supervisor", level: 100 })).toBe(false);
   });
 
   it("does not treat ordinary or custom roles as admin", () => {

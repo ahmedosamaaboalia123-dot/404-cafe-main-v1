@@ -146,10 +146,13 @@ export function TableProvider({ children }) {
     return () => window.removeEventListener("table-cart-updated", syncCart);
   }, [tableNumber]);
 
+  const toastTimer = useRef(null);
   const showToast = (message) => {
     setToastMessage(message);
-    setTimeout(() => {
+    if (toastTimer.current) clearTimeout(toastTimer.current);
+    toastTimer.current = setTimeout(() => {
       setToastMessage(null);
+      toastTimer.current = null;
     }, 3500);
   };
 
@@ -164,10 +167,21 @@ export function TableProvider({ children }) {
   };
 
   // Waiter Call
-  const triggerCallWaiter = async (reason = "طلب حضور الويتر") => {
-    await createV1TableService({ type: "CALL_WAITER", details: reason }, tableToken);
-    showToast(`تم إرسال تنبيه للجرسون للحضور إلى طاولة رقم ${tableNumber} (${reason})`);
-    setIsWaiterModalOpen(false);
+  const triggerCallWaiter = async (reason = "طلب حضور الويتر", options = {}) => {
+    const type = options.type || "CALL_WAITER";
+    const result = await createV1TableService(
+      {
+        type,
+        details: reason,
+        ...(type === "WATER_REQUEST" ? { requestedQuantity: 1 } : {}),
+      },
+      tableToken
+    );
+    if (!options.silent) {
+      showToast(`تم إرسال تنبيه للجرسون للحضور إلى طاولة رقم ${tableNumber} (${reason})`);
+      setIsWaiterModalOpen(false);
+    }
+    return result;
   };
 
   // Bill Request

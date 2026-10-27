@@ -2,22 +2,26 @@
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: var(--space-md);
+    grid-auto-rows: 1fr;
+    align-items: stretch;
 }
 
 .card-item {
     background: var(--card-bg);
-    border: var(--card-border);
+    border: 2.5px solid #6B3F1D;
     border-radius: var(--card-radius);
-    padding: var(--space-lg);
+    padding: var(--space-md);
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: var(--space-sm);
+    justify-content: flex-start;
+    gap: var(--space-xs);
     cursor: pointer;
     transition: var(--transition);
-    min-height: 140px;
+    min-height: 150px;
+    height: 100%;
     box-shadow: var(--card-shadow);
+    overflow: visible;
 }
 
 .card-item:hover {
@@ -32,9 +36,10 @@
 
 .card-item__number {
     font-size: var(--fs-lg);
-    font-weight: var(--fw-bold);
+    font-weight: 800;
     color: var(--text-main);
     overflow-wrap: anywhere;
+    white-space: normal;
     text-align: center;
 }
 
@@ -99,7 +104,7 @@
 
 .card-item__address {
     color: var(--text-secondary);
-    font-weight: 400;
+    font-weight: 700;
 }
 
 @media (max-width: 1200px) {

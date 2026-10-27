@@ -104,7 +104,7 @@ function readSheet(html) {
 
 async function printFirstShift() {
   renderApp(<DrawerPage />, { route: "/admin/drawer", auth: drawerAuth });
-  const button = await screen.findByRole("button", { name: "طباعة" });
+  const button = await screen.findByRole("button", { name: /طباعة/ });
   fireEvent.click(button);
   await waitFor(() => expect(print).toHaveBeenCalledOnce());
   await waitFor(() => expect(printCalls).toHaveLength(1));
@@ -155,7 +155,7 @@ describe("cash drawer shift print", () => {
 
   it("keeps the shift header and reconciliation meta in the sheet", async () => {
     renderApp(<DrawerPage />, { route: "/admin/drawer", auth: drawerAuth });
-    fireEvent.click(await screen.findByRole("button", { name: "طباعة" }));
+    fireEvent.click(await screen.findByRole("button", { name: /طباعة/ }));
     await waitFor(() => expect(printCalls).toHaveLength(1));
 
     const host = document.createElement("div");

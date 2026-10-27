@@ -176,6 +176,8 @@
 
 @media(max-width:767px){.customer-header-inner{display:grid;grid-template-columns:1fr auto 1fr;padding:9px 12px}.header-brand-group{display:contents}.header-brand-group .menu-btn{grid-column:1;grid-row:1;justify-self:start}.header-brand-link{grid-column:2;grid-row:1}.header-actions-group{grid-column:3;grid-row:1;justify-self:end}.header-table-pill{font-size:10px;padding:6px 9px;min-height:40px}.brand-number{font-size:23px}.brand-text{font-size:8px}.brand-est{font-size:7px}.table-reviews-grid{grid-template-columns:1fr}.hero-cta-buttons{grid-template-columns:repeat(2,minmax(0,1fr))}.hero-cta-buttons>button{font-size:12px;padding:8px}.reviews-actions{display:grid;grid-template-columns:1fr 1fr}.reviews-actions button{padding:8px}.customer-drawer-panel{width:min(88vw,350px)!important}}
 
+@media(max-width:380px){.header-brand-logo{width:52px;height:52px}.header-actions-group{gap:6px}.customer-header-inner{padding:9px 8px}}
+
 .customer-reviews-section{padding:8px clamp(16px,5vw,70px) 22px}.customer-reviews-section .section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}.customer-reviews-section .section-title{margin:0;font-size:clamp(21px,3vw,30px);color:var(--coffee-text-dark)}.customer-reviews-section .section-link-btn{border:0;background:transparent;color:var(--coffee-primary);display:flex;align-items:center;gap:4px;font:inherit;font-size:12px;font-weight:800;cursor:pointer}.reviews-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.customer-review-card{padding:20px;border:1px solid var(--coffee-border);border-radius:18px;background:#fff;box-shadow:var(--coffee-shadow-sm)}.review-card-header{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}.review-user-info{display:flex;align-items:center;gap:10px}.review-avatar-circle{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:var(--coffee-primary);color:#fff;font-weight:900}.review-user-meta{display:grid;gap:3px}.review-user-name{margin:0;font-size:13px}.review-time-stamp{font-size:10px;color:var(--coffee-text-muted)}.review-stars-group{display:flex;color:#d68a32;gap:1px}.review-stars-group .empty{opacity:.25}.review-stars-group .filled{fill:currentColor}.review-comment-text{margin:16px 0 0;color:var(--coffee-text-muted);font-size:13px;line-height:1.8}.customer-reviews-section .reviews-actions{display:flex;justify-content:center;gap:10px;margin-top:16px}.customer-reviews-section .reviews-actions button{min-height:44px;padding:9px 22px;border:1px solid var(--coffee-border);border-radius:12px;background:#fff;color:var(--coffee-primary);font:inherit;font-weight:900;cursor:pointer}.customer-reviews-section .reviews-actions .reviews-primary{background:var(--coffee-primary);color:#fff;border-color:var(--coffee-primary)}
 @media(max-width:767px){.reviews-list{grid-template-columns:1fr}.customer-reviews-section .reviews-actions{display:grid;grid-template-columns:1fr 1fr}.customer-reviews-section .reviews-actions button{padding:8px 10px}.customer-side-drawer{width:min(88vw,360px);border-radius:22px 0 0 22px}.side-link-btn{min-height:48px}}
 @media(min-width:768px) and (max-width:1024px){.reviews-list{grid-template-columns:repeat(2,minmax(0,1fr))}.customer-review-card:last-child{grid-column:1/-1}}
@@ -230,6 +232,19 @@
 @media (min-width: 768px) {
   .header-location-pill {
     display: flex;
+  }
+}
+
+@media (max-width: 767px) {
+  .header-location-pill {
+    display: inline-flex;
+    padding: 4px 10px;
+    gap: 0;
+  }
+
+  .header-location-pill .location-sub-label,
+  .header-location-pill .location-icon-circle {
+    display: none;
   }
 }
 
@@ -956,8 +971,8 @@
 }
 
 .product-add-circle-btn {
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   background-color: #FFFFFF;
   border: 1px solid var(--coffee-border);
@@ -1563,6 +1578,7 @@
   display: flex;
   justify-content: center;
   box-shadow: 0 -4px 16px rgba(43, 33, 27, 0.05);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 .bottom-nav-inner {
@@ -1624,13 +1640,16 @@
   top: 24px;
   left: 50%;
   transform: translateX(-50%);
+  max-width: 90vw;
+  overflow-wrap: anywhere;
+  text-align: center;
   background-color: var(--coffee-primary);
   color: #FFFFFF;
   padding: 10px 22px;
   border-radius: 30px;
   font-size: 14px;
   font-weight: 800;
-  z-index: 999;
+  z-index: 1200;
   box-shadow: 0 8px 24px rgba(0,0,0,0.2);
   animation: slideDownToast 0.3s ease;
 }
@@ -2365,7 +2384,7 @@
   }
 
   .customer-page-content {
-    padding: 24px 28px 40px 28px;
+    padding: 24px 28px 96px 28px;
     gap: 34px;
   }
 

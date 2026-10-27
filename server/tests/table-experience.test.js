@@ -127,17 +127,32 @@ describe('table guest experience', () => {
     expect(open).not.toHaveBeenCalled();
     expect(append).not.toHaveBeenCalled();
   });
-  it('blocks a second active proposal per guest session', async () => {
+  it('accepts a second proposal while an earlier one is still pending', async () => {
     const guest = guestDoc();
-    await expect(
-      submitProposal(guest, proposalInput(), {
-        ...infrastructure(),
-        tableGuestModels: {
-          TableOrderProposal: { findOne: () => chain(proposalDoc({ guestSessionId: guest._id })) }
-        },
-        guestProductsPort: { snapshot: async () => snap() }
-      })
-    ).rejects.toMatchObject({ code: 'PROPOSAL_ALREADY_OPEN' });
+    const first = proposalDoc({ guestSessionId: guest._id });
+    let stored;
+    const notifyProposal = vi.fn(async () => ({
+      serviceRequest: { _id: id() },
+      alreadyOpen: false
+    }));
+    const { proposal, serviceRequest } = await submitProposal(guest, proposalInput(), {
+      ...infrastructure(),
+      tableGuestModels: {
+        TableOrderProposal: {
+          findOne: () => chain(first),
+          create: async ([v]) => {
+            stored = { _id: id(), version: 0, status: 'WAITING_WAITER', ...v };
+            return [stored];
+          }
+        }
+      },
+      guestProductsPort: { snapshot: async () => snap() },
+      tableServicesPort: { notifyProposal }
+    });
+    expect(proposal.status).toBe('WAITING_WAITER');
+    expect(String(proposal._id)).toBe(String(stored._id));
+    expect(serviceRequest).toBeDefined();
+    expect(notifyProposal).toHaveBeenCalledTimes(1);
   });
 
   it('prices the proposal from the real catalog snapshot when no products port is wired', async () => {
@@ -465,6 +480,114 @@ describe('table guest experience', () => {
         }
       )
     ).rejects.toMatchObject({ code: 'REVIEW_GUEST_NOT_LINKED' });
+  });
+  it('accepts guest ratings once the dine-in order is ready', async () => {
+    const guest = guestDoc();
+    const order = { _id: id(), status: 'READY', fulfillmentType: 'DINE_IN', version: 2 };
+    const link = { _id: id(), status: 'CONFIRMED' };
+    const submit = vi.fn(async () => ({ _id: id() }));
+    const result = await submitGuestReview(
+      guest,
+      order._id,
+      { rating: 5, expectedOrderVersion: 2 },
+      {
+        ...infrastructure(),
+        tableGuestModels: {
+          TableOrderProposal: { findOne: () => ({ session: () => ({ lean: async () => link }) }) }
+        },
+        guestOrderModels: { Order: { findById: () => ({ session: () => ({ lean: async () => order }) }) } },
+        guestReviewModule: { submit }
+      }
+    );
+    expect(result).toBeDefined();
+    expect(submit).toHaveBeenCalledWith(
+      order._id,
+      expect.objectContaining({ rating: 5, owner: { type: 'GUEST', guestSessionId: guest._id } }),
+      expect.objectContaining({ reviewReadyAllowed: true })
+    );
+  });
+  it('accepts ratings for waiter-entered orders served on the same table', async () => {
+    const tableId = id();
+    const guest = guestDoc({ tableId });
+    const sessionId = id();
+    const order = { _id: id(), status: 'READY', fulfillmentType: 'DINE_IN', version: 1, tableSessionId: sessionId };
+    const submit = vi.fn(async () => ({ _id: id() }));
+    const result = await submitGuestReview(
+      guest,
+      order._id,
+      { rating: 4, expectedOrderVersion: 1 },
+      {
+        ...infrastructure(),
+        tableGuestModels: {
+          TableOrderProposal: { findOne: () => ({ session: () => ({ lean: async () => null }) }) }
+        },
+        tableSessionModels: {
+          TableSession: { findById: () => ({ session: () => ({ lean: async () => ({ _id: sessionId, tableId }) }) }) }
+        },
+        guestOrderModels: { Order: { findById: () => ({ session: () => ({ lean: async () => order }) }) } },
+        guestReviewModule: { submit }
+      }
+    );
+    expect(result).toBeDefined();
+    expect(submit).toHaveBeenCalledOnce();
+  });
+  it('still rejects ratings for orders served on another table', async () => {
+    const guest = guestDoc({ tableId: id() });
+    const order = { _id: id(), status: 'READY', fulfillmentType: 'DINE_IN', version: 0, tableSessionId: id() };
+    await expect(
+      submitGuestReview(
+        guest,
+        order._id,
+        { rating: 4, expectedOrderVersion: 0 },
+        {
+          ...infrastructure(),
+          tableGuestModels: {
+            TableOrderProposal: { findOne: () => ({ session: () => ({ lean: async () => null }) }) }
+          },
+          tableSessionModels: {
+            TableSession: { findById: () => ({ session: () => ({ lean: async () => ({ _id: id(), tableId: id() }) }) }) }
+          },
+          guestOrderModels: { Order: { findById: () => ({ session: () => ({ lean: async () => order }) }) } },
+          guestReviewModule: { submit: vi.fn() }
+        }
+      )
+    ).rejects.toMatchObject({ code: 'REVIEW_GUEST_NOT_LINKED', status: 403 });
+  });
+  it('still rejects guest ratings while the order is preparing', async () => {    const guest = guestDoc();
+    const order = { _id: id(), status: 'PREPARING', fulfillmentType: 'DINE_IN', version: 0 };
+    await expect(
+      submitGuestReview(
+        guest,
+        order._id,
+        { rating: 4, expectedOrderVersion: 0 },
+        {
+          ...infrastructure(),
+          tableGuestModels: {
+            TableOrderProposal: { findOne: () => ({ session: () => ({ lean: async () => null }) }) }
+          },
+          guestOrderModels: { Order: { findById: () => ({ session: () => ({ lean: async () => order }) }) } },
+          guestReviewModule: { submit: vi.fn() }
+        }
+      )
+    ).rejects.toMatchObject({ code: 'REVIEW_ORDER_NOT_COMPLETED', status: 409 });
+  });
+  it('keeps requiring completed orders for online customers', async () => {
+    const orderId = id();
+    const order = { _id: orderId, status: 'READY', fulfillmentType: 'DELIVERY', version: 0, customerId: id() };
+    await expect(
+      submitOrderReview(
+        orderId,
+        { rating: 5, expectedOrderVersion: 0 },
+        {
+          ...infrastructure(),
+          reviewModels: {
+            Order: { findById: () => ({ session: async () => order }) },
+            OrderReview: { create: vi.fn() },
+            OrderReviewRevision: { create: vi.fn() }
+          }
+        }
+      )
+    ).rejects.toMatchObject({ code: 'REVIEW_ORDER_NOT_COMPLETED', status: 409 });
   });
   it('stores guest ownership on dine-in reviews', async () => {
     const guestId = id();

@@ -82,7 +82,7 @@ describe("audit page event cards", () => {
     expect(screen.getAllByText("النظام").length).toBeGreaterThan(0);
     fireEvent.click(screen.getAllByRole("button", { name: /تفاصيل الحدث/ })[0]);
     await waitFor(() => expect(screen.getByText("السجل المتأثر")).toBeInTheDocument(), { timeout: 5000 });
-    expect(screen.getAllByText("رقم مرجع السجل").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("موظف").length).toBeGreaterThan(0);
     expect(screen.queryByText("metadataSafe")).not.toBeInTheDocument();
     expect(screen.queryByText("employeeId")).not.toBeInTheDocument();
     expect(screen.queryByText("الحدث كاملًا (JSON)")).not.toBeInTheDocument();

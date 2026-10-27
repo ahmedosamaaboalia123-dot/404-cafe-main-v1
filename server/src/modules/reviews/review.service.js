@@ -42,11 +42,17 @@ async function loadCompletedOrder(models, orderId, input, context, tx) {
   const order = await models.Order.findById(orderId).session(tx.session);
   if (!order)
     throw new ApiError({ code: 'ORDER_NOT_FOUND', status: 404, messageAr: 'الطلب غير موجود' });
-  if (order.status !== 'COMPLETED')
+  // Dine-in guests may rate once the order is ready; every other channel
+  // still requires a completed order. The flag defaults off so the online
+  // customer flow keeps its stricter rule.
+  const reviewableStatuses = context?.reviewReadyAllowed ? ['READY', 'COMPLETED'] : ['COMPLETED'];
+  if (!reviewableStatuses.includes(order.status))
     throw new ApiError({
       code: 'REVIEW_ORDER_NOT_COMPLETED',
       status: 409,
-      messageAr: 'التقييم متاح بعد اكتمال الطلب فقط'
+      messageAr: context?.reviewReadyAllowed
+        ? 'التقييم متاح بعد تجهيز الطلب فقط'
+        : 'التقييم متاح بعد اكتمال الطلب فقط'
     });
   const owner = input.owner ?? { type: 'CUSTOMER' };
   if (order.fulfillmentType === 'DINE_IN') {

@@ -11,6 +11,7 @@ const guestOrderPayload = {
     status: "PREPARING",
     tableNumber: 5,
     fulfillmentType: "DINE_IN",
+    version: 4,
     totals: { subtotal: "120", discount: "0", tax: "18", total: "138" },
     balanceDue: "138",
     paymentStatus: "PENDING",
@@ -58,6 +59,9 @@ describe("table guest active order", () => {
     expect(order.tableNumber).toBe(5);
     expect(order.status).toBe("in_progress");
     expect(order.pricing).toEqual({ subtotal: 120, serviceFee: 0, vat: 18, discount: 0, total: 138 });
+    // Optimistic-concurrency version must survive normalization so review
+    // submits echo the real version instead of 0 (ORDER_VERSION_CONFLICT loop).
+    expect(order.version).toBe(4);
     expect(order.items[0]).toMatchObject({
       name: "لاتيه",
       sizeName: "كبير",

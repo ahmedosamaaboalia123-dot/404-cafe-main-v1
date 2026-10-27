@@ -377,7 +377,7 @@ export default function ProductDetailsModal({
             onClick={handleAddAndProceedToCart}
           >
             <div className="pd-bottom-add-btn-texts">
-              <span className="pd-bottom-add-title">سلة المشتريات</span>
+              <span className="pd-bottom-add-title">اضافة الي سلة المشتريات</span>
               <span className="pd-bottom-add-table-sub">إضافة ومتابعة الطلب</span>
             </div>
             <div className="pd-cart-icon-wrapper">

@@ -4,8 +4,23 @@ export function isReviewableOrder(order) {
   return REVIEWABLE_ORDER_STATUSES.includes(String(order?.status || "").toLowerCase());
 }
 
+export function isTableReviewableOrder(order) {
+  if (!order) return false;
+  const s = String(order.status || "").toLowerCase();
+  return ["ready", "completed", "delivered"].includes(s);
+}
+
 export function reviewSubmitErrorMessage(error) {
-  const code = error?.code || error?.cause?.code || "";
+  const backendError = error?.response?.data?.error || error?.response?.data;
+  const messageAr = backendError?.messageAr;
+  if (messageAr && typeof messageAr === "string") return messageAr;
+
+  const code =
+    backendError?.code ||
+    error?.code ||
+    error?.cause?.code ||
+    "";
+
   switch (code) {
     case "REVIEW_ALREADY_EXISTS":
       return "قيّمت هذا الطلب من قبل";
@@ -19,7 +34,17 @@ export function reviewSubmitErrorMessage(error) {
       return "تقييم الصالة يتم من جلسة الطاولة";
     case "REVIEW_OWNER_CONFLICT":
       return "هذا التقييم غير مرتبط بطلبك";
+    case "REVIEW_GUEST_NOT_LINKED":
+      return "هذا الطلب غير مرتبط بجلستك";
+    case "REVIEW_PORT_UNAVAILABLE":
+      return "خدمة التقييمات غير متاحة حالياً";
     default:
+      if (backendError?.message && typeof backendError.message === "string") {
+        return backendError.message;
+      }
+      if (error?.response?.status === 409) {
+        return "تم تقييم هذا الطلب مسبقًا أو يوجد تعارض في البيانات";
+      }
       return error?.message || "تعذر إرسال التقييم";
   }
 }

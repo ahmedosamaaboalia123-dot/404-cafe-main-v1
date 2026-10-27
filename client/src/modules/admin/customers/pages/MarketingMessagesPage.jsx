@@ -5,12 +5,12 @@ import PageHeader from "@/shared/components/PageHeader/PageHeader";
 import { ServerPagination } from "@/shared/components";
 import { beginOperation, finishOperation } from "@/api/idempotency";
 import { customersApi } from "../api/customers.api";
+import { buildWhatsappUrl, isEgyptianMobileWhatsapp, normalizeWhatsappNumber } from "../utils/whatsapp";
 import "../styles/MarketingMessagesPage.css";
 
 const errorMessage = (error) => error?.response?.data?.error?.messageAr || error?.message || "تعذر إتمام العملية";
 const personalize = (template, customer) => `${template?.greeting || ""}\n${template?.body || ""}`
   .replaceAll("{{اسم_العميل}}", customer?.name || "عميلنا العزيز").trim();
-const whatsappNumber = (phone) => String(phone || "").replace(/\D/g, "").replace(/^00/, "").replace(/^20/, "20").replace(/^0/, "20");
 
 export default function MarketingMessagesPage() {
   const navigate = useNavigate();
@@ -52,11 +52,11 @@ export default function MarketingMessagesPage() {
   };
   const openWhatsApp = (customer) => {
     if (!selectedTemplate) return setError("اختر قالب الرسالة أولًا");
-    const phone = whatsappNumber(customer.phone);
-    if (phone.length < 11) return setError("رقم واتساب العميل غير صالح");
     const message = personalize(selectedTemplate, customer);
-    setPending({ customer, phone, message });
-    window.open(`https://web.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(message)}&type=phone_number&app_absent=0`, "_blank", "noopener,noreferrer");
+    const url = buildWhatsappUrl(customer.phone, message);
+    if (!url) return setError(`الرقم ${customer.phone || "الفارغ"} ليس موبايل مصري صالح (010/011/012/015)`);
+    setPending({ customer, phone: normalizeWhatsappNumber(customer.phone), message });
+    window.open(url, "_blank", "noopener,noreferrer");
   };
   const confirmSent = async () => {
     if (!pending || !selectedTemplate) return;
@@ -80,7 +80,10 @@ export default function MarketingMessagesPage() {
       {selectedTemplate && <div className="marketing-preview"><span>معاينة</span><pre>{personalize(selectedTemplate, { name: "أحمد" })}</pre></div>}
     </section>
     <section className="marketing-create-card"><h2><Plus size={18}/> إنشاء قالب جديد</h2><form onSubmit={createTemplate}><input required value={form.name} onChange={(event) => setForm({ ...form, name: event.target.value })} placeholder="اسم القالب، مثل عرض نهاية الأسبوع"/><textarea required value={form.greeting} onChange={(event) => setForm({ ...form, greeting: event.target.value })} placeholder="رسالة الترحيب"/><textarea required value={form.body} onChange={(event) => setForm({ ...form, body: event.target.value })} placeholder="محتوى الرسالة التسويقية"/><button disabled={savingTemplate} type="submit">حفظ القالب</button></form></section>
-    <section className="marketing-customers"><h2>إرسال رسالة لعميل</h2><div className="marketing-table-wrap"><table><thead><tr><th>العميل</th><th>رقم واتساب</th><th>الإجراء</th></tr></thead><tbody>{customers.map((customer) => <tr key={customer.id}><td>{customer.name}</td><td dir="ltr">{customer.phone}</td><td><button type="button" onClick={() => openWhatsApp(customer)}><MessageCircle size={16}/> فتح واتساب</button></td></tr>)}</tbody></table></div><ServerPagination meta={customerPageMeta} label="عميل" onPageChange={setCustomerPage}/></section>
+    <section className="marketing-customers"><h2>إرسال رسالة لعميل</h2><div className="marketing-table-wrap"><table><thead><tr><th>العميل</th><th>رقم واتساب</th><th>الإجراء</th></tr></thead><tbody>{customers.map((customer) => {
+        const valid = isEgyptianMobileWhatsapp(customer.phone);
+        return <tr key={customer.id}><td data-label="العميل">{customer.name}</td><td data-label="رقم واتساب" dir="ltr">{customer.phone}{!valid && <span className="marketing-invalid-badge">غير صالح</span>}</td><td data-label="الإجراء"><button type="button" disabled={!valid} title={valid ? "فتح واتساب" : "رقم العميل ليس موبايل مصري صالح"} onClick={() => openWhatsApp(customer)}><MessageCircle size={16}/> فتح واتساب</button></td></tr>;
+      })}</tbody></table></div><ServerPagination meta={customerPageMeta} label="عميل" onPageChange={setCustomerPage}/></section>
     {pending && <div className="marketing-modal-backdrop" role="dialog" aria-modal="true" aria-label="تأكيد الإرسال"><div className="marketing-modal"><h2>هل تم إرسال الرسالة؟</h2><p>إلى: <b>{pending.customer.name}</b> — {pending.customer.phone}</p><pre>{pending.message}</pre><div><button type="button" onClick={() => setPending(null)}>إلغاء</button><button className="marketing-confirm" type="button" disabled={confirming} onClick={confirmSent}><Check size={16}/> تم الإرسال</button></div></div></div>}
   </div>;
 }

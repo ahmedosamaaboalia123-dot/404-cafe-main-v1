@@ -67,15 +67,7 @@ const proposalSchema = new mongoose.Schema(
   },
   { timestamps: true, versionKey: 'version', optimisticConcurrency: true }
 );
-proposalSchema.index(
-  { guestSessionId: 1 },
-  {
-    unique: true,
-    partialFilterExpression: {
-      status: { $in: ['WAITING_WAITER', 'UNDER_REVIEW', 'NEEDS_CHANGES'] }
-    }
-  }
-);
+proposalSchema.index({ guestSessionId: 1, status: 1, createdAt: -1 });
 proposalSchema.index({ tableId: 1, status: 1, createdAt: -1, _id: -1 });
 
 export const TableGuestSession =

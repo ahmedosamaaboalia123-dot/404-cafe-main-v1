@@ -32,6 +32,9 @@ export const guestOrderDto = (order, items = [], tableNumber) => ({
   status: order.status,
   tableNumber: tableNumber ?? null,
   fulfillmentType: order.fulfillmentType,
+  // Optimistic-concurrency version the guest must echo back (e.g. review
+  // submit). Without it every write looks like a version conflict.
+  version: order.version ?? 0,
   totals: {
     subtotal: toApiString(order.subtotal ?? '0'),
     discount: toApiString(order.discount ?? '0'),

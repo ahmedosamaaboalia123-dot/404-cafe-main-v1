@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import { describe, expect, it, vi } from 'vitest';
-import { confirmBody } from '../src/modules/orders/order.validation.js';
+import { confirmBody, readyWholeBody } from '../src/modules/orders/order.validation.js';
 import {
   appendOrderItems,
   applyOrderPaymentSummary,
@@ -9,7 +9,8 @@ import {
   completeTakeawayOrder,
   confirmNewOrder,
   getOrderForPayment,
-  markOrderItemReady
+  markOrderItemReady,
+  markWholeOrderReady
 } from '../src/modules/orders/order.service.js';
 import { toDecimal128 } from '../src/platform/database/decimal.js';
 import { orderDto } from '../src/modules/orders/order.mapper.js';
@@ -407,6 +408,49 @@ describe('admin orders lifecycle', () => {
     expect(result.item.status).toBe('READY');
     expect(result.order.status).toBe('READY');
     expect(result.order.progress).toMatchObject({ ready: 1, total: 1 });
+  });
+  it('validates the whole-order ready body at the boundary', () => {
+    expect(readyWholeBody.safeParse({ expectedVersion: 0 }).success).toBe(true);
+    expect(readyWholeBody.safeParse({}).success).toBe(false);
+    expect(readyWholeBody.safeParse({ expectedVersion: -1 }).success).toBe(false);
+  });
+  it('marks every preparing item ready in one whole-order call', async () => {
+    const order = orderDoc({ status: 'PREPARING' });
+    const first = itemDoc({ orderId: order._id });
+    const second = itemDoc({ orderId: order._id });
+    const models = {
+      Order: { findOne: () => chain(order) },
+      OrderItem: { find: () => chain([first, second]) },
+      OrderStatusEvent: { create: async ([v]) => [v] },
+      OrderItemStatusEvent: { create: async ([v]) => [v] }
+    };
+    const result = await markWholeOrderReady(
+      order._id,
+      { expectedVersion: 0 },
+      { ...infrastructure(), orderModels: models }
+    );
+    expect(result.readyCount).toBe(2);
+    expect(result.order.status).toBe('READY');
+    expect(result.order.progress).toMatchObject({ ready: 2, total: 2 });
+  });
+  it('rejects whole-order ready when nothing is left preparing', async () => {
+    const order = orderDoc({ status: 'READY' });
+    const models = {
+      Order: { findOne: () => chain(order) },
+      OrderItem: { find: () => chain([]) }
+    };
+    await expect(
+      markWholeOrderReady(order._id, { expectedVersion: 0 }, { ...infrastructure(), orderModels: models })
+    ).rejects.toMatchObject({ code: 'ORDER_ALREADY_READY', status: 409 });
+  });
+  it('rejects whole-order ready on stale order versions', async () => {
+    await expect(
+      markWholeOrderReady(
+        id(),
+        { expectedVersion: 9 },
+        { ...infrastructure(), orderModels: { Order: { findOne: () => chain(null) } } }
+      )
+    ).rejects.toMatchObject({ code: 'ORDER_READY_CONFLICT', status: 409 });
   });
   it('rejects ready transitions on stale versions', async () => {
     await expect(

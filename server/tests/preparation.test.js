@@ -53,6 +53,8 @@ describe('preparation screens', () => {
   it('validates group and tab filters with a ten-item ceiling', () => {
     expect(screenQuery.safeParse({}).success).toBe(true);
     expect(screenQuery.safeParse({ group: 'online', tab: 'current' }).success).toBe(true);
+    expect(screenQuery.safeParse({ group: 'tables', tab: 'current' }).success).toBe(true);
+    expect(screenQuery.safeParse({ group: 'all', tab: 'current' }).success).toBe(true);
     expect(screenQuery.safeParse({ group: 'dine', tab: 'current' }).success).toBe(false);
     expect(screenQuery.safeParse({ limit: 11 }).success).toBe(false);
   });
@@ -130,6 +132,27 @@ describe('preparation screens', () => {
     );
     expect(capturedQuery).toMatchObject({ fulfillmentType: 'DINE_IN' });
     expect(result.summary).toMatchObject({ current: 0, ready: 0 });
+  });
+  it('queries every fulfillment type together for the unified cards grid', async () => {
+    let capturedQuery;
+    const models = {
+      Order: {
+        find: (query) => {
+          capturedQuery = query;
+          return { sort: () => ({ skip: () => ({ limit: () => ({ lean: async () => [] }) }) }) };
+        },
+        countDocuments: async () => 0
+      },
+      OrderItem: { find: () => ({ sort: () => ({ lean: async () => [] }) }) }
+    };
+    const result = await getPreparationScreen(
+      { group: 'all', tab: 'current', page: 1, limit: 10 },
+      { orderModels: models }
+    );
+    expect(capturedQuery).toMatchObject({
+      fulfillmentType: { $in: ['TAKEAWAY', 'DELIVERY', 'DINE_IN'] }
+    });
+    expect(result.items).toHaveLength(0);
   });
   /**
    * Regression: a DINE_IN order stores only the session ids, so the kitchen

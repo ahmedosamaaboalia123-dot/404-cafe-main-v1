@@ -113,6 +113,14 @@
   },
   {
     "method": "GET",
+    "path": "/api/v1/customer-marketing/templates"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/customer-marketing/templates"
+  },
+  {
+    "method": "GET",
     "path": "/api/v1/customer/orders"
   },
   {
@@ -130,6 +138,10 @@
   {
     "method": "PATCH",
     "path": "/api/v1/customers/:id"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/customers/:id/marketing-messages"
   },
   {
     "method": "GET",
@@ -418,6 +430,10 @@
   {
     "method": "GET",
     "path": "/api/v1/preparation/orders/:id"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/preparation/orders/:id/ready-all"
   },
   {
     "method": "PATCH",

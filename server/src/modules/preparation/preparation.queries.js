@@ -42,6 +42,7 @@ async function resolveTableNumbers(orders, context = {}) {
 const cardItemDto = (item) => ({
   id: String(item._id),
   productName: item.productName,
+  typeName: item.typeName ?? null,
   sizeName: item.sizeName,
   quantity: item.quantity,
   status: item.status
@@ -69,7 +70,11 @@ export async function getPreparationScreen(filters = {}, context = {}) {
   const { page, limit } = parsePage(filters);
   const { skip } = buildSkipLimit({ page, limit });
   const fulfillmentType =
-    filters.group === 'tables' ? 'DINE_IN' : { $in: ['TAKEAWAY', 'DELIVERY'] };
+    filters.group === 'tables'
+      ? 'DINE_IN'
+      : filters.group === 'all'
+        ? { $in: ['TAKEAWAY', 'DELIVERY', 'DINE_IN'] }
+        : { $in: ['TAKEAWAY', 'DELIVERY'] };
   const status = filters.tab === 'ready' ? 'READY' : { $in: CURRENT_STATUSES };
   const query = { fulfillmentType, status };
   const [rows, totalItems, currentCount, readyCount] = await Promise.all([

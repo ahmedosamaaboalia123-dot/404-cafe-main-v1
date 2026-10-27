@@ -71,10 +71,10 @@ beforeEach(() => {
 });
 
 describe("delegate details actions", () => {
-  it("shows only the three requested actions, no cash ledger and no cash columns", async () => {
+  it("shows only the two requested actions, no cash ledger and no cash columns", async () => {
     renderPage();
     await screen.findByText("تأكيد التسليم");
-    expect(screen.getByRole("button", { name: /إلغاء الطلب/ })).toBeTruthy();
+    expect(screen.queryByRole("button", { name: /إلغاء الطلب/ })).toBeNull();
     expect(screen.getAllByRole("button", { name: /إرسال الفاتورة للمندوب/ }).length).toBeGreaterThan(0);
     expect(screen.queryByRole("button", { name: /نقل لمندوب آخر/ })).toBeNull();
     expect(screen.queryByRole("button", { name: /تسوية الكاش/ })).toBeNull();
@@ -92,25 +92,12 @@ describe("delegate details actions", () => {
     await waitFor(() => expect(deliver).toHaveBeenCalledWith("a1", { expectedVersion: 0 }, "key-delivery:a1:deliver"));
   });
 
-  it("cancels the order with its own version and a reason", async () => {
-    vi.spyOn(window, "prompt").mockReturnValue("العميل رفض الاستلام");
+  it("never calls the removed order-cancellation flow", async () => {
     renderPage();
-    fireEvent.click(await screen.findByRole("button", { name: /إلغاء الطلب/ }));
-    await waitFor(() =>
-      expect(cancel).toHaveBeenCalledWith(
-        openAssignment.orderId,
-        { reason: "العميل رفض الاستلام", expectedVersion: 3 },
-        "key-delivery:a1:cancel"
-      )
-    );
-    expect(details).toHaveBeenCalledWith(openAssignment.orderId);
-  });
-
-  it("does nothing when the cancel reason is empty", async () => {
-    vi.spyOn(window, "prompt").mockReturnValue("");
-    renderPage();
-    fireEvent.click(await screen.findByRole("button", { name: /إلغاء الطلب/ }));
+    fireEvent.click(await screen.findByText("تأكيد التسليم"));
+    await waitFor(() => expect(deliver).toHaveBeenCalled());
     expect(cancel).not.toHaveBeenCalled();
+    expect(details).not.toHaveBeenCalled();
   });
 
   it("sends the invoice to the delegate number, not the customer", async () => {

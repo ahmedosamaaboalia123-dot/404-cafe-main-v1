@@ -485,6 +485,7 @@ export default function MenuPage({ tableMode = false, tableNumberOverride, onTab
         onOpenCart={() => setIsCartOpen(true)}
         onRemoveItem={handleRemoveFromCart}
         onConfirmOrder={handleCheckout}
+        confirmLabel={tableMode ? "إرسال للجرسون" : undefined}
       />
 
       {/* Product Details Customization Modal */}

@@ -30,6 +30,33 @@ const apiClient = axios.create({
 
 let refreshPromise = null;
 
+// Transient network blips (slow mobile data, single dropped request) must not
+// stick the global banner: only signal outage after consecutive failures.
+let consecutiveNetworkFailures = 0;
+const NETWORK_FAILURE_THRESHOLD = 2;
+
+const signalAvailable = () => {
+    consecutiveNetworkFailures = 0;
+    if(typeof window !== "undefined") window.dispatchEvent(new CustomEvent("api-availability",{detail:{available:true}}));
+};
+
+const signalUnavailable = () => {
+    consecutiveNetworkFailures += 1;
+    if(typeof window !== "undefined" && consecutiveNetworkFailures >= NETWORK_FAILURE_THRESHOLD) window.dispatchEvent(new CustomEvent("api-availability",{detail:{available:false}}));
+};
+
+// Safe to retry once: GETs are side-effect free, and keyed POSTs replay
+// idempotently on the server via the same Idempotency-Key header.
+const canAutoRetry = (config) => {
+    if(!config || config._networkRetried) return false;
+    const method = String(config.method || "get").toLowerCase();
+    if(method === "get") return true;
+    const headers = config.headers || {};
+    return Boolean(headers["Idempotency-Key"] || headers["idempotency-key"]);
+};
+
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 const sharedRefresh = () => {
     if(!refreshPromise){
         refreshPromise = refreshV1AccessTokenOnce()
@@ -100,7 +127,7 @@ apiClient.interceptors.response.use(
 
 (response)=>{
 
-    if(typeof window !== "undefined") window.dispatchEvent(new CustomEvent("api-availability",{detail:{available:true}}));
+    signalAvailable();
 
 
     return response.data;
@@ -111,8 +138,19 @@ apiClient.interceptors.response.use(
 
 (error)=>{
 
-    if(typeof window !== "undefined" && (!error.response || error.response?.status === 503)){
-        window.dispatchEvent(new CustomEvent("api-availability",{detail:{available:false}}));
+    const noResponse = !error.response;
+    const unavailable = noResponse || error.response?.status === 503;
+
+    if(typeof window !== "undefined" && unavailable){
+        signalUnavailable();
+    } else if(typeof window !== "undefined") {
+        signalAvailable();
+    }
+
+    // One silent retry for transient network drops before surfacing the error.
+    if(noResponse && canAutoRetry(error.config)){
+        error.config._networkRetried = true;
+        return sleep(800).then(() => apiClient(error.config));
     }
 
 

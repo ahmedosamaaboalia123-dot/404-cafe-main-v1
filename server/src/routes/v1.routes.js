@@ -51,6 +51,7 @@ import { confirmDeliveryReceipt } from '../modules/delivery/delivery.public-serv
 import { createCustomerExperienceRouter } from '../modules/customer-experience/customer-experience.routes.js';
 import { createCustomerRouter } from '../modules/customers/customer.routes.js';
 import { createPublicReviewRouter, createReviewRouter } from '../modules/reviews/review.routes.js';
+import { submitOrderReview } from '../modules/reviews/review.service.js';
 import {
   recordCustomerOrderCompletion,
   upsertCustomerForOrder
@@ -161,6 +162,9 @@ export function createV1Router(dependencies = {}) {
       },
       publicTrackingReviewPort: dependencies.serviceContext?.publicTrackingReviewPort ?? {
         read: getOrderReview
+      },
+      guestReviewModule: dependencies.serviceContext?.guestReviewModule ?? {
+        submit: submitOrderReview
       },
       deliveryPort: dependencies.serviceContext?.deliveryPort ?? {
         confirmReceipt: confirmDeliveryReceipt

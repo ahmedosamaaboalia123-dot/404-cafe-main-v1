@@ -154,6 +154,7 @@
   align-items: center;
   gap: 6px;
   padding: 6px 12px;
+  min-height: 44px;
   background: #FFF8EE;
   border: 1.5px solid var(--tbl-accent-amber);
   border-radius: 20px;
@@ -188,6 +189,7 @@
   align-items: center;
   gap: 6px;
   padding: 6px 12px;
+  min-height: 44px;
   background: #EBF7EE;
   border: 1.5px solid #A3E0B4;
   border-radius: 20px;
@@ -368,6 +370,7 @@
   font-size: 0.76rem;
   font-weight: 700;
   padding: 4px 10px;
+  min-height: 44px;
   border-radius: 8px;
   text-decoration: none;
   display: flex;
@@ -761,7 +764,7 @@
 }
 
 .tbl-card-add-btn {
-  height: 40px;
+  height: 44px;
   padding: 0 14px;
   border-radius: 10px;
   background: var(--tbl-espresso-dark);
@@ -901,6 +904,7 @@
   align-items: center;
   justify-content: center;
   padding: 16px;
+  overflow-y: auto;
   animation: modalFadeIn 0.25s ease-out;
 }
 
@@ -914,8 +918,9 @@
   border-radius: 24px;
   width: 100%;
   max-width: 480px;
+  max-height: 90dvh;
+  overflow-y: auto;
   box-shadow: 0 20px 60px rgba(44, 30, 22, 0.2);
-  overflow: hidden;
   border: 1.5px solid var(--tbl-border-subtle);
   animation: modalSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -948,8 +953,8 @@
 }
 
 .tbl-modal-close-btn {
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
   border-radius: 10px;
   background: #FFFFFF;
   border: 1px solid var(--tbl-border-subtle);
@@ -1287,5 +1292,22 @@
   .tbl-receipt__table th,
   .tbl-receipt__table td {
     padding: 4px 4px;
+  }
+}
+
+/* Guest images never overflow narrow screens. */
+.table-experience-page img,
+.tbl-modal-card img,
+.customer-mobile-viewport img {
+  max-width: 100%;
+  height: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tbl-modal-backdrop,
+  .tbl-modal-card,
+  .toast-float-pill {
+    animation: none !important;
+    transition: none !important;
   }
 }

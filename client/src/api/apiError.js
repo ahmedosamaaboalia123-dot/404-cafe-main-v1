@@ -23,7 +23,14 @@ export function normalizeApiError(error) {
     normalizedApiError: true,
     status: response?.status ?? null,
     code,
-    message: apiError.messageAr || DEFAULT_MESSAGES[code] || error?.message || "حدث خطأ غير متوقع",
+    message:
+      apiError.messageAr ||
+      (response?.status === 503 ? "الخدمة غير متاحة مؤقتًا، حاول مرة أخرى بعد قليل" : null) ||
+      (response?.status === 502 ? "الخدمة غير متاحة مؤقتًا" : null) ||
+      (response?.status === 504 ? "انتهت مهلة الاتصال" : null) ||
+      DEFAULT_MESSAGES[code] ||
+      error?.message ||
+      "حدث خطأ غير متوقع",
     fieldErrors: Array.isArray(apiError.fieldErrors) ? apiError.fieldErrors : [],
     details: apiError.details ?? null,
     requestId: body?.meta?.requestId || response?.headers?.["x-request-id"] || null,

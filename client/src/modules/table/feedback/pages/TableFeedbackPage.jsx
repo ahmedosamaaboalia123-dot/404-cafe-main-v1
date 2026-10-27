@@ -52,6 +52,11 @@ export default function TableFeedbackPage() {
       setGateNotice("التقييم متاح عند وجود طلب شغال على هذه الطاولة.");
       return;
     }
+    const orderStatus = String(reviewableOrder.status || "").toLowerCase();
+    if (orderStatus && !["ready", "completed", "delivered"].includes(orderStatus)) {
+      setGateNotice("التقييم متاح بعد تجهيز طلبك في الصالة (طلبك حالياً قيد التحضير).");
+      return;
+    }
     setGateNotice("");
     setOpen(true);
   };
@@ -67,13 +72,18 @@ export default function TableFeedbackPage() {
     try {
       await submitV1TableReview(reviewableOrder.id, tableToken, body);
     } catch (error) {
-      if (error?.code === "ORDER_VERSION_CONFLICT" && tableNumber) {
+      const errCode = error?.response?.data?.error?.code || error?.code;
+      if (errCode === "ORDER_VERSION_CONFLICT" && tableNumber) {
         const fresh = await getActiveTableOrder(tableNumber, tableToken).catch(() => null);
         if (fresh?.id) {
-          await submitV1TableReview(fresh.id, tableToken, {
-            ...body,
-            expectedOrderVersion: Number(fresh.version ?? 0),
-          });
+          try {
+            await submitV1TableReview(fresh.id, tableToken, {
+              ...body,
+              expectedOrderVersion: Number(fresh.version ?? 0),
+            });
+          } catch (retryError) {
+            throw new Error(reviewSubmitErrorMessage(retryError));
+          }
           await refreshTableData?.();
           const list = await refreshReviews();
           if (list !== null) setReviews(list);
